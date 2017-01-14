@@ -2,18 +2,18 @@
   'use strict'
   angular
     .module('ss')
-    .controller('mainCtrl', mainCtrl)
+    .controller('MainCtrl', MainCtrl)
 
-    mainCtrl.$inject = ['$scope', 'dataService']
+    MainCtrl.$inject = ['$scope', 'dataService']
 
-    function mainCtrl($scope, dataService){
+    function MainCtrl($scope, dataService){
       var vm = this;
       vm.startProcess = startProcess; 
       vm.runTests = runTests;
 
 
-      function startProcess(input){
-        dataService.startProcess(input.split(/\r?\n/))
+      function startProcess(postsURLs){
+        dataService.startProcess(postsURLs.split(/\r?\n/))
       }
     
 

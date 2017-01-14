@@ -4,14 +4,22 @@
   <meta charset="UTF-8">
   <title>Document</title>
 </head>
-<body ng-controller="mainCtrl as vm">
+<body ng-controller="MainCtrl as vm">
 
 <button ng-click="vm.runTests(vm.testInput)">Run Tests</button>  
 <button class="go" id="goButton" ng-click="vm.startProcess(vm.input)"><span>GO!</span></button><br>
 <textarea rows="20" cols="33" ng-model="vm.input" placeholder="Enter Input Here"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+
+
+
+
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <script src="app.js"></script>
-<script src="mainCtrl.js"></script>
+<script src="MainCtrl.js"></script>
 <script src="dataService.js"></script>
 </body>
 </html>

@@ -29,11 +29,11 @@ EXPECTED OUTPUT
 	- replies the tweet has
 
 ###if facebook
-	- likes
-	- comments
-  - shares 
+  - shares
+  - likes
+  - comments
 	- total follower count 
-  
+
 ###if instagram
 	- if video include views
 	- comment count
