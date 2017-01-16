@@ -1,29 +1,29 @@
 const q = require('q');
 
 module.exports = {
-  getFacebookProfile: function(twitterPost){
+  getFacebookProfile: function(data){
     let defered = q.defer()
     // here we do a q.all do get all profile information. 
     setTimeout(function(){
-      defered.resolve('got facebook profile');
+      defered.resolve(`${data} then got profile`);
     }, 500)
 
     return defered.promise
   },
-  getInstagramProfile: function(twitterPost){
+  getInstagramProfile: function(data){
     let defered = q.defer()
     // here we do a q.all do get all profile information. 
     setTimeout(function(){
-      defered.resolve('got instagram profile');
+      defered.resolve(`${data} then got profile`);
     }, 500)
 
     return defered.promise
   },
-  getTwitterProfile: function(twitterPost){
+  getTwitterProfile: function(data){
     let defered = q.defer()
     // here we do a q.all do get all profile information. 
     setTimeout(function(){
-      defered.resolve('got twitter profile');
+      defered.resolve(`${data} then got profile`);
     }, 500)
 
     return defered.promise
