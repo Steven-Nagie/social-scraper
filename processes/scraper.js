@@ -33,8 +33,6 @@ module.exports = {
     return defered.promise
     }
 }
-=======
-// Where do we require the libraries for these functions if this is not where they are called?
 
 
 
