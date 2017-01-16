@@ -8,8 +8,6 @@ var express = require('express'),
     scraper = require('./processes/scraper.js'),
     apiCtrl = require('./processes/apiCtrl.js');
    
-
-
 app.use(bodyParser.json());
 app.use(express.static('./public'))
 app.use(morgan('dev'))
@@ -17,31 +15,43 @@ app.use(morgan('dev'))
 let usersLoggedIn = {};
 
 io.on('connect', socket => {
-  socket.on('userLogin', userId => usersLoggedIn[userId] = socket)
-  socket.on('disconnect', () => {
+  socket.on('userLogin', userId => {
+    usersLoggedIn[userId] = socket
     console.log(`Logged in =>`, Object.keys(usersLoggedIn))
+})
+  socket.on('disconnect', () => {
     for (let userId in usersLoggedIn) {
       if (usersLoggedIn[userId] === socket) delete usersLoggedIn[userId];
+      console.log(`Logged in =>`, Object.keys(usersLoggedIn))
     }
   })
   socket.on('startProcess', function(data){
 
     for(let url of data.postsURLs){
       if (url.includes('facebook.com')){
-        //crawl post and return necessary info for api call
-        apiCtrl.getFacebookProfile(url).then(profile => {
+        scraper.crawlFacebookPost(url)
+        .then(data => {
+          return apiCtrl.getFacebookProfile(data);
+        })
+        .then(profile => {
           usersLoggedIn[data.userId].emit('facebookProfile', profile)
         })
       }
       else if (url.includes('instagram.com')){
-        //crawl post and return necessary info for api call
-        apiCtrl.getInstagramProfile(url).then(profile => {
+        scraper.crawlInstagramPost(url)
+        .then(data => {
+          return apiCtrl.getInstagramProfile(data)
+        })
+        .then(profile => {
           usersLoggedIn[data.userId].emit('instagramProfile', profile)
         })
       }
       else if (url.includes('twitter.com')){
-        //crawl post and return necessary info for api call
-        apiCtrl.getTwitterProfile(url).then(profile => {
+        scraper.crawlTwitterPost(url)
+        .then(data => {
+          return apiCtrl.getTwitterProfile(data)
+        })
+        .then(profile => {
           usersLoggedIn[data.userId].emit('twitterProfile', profile)
         })
       } 

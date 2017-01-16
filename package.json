@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/jonmyrick7401/social-scraper#readme",
   "dependencies": {
+    "axios": "^0.15.3",
     "body-parser": "^1.15.2",
     "chai": "^3.5.0",
     "express": "^4.14.0",
@@ -24,6 +26,8 @@
     "mocha": "^3.2.0",
     "morgan": "^1.7.0",
     "q": "^1.4.1",
+    "request": "^2.79.0",
+    "should": "^11.1.2",
     "socket.io": "^1.7.2"
   }
 }
