@@ -59,7 +59,7 @@ io.on('connect', socket => {
   })
 
 
-})
+})//end of sockets
 
 http.listen(3000, function () {
   console.log(`listening on port ${this.address().port}`);
