@@ -10,11 +10,15 @@
       var vm = this;
       vm.startProcess = startProcess; 
       vm.runTests = runTests;
-
+      vm.login = login;
 
       function startProcess(postsURLs){
         dataService.startProcess(postsURLs.split(/\r?\n/))
-      }
+      };
+
+      function login(){
+        dataService.login()
+      };
     
 
 
