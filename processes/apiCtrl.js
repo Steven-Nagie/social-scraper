@@ -1,7 +1,9 @@
 const q = require('q'),
       Twit = require('twit'),
       instagram = require('instagram-node').instagram(),
-      config = require('./../config');
+      config = require('./../config'),
+      FB = require('fb')
+      facebook = require('./fbApi.js');
 
 var twitter = new Twit(config.twitter)
 instagram.use(config.instagram);
@@ -10,7 +12,7 @@ var redirect_uri = 'http://localhost:3000/handleauth';
 exports.authorize_user = function(req, res) {
   res.redirect(instagram.get_authorization_url(redirect_uri, { scope: ['likes'], state: 'a state' }));
 };
- 
+
 exports.handleauth = function(req, res) {
   instagram.authorize_user(req.query.code, redirect_uri, function(err, result) {
     if (err) {
@@ -24,7 +26,7 @@ exports.handleauth = function(req, res) {
 
 exports.getFacebookProfile = function(data){
   let defered = q.defer()
-  // here we do a q.all do get all profile information. 
+  // here we do a q.all do get all profile information.
   setTimeout(function(){
     defered.resolve(`${data} then got profile`);
   }, 500)
@@ -34,7 +36,7 @@ exports.getFacebookProfile = function(data){
 
 exports.getInstagramProfile = function(data){
   let defered = q.defer()
-  // here we do a q.all do get all profile information. 
+  // here we do a q.all do get all profile information.
   setTimeout(function(){
     defered.resolve(`${data} then got profile`);
   }, 200)
@@ -49,4 +51,3 @@ exports.getTwitterProfile = function(url){
   })
   return defered.promise
 };
-
