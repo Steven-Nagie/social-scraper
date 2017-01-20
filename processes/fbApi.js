@@ -1,6 +1,8 @@
 const config = require('./../config'),
       FB = require('fb');
 
+module.exports = {
+  facebook = (data) => {
       var accessToken;
       FB.options({version: 'v2.8'});
       var app = FB.extend({appId: config.appId, appSecret: config.appSecret});
@@ -9,7 +11,9 @@ const config = require('./../config'),
       // If there is any way to see the post's content, it would probably be easier to get its id from the user's feed than to parse the url looking for the correct id.
       // var site = "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater"
 
-      var site = "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1190506704402741/?type=3&theater";
+      // var site = "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1190506704402741/?type=3&theater";
+
+      var site = data;
 
       var user;
       var id;
@@ -168,3 +172,5 @@ const config = require('./../config'),
         getPublicProfile();
         getPost();
       })
+    }
+  }
