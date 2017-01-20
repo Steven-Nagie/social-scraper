@@ -1,3 +1,5 @@
+// A lot of the stuff in here isn't necessary, it's left over from when I was playing with the API to get a feel for it.
+
 const config = require('./../config'),
       FB = require('fb');
 
@@ -47,36 +49,10 @@ module.exports = {
         }
         user = site.slice(startSliceUser, endSliceUser);
         id = site.slice(startSliceId, endSliceId).replace('/', '_');
-        console.log(id);
-        console.log(user);
       }
 
       parseUser();
 
-
-      // Default response for appId endpoint contains category, link, name, and id
-      getApp = () => {
-        app.api(`${config.appId}`, function (res) {
-          if(!res || res.error) {
-           console.log(!res ? 'error occurred' : res.error);
-           return;
-          }
-          console.log(res);
-
-        });
-      }
-
-      // The 'fields' query paramters determine what the response contains.
-      getAppEmail = () => {
-        app.api(`${config.appId}?fields=contact_email`, function (res) {
-          if(!res || res.error) {
-           console.log(!res ? 'error occurred' : res.error);
-           return;
-          }
-          console.log(res);
-
-        });
-      }
 
       // The id is in the URL, but formatted differently there than they want it here.
       getPost = () => {
@@ -91,25 +67,45 @@ module.exports = {
         });
       }
 
-      // Use id to get more info on user
-      // Turns out we get the same information whether we use an id or username, so no real need to keep this.
-      /*
-      getPublicProfileID = (id) => {
-        app.api(`${id}`, function(res) {
+      // Get post shares
+      getPostShares = () => {
+        app.api(`${id}?fields=shares`, function(res) {
           if(!res || res.error) {
            console.log(!res ? 'error occurred' : res.error);
            return;
           }
-          console.log(" within id ", res);
+          console.log(res);
         });
       }
-      */
+
+      // Get post likes. Current limit set to 3000, which is an arbitrary number I chose.
+      getPostShares = () => {
+        app.api(`${id}/likes?limit=3000`, function(res) {
+          if(!res || res.error) {
+           console.log(!res ? 'error occurred' : res.error);
+           return;
+          }
+          console.log(res);
+        });
+      }
+
+      // Get post reactions. We can parse them out.
+      getPostLikes = () => {
+        app.api(`${id}/reactions`, function(res) {
+          if(!res || res.error) {
+           console.log(!res ? 'error occurred' : res.error);
+           return;
+          }
+          console.log(res);
+        });
+      }
+
 
       // Try to get a person's public page
       // Hitting /likes will show us what they like, not how many likes they have.
       // ?fields=fan_count gets us how many likes they have.
       getPublicProfile = () => {
-        app.api(`${user}`, function(res) {
+        app.api(`${user}?fields=fan_count&limit=3000`, function(res) {
           if(!res || res.error) {
            console.log(!res ? 'error occurred' : res.error);
            return;
