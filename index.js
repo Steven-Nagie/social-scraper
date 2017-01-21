@@ -74,6 +74,3 @@ http.listen(3000, function () {
   console.log(`listening on port ${this.address().port}`);
 })
 
-module.exports = {
-  key: 'value'
-};

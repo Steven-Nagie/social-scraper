@@ -12,7 +12,6 @@
       var userId = Math.random().toString(36).substr(2, 5);
       socket.emit('userLogin', userId)
 
-
       this.startProcess = function(postsURLs){
         console.log(postsURLs);
         socket.emit('startProcess', {
@@ -30,9 +29,11 @@
       socket.on('facebookProfile', function(profile){
         console.log(profile)
       });
+
       socket.on('instagramProfile', function(profile){
         console.log(profile)
       });
+
       socket.on('twitterProfile', function(profile){
         console.log(profile)
       });
