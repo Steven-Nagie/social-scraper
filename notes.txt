@@ -1,0 +1,30 @@
+fields are:
+?fields=field
+
+edges are
+/edge
+
+userid/username
+fields:
+fan_count = their total likes
+
+edges:
+instagram_accounts = Any linked instagram accounts
+photos = the page's photos
+picture = the page's profile picture (Doesn't return a JSON object)
+posts = returns a list of all their posts, including an id for the post, which we can presumably use to see likes on that post.
+feed = The feed of posts (including status updates) and links published by this page, or by others on this page. Don't know what the difference is between this and posts.
+
+Posts
+fields:
+shares = share count of the post
+  if no shares, response contains only post id
+
+edges:
+likes
+  returns an array of users who have liked the post. To get a total we have to do res.data[0].length, and we have to be careful that we put the limit pretty high so we don't cut anyone off. I think the default limit is 25.
+reactions
+  Returns an array of users who have reacted, including a property describing their type of reaction.
+comments
+sharedposts
+  If no shares, response is empty array
