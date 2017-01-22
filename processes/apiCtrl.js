@@ -26,20 +26,11 @@ exports.handleauth = function(req, res) {
 
 exports.getFacebookProfile = function(data){
   let defered = q.defer()
-  // here we do a q.all do get all profile information.
-  setTimeout(function(){
-    defered.resolve(`${data} then got profile`);
-  }, 500)
 
   return defered.promise
 };
 
 exports.getInstagramProfile = function(data){
-  let defered = q.defer()
-  // here we do a q.all do get all profile information.
-  setTimeout(function(){
-    defered.resolve(`${data} then got profile`);
-  }, 200)
 
   return defered.promise
 };
