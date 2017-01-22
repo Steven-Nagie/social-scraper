@@ -9,6 +9,12 @@ const config = require('./../config'),
       FB.options({version: 'v2.8'});
       var app = FB.extend({appId: config.facebook.appId, appSecret: config.facebook.appSecret});
 
+      // Have to figure out how to get data organized into a single array for each link that we can then push onto the people array, which we can format into csv. 
+      var people = [["username", "userid", "postid", "followers", "comments", "shares", "likes", "reactions"]],
+      shares = 0,
+      comments = 0,
+      likes = 0;
+
 
       // If there is any way to see the post's content, it would probably be easier to get its id from the user's feed than to parse the url looking for the correct id.
       // var site = "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater"
