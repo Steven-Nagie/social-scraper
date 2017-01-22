@@ -5,8 +5,9 @@ var express = require('express'),
     morgan = require('morgan'),
     http = require('http').Server(app),
     io = require('socket.io')(http),
-    scraper = require('./processes/scraper.js'),
-    apiCtrl = require('./processes/apiCtrl.js');
+    twApi = require('./processes/twApi.js'),
+    fbApi = require('./processes/fbApi.js'),
+    igApi = require('./processes/igApi.js');
 
 
 app.use(bodyParser.json());
@@ -18,10 +19,9 @@ app.use(function(req, res, next) {
     next();
 });
 
-// This is where you would initially send users to authorize 
-app.get('/authorize_user', apiCtrl.authorize_user);
-// This is your redirect URI 
-app.get('/handleauth', apiCtrl.handleauth);
+// This is authoization to use the Instagram API 
+app.get('/authorize_user', igApi.authorize_user);
+app.get('/handleauth', igApi.handleauth);
 
 
 let usersLoggedIn = {};
@@ -38,29 +38,25 @@ io.on('connect', socket => {
     }
   })
   socket.on('startProcess', function(data){
-
     for(let url of data.postsURLs){
       if (url.includes('facebook.com')){
-        scraper.crawlFacebookPost(url)
-        .then(data => {
-          return apiCtrl.getFacebookProfile(data);
-        })
+        fbApi.facebook("https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater")
         .then(profile => {
+          //data will be emited to dataService and logged to the console
           usersLoggedIn[data.userId].emit('facebookProfile', profile)
         })
       }
       else if (url.includes('instagram.com')){
-        scraper.crawlInstagramPost(url)
-        .then(data => {
-          return apiCtrl.getInstagramProfile(data)
-        })
+        igApi.getInstagramProfile(data)
         .then(profile => {
+          //data will be emited to dataService and logged to the console
           usersLoggedIn[data.userId].emit('instagramProfile', profile)
         })
       }
       else if (url.includes('twitter.com')){
-        apiCtrl.getTwitterProfile(url)
+        twApi.getTwitterProfile(url)
         .then(profile => {
+          //data will be emited to dataService and logged to the console
           usersLoggedIn[data.userId].emit('twitterProfile', profile)
         })
       } 
