@@ -1,11 +1,8 @@
 const q = require('q'),
-      Twit = require('twit'),
       instagram = require('instagram-node').instagram(),
-      config = require('./../config'),
-      FB = require('fb')
-      facebook = require('./fbApi.js');
+      config = require('./../config');
+      
 
-var twitter = new Twit(config.twitter)
 instagram.use(config.instagram);
 var redirect_uri = 'http://localhost:3000/handleauth';
 
@@ -24,21 +21,14 @@ exports.handleauth = function(req, res) {
   });
 };
 
-exports.getFacebookProfile = function(data){
-  let defered = q.defer()
 
-  return defered.promise
-};
 
 exports.getInstagramProfile = function(data){
-
-  return defered.promise
-};
-
-exports.getTwitterProfile = function(url){
   let defered = q.defer()
-  twitter.get('statuses/show', { id: '804000988604399616'}, function (err, data, response) {
-    defered.resolve(data);
-  })
+    setTimeout(() => {
+      defered.resolve("got Instagram")
+    }, 500)
   return defered.promise
 };
+
+
