@@ -1,4 +1,4 @@
-// all i did was add promises so that we could use your code strategically.  
+// all i did was add promises so that we could use your code strategically.
 
 const config = require('./../config'),
       FB = require('fb'),
@@ -15,13 +15,13 @@ FB.api(`oauth/access_token?client_id=${config.facebook.appId}&client_secret=${co
 
 
 exports.facebook = (data) => {
-  let outerDefer = q.defer(); 
-  
+  let outerDefer = q.defer();
+
   // If there is any way to see the post's content, it would probably be easier to get its id from the user's feed than to parse the url looking for the correct id.
   // var site = "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater"
   // var site = "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1190506704402741/?type=3&theater";
 
-  var profile = {}; 
+  var profile = {};
   var user;
   var id;
 
@@ -42,10 +42,10 @@ exports.facebook = (data) => {
   })
   .then(postComments => {
     profile.postComments = postComments;
-    outerDefer.resolve(profile) 
+    outerDefer.resolve(profile)
   })
-  
-  
+
+
 
   function parseUser(site) {
     var startSliceUser = 0;
@@ -75,8 +75,9 @@ exports.facebook = (data) => {
       }
     }
     user = site.slice(startSliceUser, endSliceUser);
+    profile.username = user;
     id = site.slice(startSliceId, endSliceId).replace('/', '_');
-    
+
   };
   // Get post shares. Not quite sure what exactly the format will be like.
   function getPostShares() {
@@ -92,7 +93,7 @@ exports.facebook = (data) => {
       }
       defered.resolve(shares);
     });
-    return defered.promise; 
+    return defered.promise;
   };
   // Get post likes. Current limit set to 3000, which is an arbitrary number I chose.
   function getPostLikes() {
@@ -124,7 +125,7 @@ exports.facebook = (data) => {
       }
       defered.resolve(comments);
     });
-    return defered.promise; 
+    return defered.promise;
   };
   // Try to get a person's public page
   // Hitting /likes will show us what they like, not how many likes they have.
@@ -139,5 +140,5 @@ exports.facebook = (data) => {
   };
 
 
-  return outerDefer.promise; 
+  return outerDefer.promise;
 }
