@@ -3,7 +3,9 @@ var request = require('request'),
     should = require('chai').should(),
     expect = require('chai').expect,
     chaiAsPromised = require('chai-as-promised'),
-    fb = require('../processes/fbApi.js');
+    fb = require('../processes/fbApi.js'),
+    ig = require('../processes/igApi.js'),
+    tw = require('../processes/twApi.js');
 
 chai.use(chaiAsPromised);
 
@@ -31,8 +33,8 @@ describe('return luke', function(){
 
 // To test with different links we can use environment variables. In command line, link=https://www.facebook etc mocha test/test.js
 describe('Facebook', function() {
-  // this.timeout(5000);
-  var link = process.env.link || "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater"
+
+  var link = process.env.fblink || "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater"
   it('should return an object', function() {
 
     var facebook = fb.facebook(link);
@@ -52,6 +54,31 @@ describe('Facebook', function() {
       should.exist(data.postLikes);
       should.exist(data.postShares);
       should.exist(data.postComments);
+    })
+  })
+})
+
+// describe('Instagram', function() {
+//   var link = process.env.iglink || "link";
+//
+//   it('should return an object', function() {
+//     var instagram = ig.whater(link);
+//
+//     return instagram.then(function(data) {
+//       data.should.be.an('object');
+//     })
+//   })
+// })
+
+describe('Twitter', function() {
+  var link = process.env.twlink || "https://twitter.com/highsteph/status/804000988604399616";
+
+  it('should return an object', function() {
+    var twitter= tw.getTwitterProfile(link);
+
+    return twitter.then(function(data) {
+      console.log(data);
+      data.should.be.an('object');
     })
   })
 })
