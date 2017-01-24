@@ -75,6 +75,7 @@ exports.facebook = (data) => {
       }
     }
     user = site.slice(startSliceUser, endSliceUser);
+    profile.username = user;
     id = site.slice(startSliceId, endSliceId).replace('/', '_');
 
   };
