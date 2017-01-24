@@ -2,7 +2,8 @@
 
 const config = require('./../config'),
       FB = require('fb'),
-      q = require('q');
+      q = require('q'),
+      fs = require('fs');
 
 var accessToken;
 var app = FB.extend({appId: config.facebook.appId, appSecret: config.facebook.appSecret});
@@ -24,6 +25,7 @@ exports.facebook = (data) => {
   var profile = {};
   var user;
   var id;
+  var csvContent = "";
 
   parseUser(data);
 
@@ -42,7 +44,15 @@ exports.facebook = (data) => {
   })
   .then(postComments => {
     profile.postComments = postComments;
-    outerDefer.resolve(profile)
+    var totalObjLength = 0;
+    for (key in profile) {
+      totalObjLength++;
+
+      csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
+    };
+    fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
+
+    outerDefer.resolve(profile);
   })
 
 
