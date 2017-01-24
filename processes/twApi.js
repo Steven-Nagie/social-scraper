@@ -16,9 +16,9 @@ exports.getTwitterProfile = url => {
         screen_name: data.user.screen_name,
         name: data.user.name,
         followers_count: data.user.followers_count,
+        statuses_count: data.user.statuses_count,
         favorite_count: data.favorite_count,
-        retweets: data.retweet_count,
-        statuses_count: data.user.statuses_count
+        retweets: data.retweet_count
       });
     })
   }
@@ -35,6 +35,5 @@ exports.getTwitterProfile = url => {
     })
   }
 
->>>>>>> master
   return defered.promise
 };
