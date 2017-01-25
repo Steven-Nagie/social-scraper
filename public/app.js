@@ -1,5 +1,5 @@
 (function(){
   'use strict'
   angular
-    .module('ss', [])
+    .module('ss', ['ui.grid'])
 })();
