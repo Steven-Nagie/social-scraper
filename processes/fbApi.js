@@ -28,8 +28,10 @@ exports.facebook = (data) => {
     parseUserAndId(data);
 
     getPublicProfile()
-    .then(fanCount => {
-      profile.fanCount = fanCount;
+    .then(response => {
+      console.log("promise return: ", response);
+      profile.name = response.name
+      profile.fanCount = response.fan_count;
       return getPostLikes();
     })
     .then(postLikes => {
@@ -56,9 +58,9 @@ exports.facebook = (data) => {
     parseUserAndId(data);
 
     getPublicProfile()
-    .then(fanCount => {
-      profile.fanCount = fanCount;
-      console.log(profile);
+    .then(response => {
+      profile.name = response.name;
+      profile.fanCount = response.fan_count;
       var totalObjLength = 0;
       for (key in profile) {
         totalObjLength++;
@@ -159,9 +161,9 @@ exports.facebook = (data) => {
   // ?fields=fan_count gets us how many likes they have.
   function getPublicProfile() {
     let defered = q.defer();
-    app.api(`${user}?fields=fan_count&first_name&last_name&limit=30000`, function(res) {
+    app.api(`${user}?fields=fan_count,name&limit=30000`, function(res) {
       if(!res || res.error) return console.log(!res ? 'error occurred' : res.error);
-      defered.resolve(res.fan_count);
+      defered.resolve(res);
     });
     return defered.promise;
   };
