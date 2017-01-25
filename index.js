@@ -38,6 +38,13 @@ io.on('connect', socket => {
     }
   })
   socket.on('startProcess', function(data){
+
+    igApi.getInstagramProfile()
+        .then(profile => {
+          console.log(profile)
+          usersLoggedIn[data.userId].emit('instagramProfile', profile)
+        })
+
     for(let url of data.postsURLs){
       if (url.includes('facebook.com')){
         fbApi.facebook("https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater")
@@ -47,11 +54,7 @@ io.on('connect', socket => {
         })
       }
       else if (url.includes('instagram.com')){
-        igApi.getInstagramProfile(data)
-        .then(profile => {
-          //data will be emited to dataService and logged to the console
-          usersLoggedIn[data.userId].emit('instagramProfile', profile)
-        })
+        
       }
       else if (url.includes('twitter.com')){
         twApi.getTwitterProfile(url)

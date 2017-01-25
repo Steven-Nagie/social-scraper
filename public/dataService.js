@@ -31,6 +31,7 @@
       });
 
       socket.on('instagramProfile', function(profile){
+        console.log('got data')
         console.log(profile)
       });
 
