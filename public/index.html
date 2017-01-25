@@ -3,15 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+
+  <link rel="stylesheet" href="./dist/styles.css">
 </head>
 <body ng-controller="MainCtrl as vm">
+<main>
+  <div class="main-left">
+    <button ng-click="vm.runTests(vm.testInput)">Run Tests</button>
+    <button class="go" id="goButton" ng-click="vm.startProcess(vm.input)"><span>GO!</span></button>
+    <button class="export-button">Export</button>
+    <a href="/authorize_user"><button>Authorize Instagram</button></a>
+  </div>
 
-<button ng-click="vm.runTests(vm.testInput)">Run Tests</button>  
-<button class="go" id="goButton" ng-click="vm.startProcess(vm.input)"><span>GO!</span></button><br>
-<textarea rows="20" cols="33" ng-model="vm.input" placeholder="Enter Input Here"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+  <textarea class="input" rows="20" cols="33" ng-model="vm.input" placeholder="Enter Input Here"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
 
+  <div class="output">Here's where output goes!! I made it blue for the sake of visualization</div>
 
-<a href="/authorize_user"><button>Authorize Instagram</button></a>   
+</main>
+
 
 
 

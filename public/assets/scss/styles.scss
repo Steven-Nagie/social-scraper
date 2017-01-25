@@ -1,0 +1,41 @@
+/**************MAIN STYLES**********/
+main {
+  display: flex;
+}
+
+.main-left {
+  height: 100vh;
+  width: 10vw;
+  background-color: #4d4d4d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 10vh;
+
+  button {
+    width: 7.5vw;
+    background-color: #636363;
+    border: none;
+    margin: 2px;
+    color: white;
+  }
+  .export-button {
+    height: 3vh;
+    position: absolute;
+    bottom: 10vh;
+    left: 1.25vw;
+    background-color: #f82f2f;
+  }
+}
+
+.input {
+  width: 15vw;
+}
+
+.output {
+  height: 100vh;
+  width: 75vw;
+  color: white;
+  background-color: blue;
+}
