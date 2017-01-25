@@ -27,7 +27,7 @@
       };
 
       socket.on('facebookProfile', function(profile){
-        console.log(profile)
+        console.log(profile);
       });
 
       socket.on('instagramProfile', function(profile){
