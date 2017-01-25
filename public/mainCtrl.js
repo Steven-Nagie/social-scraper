@@ -11,7 +11,7 @@
       vm.startProcess = startProcess;
       vm.runTests = runTests;
       vm.login = login;
-      console.log()
+      vm.csv = [{"This is" : "the output area"}];
 
       /*************CSV DISPLAY IN HTML STUFF*******/
       var file = "brandonmikesell23,2722,7,0,1, \nbrandonmikesell23,2722,7,0,1,"
@@ -35,26 +35,6 @@
       }
       vm.csv = readCSV(file);
       console.log("csv ", vm.csv);
-      vm.myData = [
-        {
-        "firstName": "Cox",
-        "lastName": "Carney",
-        "company": "Enormo",
-        "employed": true
-    },
-    {
-        "firstName": "Lorraine",
-        "lastName": "Wise",
-        "company": "Comveyer",
-        "employed": false
-    },
-    {
-        "firstName": "Nancy",
-        "lastName": "Waters",
-        "company": "Fuelton",
-        "employed": false
-    }
-      ]
 
       /**********END CSV DISPLAY STUFF********/
 
