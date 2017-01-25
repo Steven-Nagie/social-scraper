@@ -18,46 +18,62 @@ FB.api(`oauth/access_token?client_id=${config.facebook.appId}&client_secret=${co
 exports.facebook = (data) => {
   let outerDefer = q.defer();
 
-  // If there is any way to see the post's content, it would probably be easier to get its id from the user's feed than to parse the url looking for the correct id.
-  // var site = "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater"
-  // var site = "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1190506704402741/?type=3&theater";
 
   var profile = {};
   var user;
   var id;
   var csvContent = "";
 
-  parseUser(data);
+  if (data.includes('photos')) {
+    parseUserAndId(data);
 
-  getPublicProfile()
-  .then(fanCount => {
-    profile.fanCount = fanCount;
-    return getPostLikes();
-  })
-  .then(postLikes => {
-    profile.postLikes = postLikes;
-    return getPostShares()
-  })
-  .then(postShares => {
-    profile.postShares = postShares;
-    return getPostComments();
-  })
-  .then(postComments => {
-    profile.postComments = postComments;
-    var totalObjLength = 0;
-    for (key in profile) {
-      totalObjLength++;
+    getPublicProfile()
+    .then(fanCount => {
+      profile.fanCount = fanCount;
+      return getPostLikes();
+    })
+    .then(postLikes => {
+      profile.postLikes = postLikes;
+      return getPostShares()
+    })
+    .then(postShares => {
+      profile.postShares = postShares;
+      return getPostComments();
+    })
+    .then(postComments => {
+      profile.postComments = postComments;
+      var totalObjLength = 0;
+      for (key in profile) {
+        totalObjLength++;
 
-      csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
-    };
-    fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
+        csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
+      };
+      fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
 
-    outerDefer.resolve(profile);
-  })
+      outerDefer.resolve(profile);
+    })
+  } else {
+    parseUserAndId(data);
+
+    getPublicProfile()
+    .then(fanCount => {
+      profile.fanCount = fanCount;
+      console.log(profile);
+      var totalObjLength = 0;
+      for (key in profile) {
+        totalObjLength++;
+
+        csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
+      };
+      fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
+
+      outerDefer.resolve(profile);
+    })
+  }
 
 
 
-  function parseUser(site) {
+  function parseUserAndId(site) {
     var startSliceUser = 0;
     var endSliceUser = 0;
     var startSliceId = 0;
@@ -87,6 +103,7 @@ exports.facebook = (data) => {
     user = site.slice(startSliceUser, endSliceUser);
     profile.username = user;
     id = site.slice(startSliceId, endSliceId).replace('/', '_');
+
 
   };
   // Get post shares. Not quite sure what exactly the format will be like.
@@ -142,7 +159,7 @@ exports.facebook = (data) => {
   // ?fields=fan_count gets us how many likes they have.
   function getPublicProfile() {
     let defered = q.defer();
-    app.api(`${user}?fields=fan_count&limit=30000`, function(res) {
+    app.api(`${user}?fields=fan_count&first_name&last_name&limit=30000`, function(res) {
       if(!res || res.error) return console.log(!res ? 'error occurred' : res.error);
       defered.resolve(res.fan_count);
     });

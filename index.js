@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-// This is authoization to use the Instagram API 
+// This is authoization to use the Instagram API
 app.get('/authorize_user', igApi.authorize_user);
 app.get('/handleauth', igApi.handleauth);
 
@@ -40,7 +40,7 @@ io.on('connect', socket => {
   socket.on('startProcess', function(data){
     for(let url of data.postsURLs){
       if (url.includes('facebook.com')){
-        fbApi.facebook("https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater")
+        fbApi.facebook(url)
         .then(profile => {
           //data will be emited to dataService and logged to the console
           usersLoggedIn[data.userId].emit('facebookProfile', profile)
@@ -59,7 +59,7 @@ io.on('connect', socket => {
           //data will be emited to dataService and logged to the console
           usersLoggedIn[data.userId].emit('twitterProfile', profile)
         })
-      } 
+      }
     }
   })
 
@@ -69,4 +69,3 @@ io.on('connect', socket => {
 http.listen(3000, function () {
   console.log(`listening on port ${this.address().port}`);
 })
-
