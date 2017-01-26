@@ -58,7 +58,7 @@ exports.facebook = (data) => {
       };
       fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
 
-      outerDefer.resolve(profile);
+      outerDefer.resolve(csvContent);
     })
   } else {
     parseUserAndId(data);
@@ -75,7 +75,7 @@ exports.facebook = (data) => {
       };
       fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
 
-      outerDefer.resolve(profile);
+      outerDefer.resolve(csvContent);
     })
   }
 

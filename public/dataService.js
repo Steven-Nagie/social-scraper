@@ -13,7 +13,7 @@
       this.subscribeToFacebook = subscribeToFacebook;
       this.subscribeToInstagram = subscribeToInstagram;
       this.subscribeToTwitter =  subscribeToTwitter;
-      
+
       let facebook_subscribers = [];
       let instagram_subscribers = [];
       let twitter_subscribers = [];

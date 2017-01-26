@@ -36,4 +36,16 @@ main {
 .output {
   height: 100vh;
   width: 75vw;
+  .table-header {
+    line-height: calc(3vh - 2px);
+    font-size: calc(3vh - 2px);
+    font-weight: bold;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .table {
+    border: none;
+    height: calc(91vh/3);
+    width: 75vw;
+  }
 }
