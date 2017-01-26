@@ -1,19 +1,25 @@
-// all i did was add promises so that we could use your code strategically.
-
 const config = require('./../config'),
       FB = require('fb'),
       q = require('q'),
       fs = require('fs');
 
-var accessToken;
-var app = FB.extend({appId: config.facebook.appId, appSecret: config.facebook.appSecret});
+let app = FB.extend({appId: config.facebook.appId, appSecret: config.facebook.appSecret});
+let gotToken = false;
 
-FB.options({version: 'v2.8'});
-FB.api(`oauth/access_token?client_id=${config.facebook.appId}&client_secret=${config.facebook.appSecret}&grant_type=client_credentials`, function(res) {
-  if (!res || res.error) return console.log(!res ? 'error occurred' : res.error);
-  app.setAccessToken(res.access_token);
-})
-
+exports.getToken = () => {
+  let defered = q.defer();
+  if(gotToken) defered.resolve("already have token");
+  else{
+    FB.options({version: 'v2.8'});
+    FB.api(`oauth/access_token?client_id=${config.facebook.appId}&client_secret=${config.facebook.appSecret}&grant_type=client_credentials`, function(res) {
+      if (!res || res.error) return console.log(!res ? 'error occurred' : res.error);
+      app.setAccessToken(res.access_token);
+      gotToken = true;
+      defered.resolve("made token");
+    })
+  }
+  return defered.promise;
+};
 
 exports.facebook = (data) => {
   let outerDefer = q.defer();
@@ -69,13 +75,14 @@ exports.facebook = (data) => {
       };
       fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
 
-      outerDefer.resolve(profile);
+      outerDefer.resolve(csvContent);
     })
   }
 
 
 
   function parseUserAndId(site) {
+
     var startSliceUser = 0;
     var endSliceUser = 0;
     var startSliceId = 0;
@@ -108,7 +115,6 @@ exports.facebook = (data) => {
 
 
   };
-  // Get post shares. Not quite sure what exactly the format will be like.
   function getPostShares() {
     let defered = q.defer()
     app.api(`${id}?fields=shares`, function(res) {
@@ -124,7 +130,6 @@ exports.facebook = (data) => {
     });
     return defered.promise;
   };
-  // Get post likes. Current limit set to 3000, which is an arbitrary number I chose.
   function getPostLikes() {
     let defered = q.defer()
     app.api(`${id}/likes?limit=30000`, function(res) {
