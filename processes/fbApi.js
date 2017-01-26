@@ -1,32 +1,32 @@
-// all i did was add promises so that we could use your code strategically.
-
 const config = require('./../config'),
       FB = require('fb'),
       q = require('q');
 
-var accessToken;
-var app = FB.extend({appId: config.facebook.appId, appSecret: config.facebook.appSecret});
+let app = FB.extend({appId: config.facebook.appId, appSecret: config.facebook.appSecret});
+let gotToken = false;
 
-FB.options({version: 'v2.8'});
-FB.api(`oauth/access_token?client_id=${config.facebook.appId}&client_secret=${config.facebook.appSecret}&grant_type=client_credentials`, function(res) {
-  if (!res || res.error) return console.log(!res ? 'error occurred' : res.error);
-  app.setAccessToken(res.access_token);
-})
-
+exports.getToken = () => {
+  let defered = q.defer();
+  if(gotToken) defered.resolve("already have token");
+  else{
+    FB.options({version: 'v2.8'});
+    FB.api(`oauth/access_token?client_id=${config.facebook.appId}&client_secret=${config.facebook.appSecret}&grant_type=client_credentials`, function(res) {
+      if (!res || res.error) return console.log(!res ? 'error occurred' : res.error);
+      app.setAccessToken(res.access_token);
+      gotToken = true;
+      defered.resolve("made token");
+    })
+  }
+  return defered.promise;
+};
 
 exports.facebook = (data) => {
   let outerDefer = q.defer();
-
-  // If there is any way to see the post's content, it would probably be easier to get its id from the user's feed than to parse the url looking for the correct id.
-  // var site = "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater"
-  // var site = "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1190506704402741/?type=3&theater";
-
-  var profile = {};
-  var user;
-  var id;
+  let profile = {};
+  let user;
+  let id;
 
   parseUser(data);
-
   getPublicProfile()
   .then(fanCount => {
     profile.fanCount = fanCount;
@@ -44,8 +44,10 @@ exports.facebook = (data) => {
     profile.postComments = postComments;
     outerDefer.resolve(profile)
   })
-
-
+  .catch(error => {
+    console.log(error)
+    outerDefer.resolve(error)
+  });
 
   function parseUser(site) {
     var startSliceUser = 0;
@@ -79,7 +81,6 @@ exports.facebook = (data) => {
     id = site.slice(startSliceId, endSliceId).replace('/', '_');
 
   };
-  // Get post shares. Not quite sure what exactly the format will be like.
   function getPostShares() {
     let defered = q.defer()
     app.api(`${id}?fields=shares`, function(res) {
@@ -95,7 +96,6 @@ exports.facebook = (data) => {
     });
     return defered.promise;
   };
-  // Get post likes. Current limit set to 3000, which is an arbitrary number I chose.
   function getPostLikes() {
     let defered = q.defer()
     app.api(`${id}/likes?limit=30000`, function(res) {
