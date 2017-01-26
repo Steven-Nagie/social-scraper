@@ -66,13 +66,9 @@
 
 
       socket.on('facebookProfile', function(profile){
-<<<<<<< HEAD
-        console.log(profile);
-=======
         angular.forEach(facebook_subscribers, function (cb) {
             cb(profile);
         });
->>>>>>> master
       });
 
       socket.on('instagramProfile', function(profile){
