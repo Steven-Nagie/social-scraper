@@ -1,6 +1,7 @@
 const config = require('./../config'),
       FB = require('fb'),
-      q = require('q');
+      q = require('q'),
+      fs = require('fs');
 
 let app = FB.extend({appId: config.facebook.appId, appSecret: config.facebook.appSecret});
 let gotToken = false;
@@ -22,34 +23,66 @@ exports.getToken = () => {
 
 exports.facebook = (data) => {
   let outerDefer = q.defer();
-  let profile = {};
-  let user;
-  let id;
 
-  parseUser(data);
-  getPublicProfile()
-  .then(fanCount => {
-    profile.fanCount = fanCount;
-    return getPostLikes();
-  })
-  .then(postLikes => {
-    profile.postLikes = postLikes;
-    return getPostShares()
-  })
-  .then(postShares => {
-    profile.postShares = postShares;
-    return getPostComments();
-  })
-  .then(postComments => {
-    profile.postComments = postComments;
-    outerDefer.resolve(profile)
-  })
-  .catch(error => {
-    console.log(error)
-    outerDefer.resolve(error)
-  });
 
-  function parseUser(site) {
+  var profile = {};
+  var user;
+  var id;
+  var csvContent = "";
+
+  if (data.includes('photos')) {
+    parseUserAndId(data);
+
+    getPublicProfile()
+    .then(response => {
+      console.log("promise return: ", response);
+      profile.name = response.name
+      profile.fanCount = response.fan_count;
+      return getPostLikes();
+    })
+    .then(postLikes => {
+      profile.postLikes = postLikes;
+      return getPostShares()
+    })
+    .then(postShares => {
+      profile.postShares = postShares;
+      return getPostComments();
+    })
+    .then(postComments => {
+      profile.postComments = postComments;
+      var totalObjLength = 0;
+      for (key in profile) {
+        totalObjLength++;
+
+        csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
+      };
+      fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
+
+      outerDefer.resolve(profile);
+    })
+  } else {
+    parseUserAndId(data);
+
+    getPublicProfile()
+    .then(response => {
+      profile.name = response.name;
+      profile.fanCount = response.fan_count;
+      var totalObjLength = 0;
+      for (key in profile) {
+        totalObjLength++;
+
+        csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
+      };
+      fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
+
+      outerDefer.resolve(profile);
+    })
+  }
+
+
+
+  function parseUserAndId(site) {
+
     var startSliceUser = 0;
     var endSliceUser = 0;
     var startSliceId = 0;
@@ -79,6 +112,7 @@ exports.facebook = (data) => {
     user = site.slice(startSliceUser, endSliceUser);
     profile.username = user;
     id = site.slice(startSliceId, endSliceId).replace('/', '_');
+
 
   };
   function getPostShares() {
@@ -132,9 +166,9 @@ exports.facebook = (data) => {
   // ?fields=fan_count gets us how many likes they have.
   function getPublicProfile() {
     let defered = q.defer();
-    app.api(`${user}?fields=fan_count&limit=30000`, function(res) {
+    app.api(`${user}?fields=fan_count,name&limit=30000`, function(res) {
       if(!res || res.error) return console.log(!res ? 'error occurred' : res.error);
-      defered.resolve(res.fan_count);
+      defered.resolve(res);
     });
     return defered.promise;
   };

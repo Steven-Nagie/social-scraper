@@ -3,21 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+
+  <link rel="stylesheet" href="./dist/styles.css">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css">
+
 </head>
 <body ng-controller="MainCtrl as vm">
 
-<button ng-click="vm.runTests(vm.testInput)">Run Tests</button>  
-<button class="go" id="goButton" ng-click="vm.startProcess(vm.input)"><span>GO!</span></button><br>
-<textarea rows="20" cols="33" ng-model="vm.input" placeholder="Enter Input Here"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+<main>
+  <div class="main-left">
+    <button ng-click="vm.runTests(vm.testInput)">Run Tests</button>
+    <button class="go" id="goButton" ng-click="vm.startProcess(vm.input)"><span>GO!</span></button>
+    <button class="export-button">Export</button>
+    <a href="/authorize_user"><button>Authorize Instagram</button></a>
+  </div>
 
+  <textarea class="input" rows="20" cols="33" ng-model="vm.input" placeholder="Enter Input Here"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
 
-<a href="/authorize_user"><button>Authorize Instagram</button></a>   
+  <!-- <iframe class="output" ng-src="{{vm.csv}}"></iframe> -->
+  <div ui-grid="{data:vm.csv}" class="output"></div>
+
+</main>
+
 
 
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous"></script>
 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script src="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.js"></script>
 <script src="app.js"></script>
 <script src="MainCtrl.js"></script>
 <script src="dataService.js"></script>

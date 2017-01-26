@@ -1,3 +1,11 @@
+Regarding exporting to csv:
+We can append to an already existing file. So, the best way to do this would seem to be to create the file to begin with, and include the column names at the start. Then, simply append every data point to the file as we get it.
+Alternatively, we could use fs.writeFile to write a new file
+Data point = complete info for each user, not each point in each user's info.
+
+Want to use iframe to display csv file, have to hit server to get it 
+
+
 fields are:
 ?fields=field
 
