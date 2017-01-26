@@ -38,29 +38,32 @@ io.on('connect', socket => {
     }
   })
   socket.on('startProcess', function(data){
-    for(let url of data.postsURLs){
-      if (url.includes('facebook.com')){
-        fbApi.facebook(url)
-        .then(profile => {
-          //data will be emited to dataService and logged to the console
-          usersLoggedIn[data.userId].emit('facebookProfile', profile)
-        })
+
+    // async await here untill the initializer functions are ready then contintue exection -> if not await, we can do promise returns .then run the for loop. 
+    // we have to do it out here so we dont get bombarded with that for-loop. The for loop does not wait for the init function to resolve. 
+
+    fbApi.getToken(data)
+    .then(response => {
+      
+      console.log(response)
+
+      for(let url of data.postsURLs){
+        if (url.includes('facebook.com')){
+          fbApi.facebook("https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater")
+          .then(profile => usersLoggedIn[data.userId].emit('facebookProfile', profile));
+        }
+        else if (url.includes('instagram.com')){
+          igApi.getInstagramProfile()
+          .then(profile => usersLoggedIn[data.userId].emit('instagramProfile', profile));
+        }
+        else if (url.includes('twitter.com')){
+          twApi.getTwitterProfile(url)
+          .then(profile => usersLoggedIn[data.userId].emit('twitterProfile', profile));
+        } 
       }
-      else if (url.includes('instagram.com')){
-        igApi.getInstagramProfile(data)
-        .then(profile => {
-          //data will be emited to dataService and logged to the console
-          usersLoggedIn[data.userId].emit('instagramProfile', profile)
-        })
-      }
-      else if (url.includes('twitter.com')){
-        twApi.getTwitterProfile(url)
-        .then(profile => {
-          //data will be emited to dataService and logged to the console
-          usersLoggedIn[data.userId].emit('twitterProfile', profile)
-        })
-      }
-    }
+    })
+
+
   })
 
 
