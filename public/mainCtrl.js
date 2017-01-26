@@ -21,7 +21,8 @@
 
       dataService.subscribeToFacebook(function (profile) {
         $scope.$apply(function () {
-          console.log(profile);
+          vm.fbProfile = profile;
+          console.log(vm.fbProfile);
         });
       });
 
@@ -37,7 +38,7 @@
         });
       });
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-                                    USER INTERACTION 
+                                    USER INTERACTION
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
       function startProcess(postsURLs){
