@@ -27,15 +27,15 @@
       };
 
       socket.on('facebookProfile', function(profile){
-        console.log(profile)
+        console.log('facebook', profile)
       });
 
       socket.on('instagramProfile', function(profile){
-        console.log(profile)
+        console.log('instagram', profile)
       });
 
       socket.on('twitterProfile', function(profile){
-        console.log(profile)
+        console.log('twitter', profile)
       });
 
     };
