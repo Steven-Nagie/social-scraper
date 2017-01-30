@@ -28,8 +28,9 @@
         $scope.$apply(function () {
           // console.log(profile);
 
-          vm.fbProfiles += csvService.parseFacebook(profile);
-          console.log(vm.fbProfiles);
+          vm.fbProfiles += csvService.parseProfiles(profile);
+          // console.log(vm.fbProfiles);
+
           vm.fbcsv = csvService.readCSVFacebook(vm.fbProfiles);
         });
       });
@@ -37,8 +38,8 @@
       dataService.subscribeToInstagram(function (profile) {
         $scope.$apply(function () {
           // console.log(profile);
-          // vm.igProfiles += `${profile.data.type},${profile.data.user.username},${profile.data.user.full_name},${profile.data.comments.count},${profile.data.likes.count}\n`
-          // vm.igcsv = readCSVInstagram(vm.igProfiles);
+          vm.igProfiles += `${profile.data.type},${profile.data.user.username},${profile.data.user.full_name},${profile.data.comments.count},${profile.data.likes.count}\n`
+          vm.igcsv = csvService.readCSVInstagram(vm.igProfiles);
           /*
             - if video, include views
             - comment count
@@ -50,9 +51,9 @@
 
       dataService.subscribeToTwitter(function (profile) {
         $scope.$apply(function () {
-          // console.log(profile);
-          // vm.twProfiles += profile;
-          // vm.twcsv = readCSVTwitter(vm.twProfiles);
+          console.log(profile);
+          vm.twProfiles += csvService.parseProfiles(profile);
+          vm.twcsv = csvService.readCSVTwitter(vm.twProfiles);
         });
       });
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*

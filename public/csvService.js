@@ -8,7 +8,7 @@
 
     function csvService($http) {
 
-      this.parseFacebook = function(profile) {
+      this.parseProfiles = function(profile) {
         var csvContent = "";
         var totalObjLength = 0;
         for (var key in profile) {

@@ -50,13 +50,7 @@ exports.facebook = (data) => {
     })
     .then(postComments => {
       profile.postComments = postComments;
-      var totalObjLength = 0;
-      for (key in profile) {
-        totalObjLength++;
-
-        csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
-      };
-      fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
+      // fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
 
       outerDefer.resolve(profile);
     })
@@ -67,13 +61,7 @@ exports.facebook = (data) => {
     .then(response => {
       profile.name = response.name;
       profile.fanCount = response.fan_count;
-      var totalObjLength = 0;
-      for (key in profile) {
-        totalObjLength++;
-
-        csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
-      };
-      fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
+      // fs.appendFileSync('facebook.csv', csvContent, encoding="utf8");
 
       outerDefer.resolve(profile);
     })
