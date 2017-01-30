@@ -4,7 +4,7 @@ const q = require('q'),
 
 let twitter = new Twit(config.twitter)
 
-// Have to fill in the object below with the proper info, either from the api or from scraping.
+
 exports.getTwitterProfile = url => {
   let defered = q.defer()
   let id = url.substring(url.lastIndexOf('/') + 1);
