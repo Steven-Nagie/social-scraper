@@ -5,22 +5,26 @@
   <title>Document</title>
 
   <link rel="stylesheet" href="./dist/styles.css">
-  <link rel="stylesheet" href="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.min.css">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/angular-ui/bower-ui-grid/master/ui-grid.css">
 
 </head>
 <body ng-controller="MainCtrl as vm">
-
+<header class="header">
+  <p>Social Post Crawler</p>
+</header>
 <main>
   <div class="main-left">
     <button ng-click="vm.runTests(vm.testInput)">Run Tests</button>
     <button class="go" id="goButton" ng-click="vm.startProcess(vm.input)"><span>GO!</span></button>
+    <button ng-click="">Clear</button>
+    <button>Preferences</button>
+    <a href="/authorize_user"><button>Authorization</button></a>
     <button class="export-button">Export</button>
-    <a href="/authorize_user"><button>Authorize Instagram</button></a>
   </div>
 
   <textarea class="input" rows="20" cols="33" ng-model="vm.input" placeholder="Enter Input Here"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
 
-  <!-- <iframe class="output" ng-src="{{vm.csv}}"></iframe> -->
+  
   <div class="output">
     <h2 class="table-header">Facebook</h2>
     <div class="table" ui-grid="{data:vm.fbcsv}"></div>
