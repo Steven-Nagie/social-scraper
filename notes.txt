@@ -3,7 +3,8 @@ We can append to an already existing file. So, the best way to do this would see
 Alternatively, we could use fs.writeFile to write a new file
 Data point = complete info for each user, not each point in each user's info.
 
-Want to use iframe to display csv file, have to hit server to get it
+Want to use iframe to display csv file, have to hit server to get it 
+(Im curious about this ^ do you mean that you would want to use an Iframe rather than the grid??) - Jon 
 
 *****************************************
 DEFINITELY GOING TO RUN INTO A PROBLEM WITH FB PARSING LINKS WHERE USER NAMES HAVE PERIODS IN THEM
