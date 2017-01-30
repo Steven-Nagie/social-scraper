@@ -67,7 +67,8 @@ main {
     font-size: 12px;
     border: none;
     height: calc((91vh - 15px) / 3);
-    width: calc(100vw - 350px); }
+    width: calc(100vw - 350px);
+    min-width: 500px; }
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

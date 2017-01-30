@@ -77,5 +77,6 @@ main {
     border: none;
     height: calc((91vh - 15px) / 3);
     width: calc(100vw - 350px);
+    min-width: 500px;
   }
 }
