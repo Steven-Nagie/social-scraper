@@ -49,7 +49,7 @@ io.on('connect', socket => {
 
       for(let url of data.postsURLs){
         if (url.includes('facebook.com')){
-          fbApi.facebook("https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater")
+          fbApi.facebook(url)
           .then(profile => usersLoggedIn[data.userId].emit('facebookProfile', profile));
         }
         else if (url.includes('instagram.com')){
