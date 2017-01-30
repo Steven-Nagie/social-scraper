@@ -83,6 +83,13 @@
 
       vm.igcsv = csvService.readCSVInstagram(vm.igProfiles);
 
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+                                EXPORT
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+      vm.exportCsv = function() {
+        csvService.exportCsv(vm.fbProfiles, vm.twProfiles, vm.igProfiles);
+      }
 
 
     }; //End of MainCtrl

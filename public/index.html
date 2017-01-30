@@ -19,7 +19,7 @@
     <button ng-click="">Clear</button>
     <button>Preferences</button>
     <a href="/authorize_user"><button>Authorization</button></a>
-    <button class="export-button">Export</button>
+    <button class="export-button" ng-click="vm.exportCsv()">Export</button>
   </div>
 
   <textarea class="input" rows="20" cols="33" ng-model="vm.input" placeholder="Enter Input Here"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>

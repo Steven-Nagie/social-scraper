@@ -78,5 +78,17 @@
         })
         return csv;
       }
+
+      this.exportCsv = function(facebook, twitter, instagram) {
+        var data = {
+          facebook: facebook,
+          twitter: twitter,
+          instagram: instagram
+        }
+        $http.post('/exportCsv', data).then(function(response){
+          console.log(response.data)
+        })
+      }
+
     } //End of csvService
 })(); //End of IIFE
