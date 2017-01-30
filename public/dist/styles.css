@@ -1,34 +1,56 @@
 /**************MAIN STYLES**********/
+.header {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 15px;
+  width: 100vw;
+  background: #222;
+  color: #999;
+  font-size: 10px;
+  text-align: center; }
+
 main {
-  display: flex; }
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  height: calc(100vh - 15px); }
 
 .main-left {
-  height: 100vh;
-  width: 10vw;
+  height: calc(100vh - 15px);
+  min-width: 155px;
+  max-width: 155px;
   background-color: #4d4d4d;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 10vh; }
+  padding-top: 2px; }
   .main-left button {
-    width: 7.5vw;
+    min-width: 150px;
+    max-width: 150px;
+    height: 30px;
     background-color: #636363;
     border: none;
     margin: 2px;
     color: white; }
+  .main-left button:hover {
+    background-color: #555; }
   .main-left .export-button {
-    height: 3vh;
+    min-width: 150px;
+    max-width: 150px;
+    height: 30px;
+    align-self: flex-end;
     position: absolute;
-    bottom: 10vh;
-    left: 1.25vw;
+    bottom: 2px;
+    left: 0;
     background-color: #f82f2f; }
+  .main-left .export-button:hover {
+    background-color: #f81525; }
 
 .input {
-  width: 15vw; }
+  min-width: 200px;
+  max-width: 200px; }
 
 .output {
-  height: 100vh;
+  height: calc(100vh - 15px);
   width: 75vw; }
   .output .table-header {
     line-height: calc(3vh - 2px);
@@ -38,8 +60,8 @@ main {
     border-bottom: 1px solid black; }
   .output .table {
     border: none;
-    height: calc(91vh/3);
-    width: 75vw; }
+    height: calc((91vh - 15px) / 3);
+    width: calc(100ch - 350px); }
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
