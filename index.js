@@ -39,12 +39,12 @@ io.on('connect', socket => {
   })
   socket.on('startProcess', function(data){
 
-    // async await here untill the initializer functions are ready then contintue exection -> if not await, we can do promise returns .then run the for loop. 
-    // we have to do it out here so we dont get bombarded with that for-loop. The for loop does not wait for the init function to resolve. 
+    // async await here untill the initializer functions are ready then contintue exection -> if not await, we can do promise returns .then run the for loop.
+    // we have to do it out here so we dont get bombarded with that for-loop. The for loop does not wait for the init function to resolve.
 
     fbApi.getToken(data)
     .then(response => {
-      
+
       console.log(response)
 
       for(let url of data.postsURLs){
@@ -59,7 +59,7 @@ io.on('connect', socket => {
         else if (url.includes('twitter.com')){
           twApi.getTwitterProfile(url)
           .then(profile => usersLoggedIn[data.userId].emit('twitterProfile', profile));
-        } 
+        }
       }
     })
 
