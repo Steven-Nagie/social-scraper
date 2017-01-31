@@ -23,6 +23,8 @@ app.use(function(req, res, next) {
 // This is authoization to use the Instagram API
 app.get('/authorize_user', igApi.authorize_user);
 app.get('/handleauth', igApi.handleauth);
+// For creating csv file
+// No proper error handling here. Ideas?
 app.post('/exportCsv', function(req, res, next) {
   csv.createCSV(req.body);
   res.sendStatus(200);
@@ -58,7 +60,7 @@ io.on('connect', socket => {
           .then(profile => usersLoggedIn[data.userId].emit('facebookProfile', profile));
         }
         else if (url.includes('instagram.com')){
-          igApi.getInstagramProfile()
+          igApi.getInstagramProfile(url)
           .then(profile => usersLoggedIn[data.userId].emit('instagramProfile', profile));
         }
         else if (url.includes('twitter.com')){

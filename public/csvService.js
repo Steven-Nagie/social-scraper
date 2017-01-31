@@ -27,12 +27,12 @@
         });
         let csv = cols.map((row) => {
           return {
-            "name": row[1],
-            "userName": row[0],
-            "fanCount": row[2],
-            "postLikes": row[3],
-            "postShares": row[4],
-            "postComments": row[5]
+            "name": row[2],
+            "userName": row[1],
+            "fanCount": row[3],
+            "postLikes": row[4],
+            "postShares": row[5],
+            "postComments": row[6]
           }
         })
         return csv;
@@ -46,13 +46,13 @@
         });
         let csv = cols.map((row) => {
           return {
-            "type": row[0],
-            "userName": row[1],
-            "name": row[2],
-            "followersCount": row[3],
-            "statusesCount": row[4],
-            "favoriteCount": row[5],
-            "retweets": row[6]
+            "type": row[1],
+            "userName": row[2],
+            "name": row[3],
+            "followersCount": row[4],
+            "statusesCount": row[5],
+            "favoriteCount": row[6],
+            "retweets": row[7]
           }
         })
         return csv;
@@ -68,12 +68,12 @@
         });
         let csv = cols.map((row) => {
           return {
-            "type": row[0],
-            "userName": row[1],
-            "name": row[2],
-            "commentsCount": row[3],
-            "likesCount": row[4],
-            "videoViews": row[5]
+            "type": row[1],
+            "userName": row[2],
+            "name": row[3],
+            "commentsCount": row[4],
+            "likesCount": row[5],
+            "videoViews": row[6]
           }
         })
         return csv;

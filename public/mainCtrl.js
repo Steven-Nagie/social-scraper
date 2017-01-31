@@ -38,7 +38,7 @@
       dataService.subscribeToInstagram(function (profile) {
         $scope.$apply(function () {
           // console.log(profile);
-          vm.igProfiles += `${profile.data.type},${profile.data.user.username},${profile.data.user.full_name},${profile.data.comments.count},${profile.data.likes.count}\n`
+          vm.igProfiles += `${profile.ogLink},${profile.data.type},${profile.data.user.username},${profile.data.user.full_name},${profile.data.comments.count},${profile.data.likes.count}\n`
           vm.igcsv = csvService.readCSVInstagram(vm.igProfiles);
           /*
             - if video, include views
