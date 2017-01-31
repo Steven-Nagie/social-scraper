@@ -88,7 +88,11 @@
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
       vm.exportCsv = function() {
-        csvService.exportCsv(vm.fbProfiles, vm.twProfiles, vm.igProfiles);
+        csvService.exportCsv(vm.fbProfiles, vm.twProfiles, vm.igProfiles).then(function(response) {
+          if (response.status === 200) {
+            window.location =  './assets/everything.csv';
+          }
+        });
       }
 
 

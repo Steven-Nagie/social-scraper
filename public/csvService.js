@@ -80,14 +80,21 @@
       }
 
       this.exportCsv = function(facebook, twitter, instagram) {
-        var data = {
-          facebook: facebook,
-          twitter: twitter,
-          instagram: instagram
-        }
-        $http.post('/exportCsv', data).then(function(response){
-          console.log(response.data)
+        return $http({
+          method: 'POST',
+          url: '/exportCsv',
+          data: {
+            facebook: facebook,
+            twitter: twitter,
+            instagram: instagram
+          }
         })
+        // var data = {
+        //   facebook: facebook,
+        //   twitter: twitter,
+        //   instagram: instagram
+        // }
+        // $http.post('/exportCsv', data)
       }
 
     } //End of csvService

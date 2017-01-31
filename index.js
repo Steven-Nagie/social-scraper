@@ -25,6 +25,7 @@ app.get('/authorize_user', igApi.authorize_user);
 app.get('/handleauth', igApi.handleauth);
 app.post('/exportCsv', function(req, res, next) {
   csv.createCSV(req.body);
+  res.sendStatus(200);
 });
 
 
