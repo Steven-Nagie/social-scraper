@@ -4,9 +4,9 @@
     .module('ss')
     .controller('MainCtrl', MainCtrl)
 
-    MainCtrl.$inject = ['$scope', 'dataService']
+    MainCtrl.$inject = ['$scope', 'dataService', 'csvService']
 
-    function MainCtrl($scope, dataService){
+    function MainCtrl($scope, dataService, csvService){
       let vm = this;
       vm.startProcess = startProcess;
       vm.runTests = runTests;
@@ -27,16 +27,19 @@
       dataService.subscribeToFacebook(function (profile) {
         $scope.$apply(function () {
           // console.log(profile);
-          vm.fbProfiles += profile;
-          vm.fbcsv = readCSVFacebook(vm.fbProfiles);
+
+          vm.fbProfiles += csvService.parseProfiles(profile);
+          // console.log(vm.fbProfiles);
+
+          vm.fbcsv = csvService.readCSVFacebook(vm.fbProfiles);
         });
       });
 
       dataService.subscribeToInstagram(function (profile) {
         $scope.$apply(function () {
-          console.log(profile);
+          // console.log(profile);
           vm.igProfiles += `${profile.data.type},${profile.data.user.username},${profile.data.user.full_name},${profile.data.comments.count},${profile.data.likes.count}\n`
-          vm.igcsv = readCSVInstagram(vm.igProfiles);
+          vm.igcsv = csvService.readCSVInstagram(vm.igProfiles);
           /*
             - if video, include views
             - comment count
@@ -48,9 +51,9 @@
 
       dataService.subscribeToTwitter(function (profile) {
         $scope.$apply(function () {
-          // console.log(profile)
-          vm.twProfiles += profile;
-          vm.twcsv = readCSVTwitter(vm.twProfiles);
+          console.log(profile);
+          vm.twProfiles += csvService.parseProfiles(profile);
+          vm.twcsv = csvService.readCSVTwitter(vm.twProfiles);
         });
       });
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -74,69 +77,23 @@
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
+      vm.fbcsv = csvService.readCSVFacebook(vm.fbProfiles);
 
-      function readCSVFacebook(file) {
-        let rows=file.split('\n');
-        let cols = [];
-        rows.forEach((row) => {
-          cols.push(row.split(','));
-        });
-        let csv = cols.map((row) => {
-          return {
-            "name": row[1],
-            "userName": row[0],
-            "fanCount": row[2],
-            "postLikes": row[3],
-            "postShares": row[4],
-            "postComments": row[5]
+      vm.twcsv = csvService.readCSVTwitter(vm.twProfiles);
+
+      vm.igcsv = csvService.readCSVInstagram(vm.igProfiles);
+
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+                                EXPORT
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+      vm.exportCsv = function() {
+        csvService.exportCsv(vm.fbProfiles, vm.twProfiles, vm.igProfiles).then(function(response) {
+          if (response.status === 200) {
+            window.location =  './assets/everything.csv';
           }
-        })
-        return csv;
-      }
-      vm.fbcsv = readCSVFacebook(vm.fbProfiles);
-
-      function readCSVTwitter(file) {
-        let rows=file.split('\n');
-        let cols = [];
-        rows.forEach((row) => {
-          cols.push(row.split(','));
         });
-        let csv = cols.map((row) => {
-          return {
-            "type": row[0],
-            "userName": row[1],
-            "name": row[2],
-            "followersCount": row[3],
-            "statusesCount": row[4],
-            "favoriteCount": row[5],
-            "retweets": row[6]
-          }
-        })
-        return csv;
       }
-      vm.twcsv = readCSVTwitter(vm.twProfiles);
-
-      // `${profile.data.type},${profile.data.user.username},${profile.data.user.full_name},${profile.data.comments.count},${profile.data.likes.count}\n`
-
-      function readCSVInstagram(file) {
-        let rows=file.split('\n');
-        let cols = [];
-        rows.forEach((row) => {
-          cols.push(row.split(','));
-        });
-        let csv = cols.map((row) => {
-          return {
-            "type": row[0],
-            "userName": row[1],
-            "name": row[2],
-            "commentsCount": row[3],
-            "likesCount": row[4],
-            "videoViews": row[5]
-          }
-        })
-        return csv;
-      }
-      vm.igcsv = readCSVInstagram(vm.igProfiles);
 
 
     }; //End of MainCtrl

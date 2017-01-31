@@ -7,7 +7,8 @@ var express = require('express'),
     io = require('socket.io')(http),
     twApi = require('./processes/twApi.js'),
     fbApi = require('./processes/fbApi.js'),
-    igApi = require('./processes/igApi.js');
+    igApi = require('./processes/igApi.js'),
+    csv = require('./processes/csvExport.js');
 
 
 app.use(bodyParser.json());
@@ -22,6 +23,10 @@ app.use(function(req, res, next) {
 // This is authoization to use the Instagram API
 app.get('/authorize_user', igApi.authorize_user);
 app.get('/handleauth', igApi.handleauth);
+app.post('/exportCsv', function(req, res, next) {
+  csv.createCSV(req.body);
+  res.sendStatus(200);
+});
 
 
 let usersLoggedIn = {};
