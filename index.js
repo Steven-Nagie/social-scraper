@@ -26,8 +26,12 @@ app.get('/handleauth', igApi.handleauth);
 // For creating csv file
 // No proper error handling here. Ideas?
 app.post('/exportCsv', function(req, res, next) {
-  csv.createCSV(req.body);
-  res.sendStatus(200);
+  try {
+    csv.createCSV(req.body);
+    res.sendStatus(200);
+  } catch (err) {
+    throw err;
+  }
 });
 
 
