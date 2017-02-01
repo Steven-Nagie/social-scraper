@@ -2,7 +2,7 @@ const q = require('q'),
       axios = require('axios'),
       instagram = require('instagram-node').instagram(),
       config = require('./../config');
-      
+
 instagram.use({ access_token: config.access_token });
 instagram.use(config.instagram);
 var redirect_uri = 'http://localhost:3000/handleauth';
@@ -26,13 +26,12 @@ exports.handleauth = function(req, res) {
 exports.getInstagramProfile = function(data){
   let defered = q.defer();
   axios.get(`https://api.instagram.com/v1/media/shortcode/BMIghBeBqMK?access_token=4512030680.ccce173.c3731c8c139d4204a56b464739b5457c`).then(response => {
-    defered.resolve(response.data)
+    var returnData = {data: response.data.data, ogLink: data};
+    defered.resolve(returnData);
   }).catch(error => console.log(error));
     // instagram.media('BMIghBeBqMK', function(err, media, remaining, limit) {
-    //   if(err) return console.log(err); 
+    //   if(err) return console.log(err);
     //   defered.resolve(media)
     // });
   return defered.promise
 };
-
-

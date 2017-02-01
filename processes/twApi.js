@@ -12,6 +12,7 @@ exports.getTwitterProfile = url => {
     twitter.get('statuses/show', {id: id},  (err, data, response) => {
       if (err) return console.log(err)
       return defered.resolve({
+        ogLink: url,
         type: 'post',
         screen_name: data.user.screen_name,
         name: data.user.name,
@@ -26,6 +27,7 @@ exports.getTwitterProfile = url => {
     twitter.get('users/show', {iuser_id: '', screen_name: id}, (err, data, response) => {
       if (err) return console.log(err)
       return defered.resolve({
+        ogLink: url,
         type: 'profile',
         screen_name: data.screen_name,
         name: data.name,
