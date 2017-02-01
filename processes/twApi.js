@@ -4,7 +4,7 @@ const q = require('q'),
 
 let twitter = new Twit(config.twitter)
 
-export const buildProfileFromId = function (data) {
+const buildProfileFromId = function (data) {
   return {
     type: 'post',
     screen_name: data.user.screen_name,
