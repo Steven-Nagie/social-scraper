@@ -8,12 +8,42 @@ var request = require('request'),
     tw = require('../processes/twApi.js');
 
 // chai.use(chaiAsPromised);
+ //before() this is where I can maybe do the auth call 
 
-describe('A basic test', function(){
-  it('should pass when everything is ok', function(){
-    expect(true).to.betrue;
+
+describe('Twitter Testing', function(){
+  it('Twitter API Tests should all pass', function(){
+    var profilePromise = tw.getTwitterProfile("https://twitter.com/highsteph/status/804000988604399616");
+    
+    profilePromise.should.be.an('object');
+    should.be.true(profilePromise.hasOwnProperty('then'));
+    
+   
+
+  it('Twitter API Tests should all pass', function(){
+    var profilePromise = tw.getTwitterProfile("https://twitter.com/highsteph/status/804000988604399616").then(response => {
+      describe('Response Test', function(){
+        it('should be an object', function(){
+          response.should.be.an('object');
+        });
+        it('should have proper data', function(){
+          should.exist(response.followers_count);
+          should.exist(response.statuses_count);
+          should.exist(response.favorite_count);
+          should.exist(response.retweets);
+        });
+      })//end of Response Test
+
+    })
   })
 })
+
+
+
+
+
+
+
 
 
 // //Endpoint testing
