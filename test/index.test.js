@@ -25,7 +25,7 @@ describe('TWITTER TESTING', function(){
         expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name')
       })
     })
-  })
+  }) // end of Testing Twitter Posts
 
   describe('Testing Twitter Profiles', function(){
     it('Should take full url', function(){
@@ -41,15 +41,27 @@ describe('TWITTER TESTING', function(){
       })
     })
 
-  });
+  })// end of Testing Twitter Profiles
 
-  describe('Testing Twitter invalid inputs', function(){
-    it('Should return error status when the API status is not specified', function(){
-      return tw.getTwitterProfile('https://twitter.com/jimkchin/806134951926067200').then(response => {
-        expect(response.status).to.exist
-        // expect(response.status).to.be('invalid input, please specify url')
-      })
-    })
+  describe('Data Validation', function(){
+
+    it('Should validate valid post URL', () => expect(tw.validateData('https://twitter.com/highsteph/status/804000988604399616')).to.be.true)
+
+    it('Should validate if missing https', () => expect(tw.validateData('twitter.com/jimkchin/status/806134951926067200')).to.be.true)
+
+    it('Should validate valid user URL', () => expect(tw.validateData('https://twitter.com/JamieAsnow')).to.be.true)
+
+    it('Should not validate if missing base URL', () => expect(tw.validateData('https://jimkchin/806134951926067200')).to.be.false)
+
+    it('Should not validate if missing base URL', () => expect(tw.validateData('https://jimkchin/806134951926067200')).to.be.false)
+
+    it('Should return error status if there are typos in the URL', () => expect(tw.validateData('witter.com/jimkchin/status/806134951926067200')).to.be.false)
+    
+    it('Should not validate if missing base URL', () => expect(tw.validateData('https://jimkchin/806134951926067200')).to.be.false)
+
+    it('Should not validate if missing base URL', () => expect(tw.validateData('.com/JamieAsnow')).to.be.false)
+
+    it('Should not validate if missing base URL', () => expect(tw.validateData('/jimkchin/status/806134951926067200')).to.be.false)
 
     it('Should return error status when the post id does not exist', function(){
       return tw.getTwitterProfile('https://twitter.com/jimkchin/status/82606').then(response => {
@@ -57,31 +69,7 @@ describe('TWITTER TESTING', function(){
         // expect(response.status).to.be('invalid input, please specify url')
       })
     })
-    it('Should return error status if there are typos in the URL', function(){
-      return tw.getTwitterProfile('witter.com/jimkchin/status/806134951926067200').then(response => {
-        expect(response.status).to.exist
-        // expect(response.status).to.be('invalid input, please specify url')
-      })
-    })
-    it('Should return error status if the base URL is incomplete', function(){
-      return tw.getTwitterProfile('.com/JamieAsnow').then(response => {
-        expect(response.status).to.exist
-        // expect(response.status).to.be('invalid input, please specify url')
-      })
-    })
-    it('Should return error status if the base url is incomplete', function(){
-      return tw.getTwitterProfile('/jimkchin/status/806134951926067200').then(response => {
-        expect(response.status).to.exist
-        // expect(response.status).to.be('invalid input, please specify url')    
-      })
-    })
-    it('Should return error status if the base url is incomplete', function(){
-      return tw.getTwitterProfile('/JamieAsnow').then(response => {
-        expect(response.status).to.exist
-        // expect(response.status).to.be('invalid input, please specify url')
-      })
-    })
 
-  })
+  }) // end of Testing Twitter invalid inputs
 
-})
+}) // end of TWITTER TESTING

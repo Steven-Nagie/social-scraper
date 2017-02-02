@@ -4,8 +4,9 @@ const q = require('q'),
 
 let twitter = new Twit(config.twitter)
 
-const buildProfileFromId = function (data) {
+const buildProfileFromId = function (data, statusCode) {
   return {
+    status: statusCode,
     type: 'post',
     screen_name: data.user.screen_name,
     name: data.user.name,
@@ -16,34 +17,55 @@ const buildProfileFromId = function (data) {
   }
 }
 
+const buildProfileFromScreenName= function (data, statusCode) {
+  return {
+    status: statusCode,
+    type: 'profile',
+    screen_name: data.screen_name,
+    name: data.name,
+    followers_count: data.followers_count,
+    statuses_count: data.statuses_count
+  }
+}
 
+exports.validateData = function(url){
+  if(!url.includes('twitter')) return false; 
+  else return true;
+}
 
-exports.getTwitterProfile = url => {
+exports.parseData = function(url){
+  let endpoint = url.substring(url.lastIndexOf('/') + 1)
+  if (Number(endpoint)){
+    return {
+      type: 'post',
+      endpoint: endpoint
+    }
+  }
+  else {
+    return {
+      type: 'profile',
+      endpoint: endpoint
+    }
+  }
+}
+
+exports.getTwitterProfile = function(url){
   let defered = q.defer()
-
-  
-
-  let id = url.substring(url.lastIndexOf('/') + 1);
-  if (Number(id)) {
+  let endpoint = url.substring(url.lastIndexOf('/') + 1)
+  if (Number(endpoint)) { //Get Post
     twitter.get('statuses/show', {
-      id: id
+      id: endpoint
     }, (err, data, response) => {
-      if (err) return resolve(err)
-      return defered.resolve(buildProfileFromId(data));
+      console.log(response.statusCode)
+      return defered.resolve(buildProfileFromId(data, response.statusCode));
     })
-  } else {
+  } else { //Get User
     twitter.get('users/show', {
       iuser_id: '',
-      screen_name: id
+      screen_name: endpoint
     }, (err, data, response) => {
-      if (err) return resolve(err)
-      return defered.resolve({
-        type: 'profile',
-        screen_name: data.screen_name,
-        name: data.name,
-        followers_count: data.followers_count,
-        statuses_count: data.statuses_count
-      });
+      console.log(response.statusCode)
+      return defered.resolve(buildProfileFromScreenName(data, response.statusCode));
     })
   }
 
