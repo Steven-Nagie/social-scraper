@@ -45,7 +45,7 @@ exports.validateData = function(url){
 }
 
 exports.parseData = function(url){
-  let endpoint = url.substring(url.lastIndexOf('/') + 1)
+  let endpoint = url.substring(url.lastIndexOf('/') + 1).replace(/\s/g,'').replace(/[!@#$%^&*()":;',?<>_=+|-]/ig, '')
   if (Number(endpoint)){
     return {
       type: 'post',

@@ -8,9 +8,9 @@ var request = require('request'),
     tw = require('../processes/twApi.js');
 
 // chai.use(chaiAsPromised);
- //before() this is where I can maybe do the auth call 
-// we still need validation for when postId does not exist - have to hit twitter for that and handle the 404 response 
-// we need to handle all responses 400, 401, 404, etc... 
+//before() this is where I can maybe do the auth call for facebook. 
+
+//we still need to handle unauthorized 401 errors --> we have to decide what to do with that. 
 
 describe('TWITTER TESTING', function(){
 
@@ -139,23 +139,10 @@ describe('TWITTER TESTING', function(){
     it('Should validate if missing https', function(){
       expect(tw.validateData('twitter.com/jimkchin/status/806134951926067200')).to.be.true
     })
-    
+
     it('Should validate valid user URL', function(){
       expect(tw.validateData('https://twitter.com/JamieAsnow')).to.be.true
     })
-
-
-   
-
-
-    
-    
-  
-    
-
-
-    
-
 
 
   }) // end of Data Validation 
@@ -174,45 +161,138 @@ describe('TWITTER TESTING', function(){
 
 
 
-  describe('Data Parsing', function(){
+  describe('Data Parsing', function(){  // My parsing logic assumes that the desired data is locaded after the last / and is the final part of the string. It also assumes that ID's and usernames will not contain an punctuation.  
+
     it('should return post for post URLs', function() {
       let response = tw.parseData('https://twitter.com/highsteph/status/804000988604399616')
       expect(response.type).to.eql('post');
       expect(response.endpoint).to.eql('804000988604399616');
     })
+
     it('should return post for post URLs', function() {
       let response = tw.parseData('twitter.com/jimkchin/status/806134951926067200')
       expect(response.type).to.eql('post');
       expect(response.endpoint).to.eql('806134951926067200');
     })
+
     it('should return profile for profile URLs', function() {
       let response = tw.parseData('https://twitter.com/JamieAsnow');
       expect(response.type).to.eql('profile');
       expect(response.endpoint).to.eql('JamieAsnow'); 
     })
+
+    it('parsed data should not have white space', function() {
+      let response = tw.parseData('https://twitter.com/highsteph/status/ 804000988604399616');
+      expect(response.type).to.eql('post');
+      expect(response.endpoint).to.eql('804000988604399616');
+    })
+
+    it('parsed data should not have white space', function() {
+      let response = tw.parseData('https://twitter.com/highsteph/status / 804000988604399616 ');
+      expect(response.type).to.eql('post');
+      expect(response.endpoint).to.eql('804000988604399616'); 
+    })
+
+    it('parsed data should not have white space', function() {
+      let response = tw.parseData('https://twitter.com/highsteph/status/8040 00988604399616');
+      expect(response.type).to.eql('post');
+      expect(response.endpoint).to.eql('804000988604399616'); 
+    })
+
+    it('parsed data should not have white space', function() {
+      let response = tw.parseData('https://twitter.com/highsteph/status/8040009886   04399616');
+      expect(response.type).to.eql('post');
+      expect(response.endpoint).to.eql('804000988604399616');
+    })
+
+    it('parsed data should not have white space', function() {
+      let response = tw.parseData('https://twitter.com/highsteph/status / 8 0 4 00 0 98 8 60 4 3 996 1 6 ');
+      expect(response.type).to.eql('post');
+      expect(response.endpoint).to.eql('804000988604399616'); 
+    })
+
+    it('parsed data should not have white space', function() {
+      let response = tw.parseData('https://twitter.com / JamieAsnow  ');
+      expect(response.type).to.eql('profile');
+      expect(response.endpoint).to.eql('JamieAsnow'); 
+    })
+
+    it('parsed data should not have white space', function() {
+      let response = tw.parseData('https://twitter.com/Jamie Asnow');
+      expect(response.type).to.eql('profile');
+      expect(response.endpoint).to.eql('JamieAsnow'); 
+    })
+
+    it('parsed data should not have white space', function() {
+      let response = tw.parseData('https://twitter.com / J a m i e A s n o w');
+      expect(response.type).to.eql('profile');
+      expect(response.endpoint).to.eql('JamieAsnow'); 
+    })
+
+    it('parsed data should not contain invalid charicters', function() {
+      let response = tw.parseData('https://twitter.com/highsteph/status/80!40009?88604399616');
+      expect(response.type).to.eql('post');
+      expect(response.endpoint).to.eql('804000988604399616'); 
+    })
+
+    it('parsed data should not contain invalid charicters', function() {
+      let response = tw.parseData('https://twitter.com/highsteph/status/8040009^88604:39961" "6');
+      expect(response.type).to.eql('post');
+      expect(response.endpoint).to.eql('804000988604399616'); 
+    })
+
+    it('parsed data should not contain invalid charicters', function() {
+      let response = tw.parseData("'https://twitter.com/highsteph/status/8040009?88604399616'");
+      expect(response.type).to.eql('post');
+      expect(response.endpoint).to.eql('804000988604399616'); 
+    })
+
+    it('parsed data should not contain invalid charicters', function() {
+      let response = tw.parseData('https://twitter.com/Jamie%Asnow  "');
+      expect(response.type).to.eql('profile');
+      expect(response.endpoint).to.eql('JamieAsnow'); 
+    })
+
+    it('parsed data should not contain invalid charicters', function() {
+      let response = tw.parseData('https://twitter.com/Jamie$Asnow');
+      expect(response.type).to.eql('profile');
+      expect(response.endpoint).to.eql('JamieAsnow'); 
+    })
+
+    it('parsed data should not contain invalid charicters', function() {
+      let response = tw.parseData(`"'https://twitter.com/Jamie#Asnow"'`);
+      expect(response.type).to.eql('profile');
+      expect(response.endpoint).to.eql('JamieAsnow'); 
+    })
+
+    it('parsed data should not contain invalid charicters', function() {
+      let response = tw.parseData(`!@#$%^&*()_+-=;:'"<>?|`);
+      expect(response.endpoint).to.eql(''); 
+    })
+    
+    
   })// end of Data Parsing
 
+  describe('Twitter Posts', function(){
+    it('Should take full url', function(){
+      return tw.getPost('804000988604399616').then(response => {
+        expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name')
+      })
+    })
 
-  // describe('Twitter Posts', function(){
-  //   it('Should take full url', function(){
-  //     return tw.getPost('804000988604399616').then(response => {
-  //       expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name')
-  //     })
-  //   })
+    it('should take url if missing https', function(){
+      return tw.getPost('806134951926067200').then(response => {
+        expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name')
+      })
+    })
+  }) // end of Twitter Posts
 
-  //   it('should take url if missing https', function(){
-  //     return tw.getPost('806134951926067200').then(response => {
-  //       expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name')
-  //     })
-  //   })
-  // }) // end of Twitter Posts
+  describe('Twitter Profiles', function(){
+    it('Should take full url', function(){
+      return tw.getProfile('JamieAsnow').then(response => {
+        expect(response).to.have.all.keys('followers_count', 'statuses_count','status', 'type', 'screen_name', 'name')
+      })
+    })
 
-  // describe('Twitter Profiles', function(){
-  //   it('Should take full url', function(){
-  //     return tw.getProfile('JamieAsnow').then(response => {
-  //       expect(response).to.have.all.keys('followers_count', 'statuses_count','status', 'type', 'screen_name', 'name')
-  //     })
-  //   })
-
-  // })// end of twitter Profiles
+  })// end of twitter Profiles
 }) // end of TWITTER TESTING
