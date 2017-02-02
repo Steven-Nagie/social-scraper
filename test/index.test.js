@@ -8,103 +8,96 @@ var request = require('request'),
     tw = require('../processes/twApi.js');
 
 // chai.use(chaiAsPromised);
+ //before() this is where I can maybe do the auth call 
+// we still need validation for when postId does not exist - have to hit twitter for that and handle the 404 response 
+// we need to handle all responses 400, 401, 404, etc... 
 
-describe('A basic test', function(){
-  it('should pass when everything is ok', function(){
-    expect(true).to.betrue;
-  })
-})
+describe('TWITTER TESTING', function(){
 
+  
 
-// //Endpoint testing
-// describe('return luke', function(){
-//   it('returns luke', function(done){
-//     request.get({ url: `http://swapi.co/api/people/1/`},
-//       function(error, response, body){
-//         if(error) console.log(error)
-//         let bodyObj = JSON.parse(body)
-//         expect(bodyObj.name).to.equal('Luke Skywalker');
-//         expect(bodyObj.hair_color).to.equal('blond');
-//         expect(response.statusCode).to.equal(200);
-//         done();
-//       })
-//   })
-// })
+  describe('Data Validation', function(){
 
-// // To test with different links we can use environment variables. In command line, link=https://www.facebook etc mocha test/test.js
-// describe('Facebook', function() {
+    it('Should validate valid post URL', function(){
+      expect(tw.validateData('https://twitter.com/highsteph/status/804000988604399616')).to.be.true
+    })
 
-//   var link = process.env.fblink || "https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater"
-//   it('should return an object', function() {
+    it('Should validate if missing https', function(){
+      expect(tw.validateData('twitter.com/jimkchin/status/806134951926067200')).to.be.true
+    })
 
-//     var facebook = fb.facebook(link);
+    it('Should validate valid user URL', function(){
+      expect(tw.validateData('https://twitter.com/JamieAsnow')).to.be.true
+    })
 
-//     return facebook.then(function(data) {
-//       console.log(data);
-//       data.should.be.an('object');
-//     })
-//   })
+    it('Should not validate if missing base URL', function(){
+      expect(tw.validateData('https://jimkchin/806134951926067200')).to.be.false
+    })
 
-//   it('should contain defined properties username, fanCount, postLikes, postShares, and postComments', function() {
-//     var facebook = fb.facebook(link);
+    it('Should not validate if missing base URL', function(){
+      expect(tw.validateData('https://jimkchin/806134951926067200')).to.be.false
+    })
 
-//     return facebook.then(function(data) {
-//       should.exist(data.username);
-//       should.exist(data.fanCount);
-//       should.exist(data.postLikes);
-//       should.exist(data.postShares);
-//       should.exist(data.postComments);
-//     })
-//   })
-// })
+    it('Should return error status if there are typos in the URL', function(){
+      expect(tw.validateData('witter.com/jimkchin/status/806134951926067200')).to.be.false
+    })
+    
+    it('Should not validate if missing base URL', function(){
+      expect(tw.validateData('https://jimkchin/806134951926067200')).to.be.false
+    })
 
-// // describe('Instagram', function() {
-// //   var link = process.env.iglink || "link";
-// //
-// //   it('should return an object', function() {
-// //     var instagram = ig.whater(link);
-// //
-// //     return instagram.then(function(data) {
-// //       data.should.be.an('object');
-// //     })
-// //   })
-// // })
+    it('Should not validate if missing base URL', function(){
+      expect(tw.validateData('.com/JamieAsnow')).to.be.false
+    })
 
-// describe('Twitter', function() {
-//   var link = process.env.twlink || "https://twitter.com/highsteph/status/804000988604399616";
+    it('Should not validate if missing base URL', function(){
+      expect(tw.validateData('/jimkchin/status/806134951926067200')).to.be.false
+    })
 
-//   it('should return an object', function() {
-//     var twitter= tw.getTwitterProfile(link);
+    
 
-//     return twitter.then(function(data) {
-//       console.log(data);
-//       data.should.be.an('object');
-//     })
-//   })
-// })
+  }) // end of Data Validation 
 
 
+  describe('Data Parsing', function(){
+    it('should return post for post URLs', function() {
+      let response = tw.parseData('https://twitter.com/highsteph/status/804000988604399616')
+      expect(response.type).to.eql('post');
+      expect(response.endpoint).to.eql('804000988604399616');
+    })
+    it('should return post for post URLs', function() {
+      let response = tw.parseData('twitter.com/jimkchin/status/806134951926067200')
+      expect(response.type).to.eql('post');
+      expect(response.endpoint).to.eql('806134951926067200');
+    })
+    it('should return profile for profile URLs', function() {
+      let response = tw.parseData('https://twitter.com/JamieAsnow');
+      expect(response.type).to.eql('profile');
+      expect(response.endpoint).to.eql('JamieAsnow'); 
+    })
+  })// end of Data Parsing
 
-// let data = ["https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater"]
-// //Endpoint testing
-// describe('TESTING FACEBOOK', function(){
-//   it('Should return data', function(done){
-//     fbApi.getToken(data).then(response => {
-//       console.log(response)
-//       response.should.be.an('object');
-//       done();
-//     })
-//    })
-// })
 
-// //Endpoint testing
-// describe('TESTING TWITTER', function(){
-//   it('Should return data', function(done){
-//     tw.getTwitterProfile("https://twitter.com/highsteph/status/804000988604399616").then(response => {
-//       console.log(response)
-//       response.should.be.an('object');
-//       done(); 
-//     })
-      
-//   })
-// })
+  describe('Twitter Posts', function(){
+    it('Should take full url', function(){
+      return tw.getPost('804000988604399616').then(response => {
+        expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name')
+      })
+    })
+
+    it('should take url if missing https', function(){
+      return tw.getPost('806134951926067200').then(response => {
+        expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name')
+      })
+    })
+  }) // end of Twitter Posts
+
+  describe('Twitter Profiles', function(){
+    it('Should take full url', function(){
+      return tw.getProfile('JamieAsnow').then(response => {
+        expect(response).to.have.all.keys('followers_count', 'statuses_count','status', 'type', 'screen_name', 'name')
+      })
+    })
+
+  })// end of witter Profiles
+}) // end of TWITTER TESTING
