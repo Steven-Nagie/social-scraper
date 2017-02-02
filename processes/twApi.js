@@ -28,9 +28,20 @@ const buildProfileFromScreenName= function (data, statusCode) {
   }
 }
 
+const buildErrorReport= function (error, statusCode) {
+  return {
+    status: error.statusCode,
+    message: error.message
+  }
+}
+
 exports.validateData = function(url){
-  if(!url.includes('twitter')) return false; 
-  else return true;
+  if(!url) return false;
+  if(typeof(url) !== 'string') return false;
+  if(!url.includes('twitter')) return false;
+  if(!url.includes('/')) return false;
+  if(!url.substring(url.lastIndexOf('/') + 1).trim()) return false;
+  return true;
 }
 
 exports.parseData = function(url){
@@ -54,8 +65,8 @@ exports.getPost = function(endpoint){
   twitter.get('statuses/show', {
       id: endpoint
     }, (err, data, response) => {
-      if (err) console.log(err)
-      return defered.resolve(buildProfileFromId(data, response.statusCode));
+      if (err) return defered.resolve(buildErrorReport(err, response.statusCode))
+      else return defered.resolve(buildProfileFromId(data, response.statusCode));
     })
    return defered.promise;
 }
@@ -67,7 +78,7 @@ exports.getProfile = function(endpoint){
       iuser_id: '',
       screen_name: endpoint
     }, (err, data, response) => {
-      if (err) console.log(err)
+      if (err) return defered.resolve(buildErrorReport(error, response.statusCode))
       return defered.resolve(buildProfileFromScreenName(data, response.statusCode));
     })
   return defered.promise
