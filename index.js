@@ -5,7 +5,7 @@ var express = require('express'),
     morgan = require('morgan'),
     http = require('http').Server(app),
     io = require('socket.io')(http),
-    twApi = require('./processes/twApi.js'),
+    tw = require('./processes/twApi.js'),
     fbApi = require('./processes/fbApi.js'),
     igApi = require('./processes/igApi.js'),
     csv = require('./processes/csvExport.js');
@@ -62,8 +62,19 @@ io.on('connect', socket => {
           .then(profile => usersLoggedIn[data.userId].emit('instagramProfile', profile));
         }
         else if (url.includes('twitter.com')){
-          twApi.getTwitterProfile(url)
-          .then(profile => usersLoggedIn[data.userId].emit('twitterProfile', profile));
+          if(tw.validateData(url)){
+            let parsedObj = tw.parseData(url)
+            if(parsedObj.type === "post"){
+              tw.getPost(parsedObj.endpoint).then(data => {
+                usersLoggedIn[data.userId].emit('twitterProfile', data)
+              });
+            }
+            else if(parsedObj.type === "profile"){
+              tw.getProfile(parsedObj.endpoint).then(data => {
+                usersLoggedIn[data.userId].emit('twitterProfile', data)
+              });
+            }
+          } 
         }
       }
     })

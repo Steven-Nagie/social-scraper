@@ -54,6 +54,7 @@ exports.getPost = function(endpoint){
   twitter.get('statuses/show', {
       id: endpoint
     }, (err, data, response) => {
+      if (err) console.log(err)
       return defered.resolve(buildProfileFromId(data, response.statusCode));
     })
    return defered.promise;
@@ -66,6 +67,7 @@ exports.getProfile = function(endpoint){
       iuser_id: '',
       screen_name: endpoint
     }, (err, data, response) => {
+      if (err) console.log(err)
       return defered.resolve(buildProfileFromScreenName(data, response.statusCode));
     })
   return defered.promise
