@@ -34,13 +34,6 @@ describe('TWITTER TESTING', function(){
       })
     })
 
-    it('should take url if missing https', function(){
-      return tw.getTwitterProfile('twitter.com/JamieAsnow').then(response => {
-        expect(response).to.have.all.keys('followers_count', 'statuses_count', 'status', 'type', 'screen_name', 'name')
-
-      })
-    })
-
   })// end of Testing Twitter Profiles
 
   describe('Data Validation', function(){
@@ -70,6 +63,15 @@ describe('TWITTER TESTING', function(){
       })
     })
 
-  }) // end of Testing Twitter invalid inputs
+  }) // end of Data Validation 
+
+
+  describe('Data Parsing', function(){
+    it('should return post for post URLs', () => expect(tw.parseData('https://twitter.com/highsteph/status/804000988604399616').type).to.eql('post'))
+
+    it('should return post for post URLs', () => expect(tw.parseData('twitter.com/jimkchin/status/806134951926067200').type).to.eql('post'))
+
+    it('should return profile for profile URLs', () => expect(tw.parseData('https://twitter.com/JamieAsnow').type).to.eql('profile'))
+  })
 
 }) // end of TWITTER TESTING

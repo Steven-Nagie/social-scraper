@@ -56,7 +56,6 @@ exports.getTwitterProfile = function(url){
     twitter.get('statuses/show', {
       id: endpoint
     }, (err, data, response) => {
-      console.log(response.statusCode)
       return defered.resolve(buildProfileFromId(data, response.statusCode));
     })
   } else { //Get User
@@ -64,7 +63,6 @@ exports.getTwitterProfile = function(url){
       iuser_id: '',
       screen_name: endpoint
     }, (err, data, response) => {
-      console.log(response.statusCode)
       return defered.resolve(buildProfileFromScreenName(data, response.statusCode));
     })
   }
