@@ -16,14 +16,19 @@ const buildProfileFromId = function (data) {
   }
 }
 
+
+
 exports.getTwitterProfile = url => {
   let defered = q.defer()
+
+  
+
   let id = url.substring(url.lastIndexOf('/') + 1);
   if (Number(id)) {
     twitter.get('statuses/show', {
       id: id
     }, (err, data, response) => {
-      if (err) return console.log(err)
+      if (err) return resolve(err)
       return defered.resolve(buildProfileFromId(data));
     })
   } else {
@@ -31,7 +36,7 @@ exports.getTwitterProfile = url => {
       iuser_id: '',
       screen_name: id
     }, (err, data, response) => {
-      if (err) return console.log(err)
+      if (err) return resolve(err)
       return defered.resolve({
         type: 'profile',
         screen_name: data.screen_name,
