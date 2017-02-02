@@ -49,23 +49,24 @@ exports.parseData = function(url){
   }
 }
 
-exports.getTwitterProfile = function(url){
+exports.getPost = function(endpoint){
   let defered = q.defer()
-  let endpoint = url.substring(url.lastIndexOf('/') + 1)
-  if (Number(endpoint)) { //Get Post
-    twitter.get('statuses/show', {
+  twitter.get('statuses/show', {
       id: endpoint
     }, (err, data, response) => {
       return defered.resolve(buildProfileFromId(data, response.statusCode));
     })
-  } else { //Get User
+   return defered.promise;
+}
+
+
+exports.getProfile = function(endpoint){
+  let defered = q.defer()
     twitter.get('users/show', {
       iuser_id: '',
       screen_name: endpoint
     }, (err, data, response) => {
       return defered.resolve(buildProfileFromScreenName(data, response.statusCode));
     })
-  }
-
   return defered.promise
 };
