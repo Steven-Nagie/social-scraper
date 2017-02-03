@@ -8,7 +8,7 @@ var request = require('request'),
     tw = require('../processes/twApi.js');
 
 // chai.use(chaiAsPromised);
-//before() this is where I can maybe do the auth call for facebook. 
+
 
 //we still need to handle unauthorized 401 errors --> we have to decide what to do with that. 
 
