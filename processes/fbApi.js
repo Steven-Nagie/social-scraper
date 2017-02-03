@@ -31,11 +31,11 @@ exports.facebook = (data) => {
   var csvContent = "";
 
   if (data.includes('photos')) {
+    profile.ogLink = data;
     parseUserAndId(data);
 
     getPublicProfile()
     .then(response => {
-      console.log("promise return: ", response);
       profile.name = response.name
       profile.fanCount = response.fan_count;
       return getPostLikes();
@@ -55,6 +55,7 @@ exports.facebook = (data) => {
       outerDefer.resolve(profile);
     })
   } else {
+    profile.ogLink = data;
     parseUserAndId(data);
 
     getPublicProfile()
@@ -133,7 +134,6 @@ exports.facebook = (data) => {
         console.log(!res ? 'error occurred' : res.error);
         return;
       }
-      console.log(res);
     });
   };
   // Get post comments

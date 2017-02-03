@@ -5,7 +5,7 @@ var express = require('express'),
     morgan = require('morgan'),
     http = require('http').Server(app),
     io = require('socket.io')(http),
-    twApi = require('./processes/twApi.js'),
+    tw = require('./processes/twApi.js'),
     fbApi = require('./processes/fbApi.js'),
     igApi = require('./processes/igApi.js'),
     csv = require('./processes/csvExport.js');
@@ -23,9 +23,15 @@ app.use(function(req, res, next) {
 // This is authoization to use the Instagram API
 app.get('/authorize_user', igApi.authorize_user);
 app.get('/handleauth', igApi.handleauth);
+// For creating csv file
+// No proper error handling here. Ideas?
 app.post('/exportCsv', function(req, res, next) {
-  csv.createCSV(req.body);
-  res.sendStatus(200);
+  try {
+    csv.createCSV(req.body);
+    res.sendStatus(200);
+  } catch (err) {
+    throw err;
+  }
 });
 
 
@@ -58,12 +64,23 @@ io.on('connect', socket => {
           .then(profile => usersLoggedIn[data.userId].emit('facebookProfile', profile));
         }
         else if (url.includes('instagram.com')){
-          igApi.getInstagramProfile()
+          igApi.getInstagramProfile(url)
           .then(profile => usersLoggedIn[data.userId].emit('instagramProfile', profile));
         }
         else if (url.includes('twitter.com')){
-          twApi.getTwitterProfile(url)
-          .then(profile => usersLoggedIn[data.userId].emit('twitterProfile', profile));
+          if(tw.validateData(url)){
+            let parsedObj = tw.parseData(url)
+            if(parsedObj.type === "post"){
+              tw.getPost(parsedObj.endpoint).then(data => {
+                usersLoggedIn[data.userId].emit('twitterProfile', data)
+              });
+            }
+            else if(parsedObj.type === "profile"){
+              tw.getProfile(parsedObj.endpoint).then(data => {
+                usersLoggedIn[data.userId].emit('twitterProfile', data)
+              });
+            }
+          } 
         }
       }
     })
