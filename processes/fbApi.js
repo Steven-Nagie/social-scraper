@@ -32,6 +32,7 @@ exports.validateData = (url) => {
 }
 
 exports.parseDataPostsOrVideos = (url) => {
+  // For some reason these two functions can't be chained, they need to be separate like this in order to function correctly.
   url = url.replace(/\s/g,''); //Eliminates empty space in thing
   url = url.substring(url.lastIndexOf('.com') + 5); //Eliminates any empty space then gets rid of everything before the username
   let arr;
@@ -45,11 +46,27 @@ exports.parseDataPostsOrVideos = (url) => {
 }
 
 exports.parseDataPhotos = (url) => {
+  // For some reason these two functions can't be chained, they need to be separate like this in order to function correctly.
   url = url.replace(/\s/g,''); //Eliminates empty space in thing
   url = url.substring(url.lastIndexOf('.com') + 5); //Eliminates any empty space then gets rid of everything before the username
+  // index of and lastindex of /
+  let arr = url.split('/photos/');
+  let obj = {username: arr[0], id: arr[1].substring(arr[1].indexOf('/') + 1, arr[1].lastIndexOf('/'))};
+  return obj;
 }
 
-exports.parseDataVideos
+exports.parseDataUser = (url) => {
+  url = url.replace(/\s/g, '');
+  url = url.substring(url.lastIndexOf('.com') + 5);
+  let obj = {username: url.replace(/\//g, '')};
+  return obj;
+}
+
+exports.parseDataPermalink = (url) => {
+    url = url.replace(/\s/g, '');
+    let obj = {username: url.substring(url.lastIndexOf('id=') + 3), id: url.substring(url.indexOf('id=') + 3, url.indexOf('&'))};
+    return obj;
+}
 
 exports.facebook = (data) => {
   let outerDefer = q.defer();
