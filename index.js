@@ -71,9 +71,9 @@ io.on('connect', socket => {
           if(tw.validateData(url)){
             let parsedObj = tw.parseData(url)
             if(parsedObj.type === "post"){
-              tw.getPost(parsedObj.endpoint, parsedObj.givenInput).then(data => {
-                console.log(data)
-                usersLoggedIn[data.userId].emit('twitterProfile', data)
+              tw.getPost(parsedObj.endpoint, parsedObj.givenInput).then(profile => {
+                console.log(profile)
+                usersLoggedIn[data.userId].emit('twitterProfile', profile)
               });
             }
             else if(parsedObj.type === "profile"){
