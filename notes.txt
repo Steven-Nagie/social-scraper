@@ -1,10 +1,19 @@
+**************************
+function sortbyInput(list){
+   return function (a, b) {
+       var sortingArr = list;
+       return sortingArr.indexOf(a.Input) - sortingArr.indexOf(b.Input);
+   }
+}
+****************
+
 Regarding exporting to csv:
 We can append to an already existing file. So, the best way to do this would seem to be to create the file to begin with, and include the column names at the start. Then, simply append every data point to the file as we get it.
 Alternatively, we could use fs.writeFile to write a new file
 Data point = complete info for each user, not each point in each user's info.
 
-Want to use iframe to display csv file, have to hit server to get it 
-(Im curious about this ^ do you mean that you would want to use an Iframe rather than the grid??) - Jon 
+Want to use iframe to display csv file, have to hit server to get it
+(Im curious about this ^ do you mean that you would want to use an Iframe rather than the grid??) - Jon
 
 *****************************************
 DEFINITELY GOING TO RUN INTO A PROBLEM WITH FB PARSING LINKS WHERE USER NAMES HAVE PERIODS IN THEM
@@ -98,4 +107,3 @@ expect(tw.getTwitterProfile('witter.com/jimkchin/status/806134951926067200')).to
 expect(tw.getTwitterProfile('/jimkchin/status/806134951926067200')).to.equal({status: "status: invalid input, please specify url"});
 expect(tw.getTwitterProfile('.com/JamieAsnow')).to.equal({status: "status: invalid input, please specify url"});
 expect(tw.getTwitterProfile('/JamieAsnow)).to.equal({status: "status: invalid input, please specify url"});
-
