@@ -41,7 +41,7 @@ exports.parseDataPostsOrVideos = (url) => {
   } else {
     arr = url.split('/posts/');
   }
-  let obj = {ogLink: url, username: arr[0], post_id: arr[1].replace(/\//g, '')};
+  let obj = {givenInput: url, username: arr[0], post_id: arr[1].replace(/\//g, '')};
   return obj;
 }
 
@@ -51,27 +51,29 @@ exports.parseDataPhotos = (url) => {
   url = url.substring(url.lastIndexOf('.com') + 5); //Eliminates any empty space then gets rid of everything before the username
   // index of and lastindex of /
   let arr = url.split('/photos/');
-  let obj = {ogLink: url, username: arr[0], post_id: arr[1].substring(arr[1].indexOf('/') + 1, arr[1].lastIndexOf('/'))};
+  let obj = {givenInput: url, username: arr[0], post_id: arr[1].substring(arr[1].indexOf('/') + 1, arr[1].lastIndexOf('/'))};
   return obj;
 }
 
 exports.parseDataUser = (url) => {
   url = url.replace(/\s/g, '');
   url = url.substring(url.lastIndexOf('.com') + 5);
-  let obj = {ogLink: url, username: url.replace(/\//g, '')};
+  let obj = {givenInput: url, username: url.replace(/\//g, '')};
   return obj;
 }
 
 exports.parseDataPermalink = (url) => {
     url = url.replace(/\s/g, '');
-    let obj = {ogLink: url, username: url.substring(url.lastIndexOf('id=') + 3), post_id: url.substring(url.indexOf('id=') + 3, url.indexOf('&'))};
+    let obj = {givenInput: url, username: url.substring(url.lastIndexOf('id=') + 3), post_id: url.substring(url.indexOf('id=') + 3, url.indexOf('&'))};
     return obj;
 }
 
 exports.getUserIdAndFans =(obj) => {
     let defered = q.defer();
     app.api(`${obj.username}?fields=id,fan_count`, function(res) {
-      if(!res || res.error) defered.resolve(!res ? 'error occurred' : res.error);
+      if(!res || res.error) {
+        defered.resolve(!res ? {givenInput: obj.givenInput, username: obj.username, error: 'Invalid input. Remember that private user profiles are not legally accessible.'} : {givenInput: obj.givenInput, username: obj.username, error: `${res.error.message}. Remember that private user profiles are not legally accessible.`});
+      }
       obj.id = res.id;
       obj.fan_count = res.fan_count;
       defered.resolve(obj);
@@ -82,6 +84,9 @@ exports.getUserIdAndFans =(obj) => {
 exports.getPostInfo = (obj) => {
   let defered = q.defer();
   app.api(`${obj.id}_${obj.post_id}?fields=shares.limit(1000000),likes.limit(1000000),comments.limit(1000000)`, function(res)  {
+    if(!res || res.error) {
+      defered.resolve(!res ? {givenInput: obj.givenInput, username: obj.username, error: 'Invalid input. Remember that private user profiles are not legally accessible.'} : {givenInput: obj.givenInput, username: obj.username, error: `${res.error.message}. Remember that private user profiles are not legally accessible.`});
+    }
     obj.likes = !res.likes ? 0 : res.likes.data.length;
     obj.shares = !res.shares ? 0 : res.shares.count;
     obj.comments = !res.comments ? 0 : res.comments.data.length;
