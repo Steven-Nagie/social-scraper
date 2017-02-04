@@ -633,7 +633,7 @@ describe("FACEBOOK TESTING", function() {
 
   }) // End of Facebook GET USER ID
 
-  describe.only("Get post info", function() {
+  describe("Get post info", function() {
     this.timeout(5000);
     let userFull;
     before(function(done) {
@@ -684,6 +684,93 @@ describe("FACEBOOK TESTING", function() {
     })
 
   }) //End of Facebook GET POST INFO
+
+  describe("FACEBOOK TOTAL", function() {
+    this.timeout(10000);
+    before(function(done) {
+      fb.getToken().then(function(){done()});
+    })
+
+    it("Should do exactly what we want it to (case 1)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/cart0onz/posts/1797041023877382");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
+    })
+
+    it("Should do exactly what we want it to (case 2)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/sl1pg8rLP/videos/1499081423439939/");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
+    })
+
+    it("Should do exactly what we want it to (case 3)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/permalink.php?story_fbid=1370824039607865&id=288340451189568");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
+    })
+
+    it("Should do exactly what we want it to (case 4)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/aimeefullersnow/");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count').notify(done);
+    })
+
+    it("Should do exactly what we want it to (case 5)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/sl1pg8rLP/videos/1499081423439939/");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
+    })
+
+    it("Should do exactly what we want it to (case 6)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/MassiveNetwork/posts/1316604901716019");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
+    })
+
+    it("Should do exactly what we want it to (case 7)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/sl1pg8rLP/posts/1516922548322493");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
+    })
+
+    it("Should do exactly what we want it to (case 8)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/GoProBombSquad/posts/1521657471183229");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
+    })
+
+    it("Should do exactly what we want it to (case 9)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/216875158351676/photos/a.218037834902075.55227.216875158351676/1289469471092234/?type=3&theater");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
+    })
+
+    it("Should do exactly what we want it to (case 10)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/161903407172302/photos/a.161919140504062.39607.161903407172302/1475901979105765/?type=3&theater");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
+    })
+
+    it("Should do exactly what we want it to (case 12)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/ericwillettofficial/");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count').notify(done);
+    })
+
+
+    it("Should do exactly what we want it to (case 12)", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/willwessonski/videos/1269951999743269/");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
+    })
+
+    it("Should throw an error when stuff breaks", function(done) {
+      let answer = fb.facebook("https://www.facebook.com/tatum.monod/photos/a.927441700603682.1073741829.804486849565835/1456800001001180/?type=3&theater");
+      expect(answer).to.eventually.be.an('object');
+      expect(answer).to.eventually.have.all.keys('message', 'type', 'code', 'fbtrace_id').notify(done);
+    })
+
+  }) // End of FACEBOOK TOTAL
 
 
 }) // end of FACEBOOK TESTING
