@@ -41,7 +41,7 @@ exports.parseDataPostsOrVideos = (url) => {
   } else {
     arr = url.split('/posts/');
   }
-  let obj = {username: arr[0], post_id: arr[1].replace(/\//g, '')};
+  let obj = {ogLink: url, username: arr[0], post_id: arr[1].replace(/\//g, '')};
   return obj;
 }
 
@@ -51,20 +51,20 @@ exports.parseDataPhotos = (url) => {
   url = url.substring(url.lastIndexOf('.com') + 5); //Eliminates any empty space then gets rid of everything before the username
   // index of and lastindex of /
   let arr = url.split('/photos/');
-  let obj = {username: arr[0], post_id: arr[1].substring(arr[1].indexOf('/') + 1, arr[1].lastIndexOf('/'))};
+  let obj = {ogLink: url, username: arr[0], post_id: arr[1].substring(arr[1].indexOf('/') + 1, arr[1].lastIndexOf('/'))};
   return obj;
 }
 
 exports.parseDataUser = (url) => {
   url = url.replace(/\s/g, '');
   url = url.substring(url.lastIndexOf('.com') + 5);
-  let obj = {username: url.replace(/\//g, '')};
+  let obj = {ogLink: url, username: url.replace(/\//g, '')};
   return obj;
 }
 
 exports.parseDataPermalink = (url) => {
     url = url.replace(/\s/g, '');
-    let obj = {username: url.substring(url.lastIndexOf('id=') + 3), post_id: url.substring(url.indexOf('id=') + 3, url.indexOf('&'))};
+    let obj = {ogLink: url, username: url.substring(url.lastIndexOf('id=') + 3), post_id: url.substring(url.indexOf('id=') + 3, url.indexOf('&'))};
     return obj;
 }
 
@@ -77,6 +77,18 @@ exports.getUserIdAndFans =(obj) => {
       defered.resolve(obj);
     });
     return defered.promise;
+}
+
+exports.getPostInfo = (obj) => {
+  console.log(obj);
+  let defered = q.defer();
+  app.api(`${obj.id}_${obj.post_id}?fields=shares.limit(1000000),likes.limit(1000000),comments.limit(1000000)`, function(res)  {
+    obj.likes = !res.likes ? 0 : res.likes.data.length;
+    obj.shares = !res.shares ? 0 : res.shares.count;
+    obj.comments = !res.comments ? 0 : res.comments.data.length;
+    defered.resolve(obj);
+  });
+  return defered.promise;
 }
 
 exports.facebook = (data) => {
