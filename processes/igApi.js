@@ -23,9 +23,24 @@ exports.handleauth = function(req, res) {
   });
 };
 
-exports.getInstagramProfile = function(data){
+exports.validateData = function(instagramUrl){
+  if(!instagramUrl) return false;  //Filters out all falsy inputs
+  if(typeof(instagramUrl) !== 'string') return false; //Filters out all inputs that are not a string
+  if(!instagramUrl.includes('instagram')) return false; //Filters out all inputs that do not have base Url
+  if(!instagramUrl.includes('/')) return false; //Filters out all inputs that do not an endpoint
+  if(!instagramUrl.substring(instagramUrl.lastIndexOf('/') + 1).trim()) return false; //Filters out all inputs that the endpoint is an empty string. 
+  return true;
+};
+
+exports.parseData = function(instagramUrl){
+  
+  return {shortcode: instagramUrl};
+};
+
+exports.getInstagramProfile = function(shortcode){
   let defered = q.defer();
-  axios.get(`https://api.instagram.com/v1/media/shortcode/BMIghBeBqMK?access_token=4512030680.ccce173.c3731c8c139d4204a56b464739b5457c`).then(response => {
+  //BMIghBeBqMK
+  axios.get(`https://api.instagram.com/v1/media/shortcode/${shortcode}?access_token=${config.access_token}`).then(response => {
     var returnData = {data: response.data.data, ogLink: data};
     defered.resolve(returnData);
   }).catch(error => console.log(error));
