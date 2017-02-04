@@ -80,7 +80,6 @@ exports.getUserIdAndFans =(obj) => {
 }
 
 exports.getPostInfo = (obj) => {
-  console.log(obj);
   let defered = q.defer();
   app.api(`${obj.id}_${obj.post_id}?fields=shares.limit(1000000),likes.limit(1000000),comments.limit(1000000)`, function(res)  {
     obj.likes = !res.likes ? 0 : res.likes.data.length;

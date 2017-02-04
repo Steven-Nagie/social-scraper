@@ -273,28 +273,28 @@ describe('TWITTER TESTING', function(){
 
   })// end of Data Parsing
 
-//   describe('Twitter Posts', function(){
-//     it('Should take full url', function(){
-//       return tw.getPost('804000988604399616').then(response => {
-//         expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name')
-//       })
-//     })
-//
-//     it('should take url if missing https', function(){
-//       return tw.getPost('806134951926067200').then(response => {
-//         expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name')
-//       })
-//     })
-//   }) // end of Twitter Posts
-//
-//   describe('Twitter Profiles', function(){
-//     it('Should take full url', function(){
-//       return tw.getProfile('JamieAsnow').then(response => {
-//         expect(response).to.have.all.keys('followers_count', 'statuses_count','status', 'type', 'screen_name', 'name')
-//       })
-//     })
-//
-//   })// end of twitter Profiles
+  describe('Twitter Posts', function(){
+    it('Should take full url', function(){
+      return tw.getPost('804000988604399616').then(response => {
+        expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name')
+      })
+    })
+
+    it('should take url if missing https', function(){
+      return tw.getPost('806134951926067200').then(response => {
+        expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name')
+      })
+    })
+  }) // end of Twitter Posts
+
+  describe('Twitter Profiles', function(){
+    it('Should take full url', function(){
+      return tw.getProfile('JamieAsnow').then(response => {
+        expect(response).to.have.all.keys('followers_count', 'statuses_count','status', 'type', 'screen_name', 'name')
+      })
+    })
+
+  })// end of twitter Profiles
 }) // end of TWITTER TESTING
 
 describe("FACEBOOK TESTING", function() {
@@ -661,50 +661,26 @@ describe("FACEBOOK TESTING", function() {
     it("Should return an object with ogLink, username, id, post_id, fan_count, shares, comments, and likes", function(done) {
       let answer = fb.getPostInfo(userFull);
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.property('username');
-      expect(answer).to.eventually.have.property('user_id');
-      expect(answer).to.eventually.have.property('fan_count');
-      expect(answer).to.eventually.have.property('post_id');
-      expect(answer).to.eventually.have.property('shares');
-      expect(answer).to.eventually.have.property('comments');
-      expect(answer).to.eventually.have.property('likes').notify(done);
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
 
     })
 
     it("Should return an object with ogLink, username, id, post_id, fan_count, shares, comments, and likes", function(done) {
       let answer = fb.getPostInfo(userFull);
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.property('username');
-      expect(answer).to.eventually.have.property('user_id');
-      expect(answer).to.eventually.have.property('fan_count');
-      expect(answer).to.eventually.have.property('post_id');
-      expect(answer).to.eventually.have.property('shares');
-      expect(answer).to.eventually.have.property('comments');
-      expect(answer).to.eventually.have.property('likes').notify(done);
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
     })
 
     it("Should return an object with ogLink, username, id, post_id, fan_count, shares, comments, and likes", function(done) {
       let answer = fb.getPostInfo(userFull);
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.property('username');
-      expect(answer).to.eventually.have.property('user_id');
-      expect(answer).to.eventually.have.property('fan_count');
-      expect(answer).to.eventually.have.property('post_id');
-      expect(answer).to.eventually.have.property('shares');
-      expect(answer).to.eventually.have.property('comments');
-      expect(answer).to.eventually.have.property('likes').notify(done);
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
     })
 
     it("Should return an object with ogLink, username, id, post_id, fan_count, shares, comments, and likes", function(done) {
       let answer = fb.getPostInfo(userFull);
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.property('username');
-      expect(answer).to.eventually.have.property('user_id');
-      expect(answer).to.eventually.have.property('fan_count');
-      expect(answer).to.eventually.have.property('post_id');
-      expect(answer).to.eventually.have.property('shares');
-      expect(answer).to.eventually.have.property('comments');
-      expect(answer).to.eventually.have.property('likes').notify(done);
+      expect(answer).to.eventually.have.all.keys('username', 'ogLink', "id", 'fan_count', 'post_id', 'shares', 'comments', 'likes').notify(done);
     })
 
   }) //End of Facebook GET POST INFO
