@@ -37,53 +37,53 @@ const buildErrorReport= function (error, statusCode) {
   }
 }
 
-exports.validateData = function(url){
-  if(!url) return false;  //Filters out all falsy inputs
-  if(typeof(url) !== 'string') return false; //Filters out all inputs that are not a string
-  if(!url.includes('twitter')) return false; //Filters out all inputs that do not have base url
-  if(!url.includes('/')) return false; //Filters out all inputs that do not an endpoint
-  if(!url.substring(url.lastIndexOf('/') + 1).trim()) return false; //Filters out all inputs that the endpoint is an empty string. 
+exports.validateData = function(twitterUrl){
+  if(!twitterUrl) return false;  //Filters out all falsy inputs
+  if(typeof(twitterUrl) !== 'string') return false; //Filters out all inputs that are not a string
+  if(!twitterUrl.includes('twitter')) return false; //Filters out all inputs that do not have base Url
+  if(!twitterUrl.includes('/')) return false; //Filters out all inputs that do not an endpoint
+  if(!twitterUrl.substring(twitterUrl.lastIndexOf('/') + 1).trim()) return false; //Filters out all inputs that the endpoint is an empty string. 
   return true;
 }
 
-exports.parseData = function(url){
-  let endpoint = url.substring(url.lastIndexOf('/') + 1).replace(/\s/g,'').replace(/[!@#$%^&*()":;',?<>_=+|-]/ig, '')
+exports.parseData = function(twitterUrl){
+  let endpoint = twitterUrl.substring(twitterUrl.lastIndexOf('/') + 1).replace(/\s/g,'').replace(/[!@#$%^&*()":;',?<>_=+|-]/ig, '')
   if (Number(endpoint)){ // checks if the endpoint is a string or a number
     return {
       type: 'post',
       endpoint: endpoint,
-      givenInput: url
+      givenInput: twitterUrl
     }
   }
   else {
     return {
       type: 'profile',
       endpoint: endpoint,
-      givenInput: url
+      givenInput: twitterUrl
     }
   }
 }
 
-exports.getPost = function(endpoint, url){
+exports.getPost = function(endpoint, twitterUrl){
   let defered = q.defer()
   twitter.get('statuses/show', {
       id: endpoint
     }, (err, data, response) => {
-      if (err) return defered.resolve(buildErrorReport(err, response.statusCode, url))
-      else return defered.resolve(buildProfileFromId(data, response.statusCode, url));
+      if (err) return defered.resolve(buildErrorReport(err, response.statusCode, twitterUrl))
+      else return defered.resolve(buildProfileFromId(data, response.statusCode, twitterUrl));
     })
    return defered.promise;
 }
 
 
-exports.getProfile = function(endpoint, url){
+exports.getProfile = function(endpoint, twitterUrl){
   let defered = q.defer()
     twitter.get('users/show', {
       iuser_id: '',
       screen_name: endpoint
     }, (err, data, response) => {
-      if (err) return defered.resolve(buildErrorReport(error, response.statusCode, url))
-      return defered.resolve(buildProfileFromScreenName(data, response.statusCode, url));
+      if (err) return defered.resolve(buildErrorReport(error, response.statusCode, twitterUrl))
+      return defered.resolve(buildProfileFromScreenName(data, response.statusCode, twitterUrl));
     })
   return defered.promise
 };
