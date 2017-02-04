@@ -81,7 +81,7 @@ io.on('connect', socket => {
                 usersLoggedIn[data.userId].emit('twitterProfile', data)
               });
             }
-          } 
+          }
         }
       }
     })
