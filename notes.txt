@@ -22,6 +22,11 @@ DEFINITELY GOING TO RUN INTO A PROBLEM WITH FB PARSING LINKS WHERE USER NAMES HA
 Linking multiple calls into one:
 1398906127024209_1808047382776746?fields=likes.limit(3000){id},comments.limit(3000){id},shares
 
+https://www.facebook.com/cart0onz/posts/1797041023877382
+https://www.facebook.com/sl1pg8rLP/videos/1499081423439939/
+https://www.facebook.com/permalink.php?story_fbid=1370824039607865&id=288340451189568
+https://www.facebook.com/MassiveNetwork/photos/a.470062353036949.107449.194775607232293/1337412742968568/?type=3&theater
+https://www.facebook.com/aimeefullersnow/
 
 Have to contend with:
 Videos and posts, where we have to use username to get id, then combine user_id and video_id to get info
