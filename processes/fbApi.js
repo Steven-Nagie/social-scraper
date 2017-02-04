@@ -90,6 +90,7 @@ exports.getPostInfo = (obj) => {
   return defered.promise;
 }
 
+// Where everything comes together
 exports.facebook = (data) => {
   let outerDefer = q.defer();
   let user = {};
@@ -118,6 +119,6 @@ exports.facebook = (data) => {
       outerDefer.resolve(response);
     })
 
-  
+
   return outerDefer.promise;
 }
