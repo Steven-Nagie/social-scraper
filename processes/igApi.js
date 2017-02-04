@@ -33,12 +33,14 @@ exports.validateData = function(instagramUrl){
 };
 
 exports.parseData = function(instagramUrl){
-
+  
+  return {shortcode: instagramUrl};
 };
 
-exports.getInstagramProfile = function(instagramUrl){
+exports.getInstagramProfile = function(shortcode){
   let defered = q.defer();
-  axios.get(`https://api.instagram.com/v1/media/shortcode/BMIghBeBqMK?access_token=4512030680.ccce173.c3731c8c139d4204a56b464739b5457c`).then(response => {
+  //BMIghBeBqMK
+  axios.get(`https://api.instagram.com/v1/media/shortcode/${shortcode}?access_token=${config.access_token}`).then(response => {
     var returnData = {data: response.data.data, ogLink: data};
     defered.resolve(returnData);
   }).catch(error => console.log(error));
