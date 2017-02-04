@@ -1,14 +1,37 @@
+**************************
+function sortbyInput(list){
+   return function (a, b) {
+       var sortingArr = list;
+       return sortingArr.indexOf(a.Input) - sortingArr.indexOf(b.Input);
+   }
+}
+****************
+
 Regarding exporting to csv:
 We can append to an already existing file. So, the best way to do this would seem to be to create the file to begin with, and include the column names at the start. Then, simply append every data point to the file as we get it.
 Alternatively, we could use fs.writeFile to write a new file
 Data point = complete info for each user, not each point in each user's info.
 
-Want to use iframe to display csv file, have to hit server to get it 
-(Im curious about this ^ do you mean that you would want to use an Iframe rather than the grid??) - Jon 
+Want to use iframe to display csv file, have to hit server to get it
+(Im curious about this ^ do you mean that you would want to use an Iframe rather than the grid??) - Jon
 
 *****************************************
 DEFINITELY GOING TO RUN INTO A PROBLEM WITH FB PARSING LINKS WHERE USER NAMES HAVE PERIODS IN THEM
 *****************************************
+
+Linking multiple calls into one:
+1398906127024209_1808047382776746?fields=likes.limit(3000){id},comments.limit(3000){id},shares
+
+https://www.facebook.com/cart0onz/posts/1797041023877382
+https://www.facebook.com/sl1pg8rLP/videos/1499081423439939/
+https://www.facebook.com/permalink.php?story_fbid=1370824039607865&id=288340451189568
+https://www.facebook.com/MassiveNetwork/photos/a.470062353036949.107449.194775607232293/1337412742968568/?type=3&theater
+https://www.facebook.com/aimeefullersnow/
+
+Have to contend with:
+Videos and posts, where we have to use username to get id, then combine user_id and video_id to get info
+Maybe best way to make Facebook robust is to always use username and last series of numbers, instead of grasping at periods and stuff.
+Maybe always use either username or id to grab id, combine that with post id if there is one. That would prevent us from having to verify whether the url has an id for us to use or if we have to grab one.
 
 
 fields are:
@@ -98,4 +121,3 @@ expect(tw.getTwitterProfile('witter.com/jimkchin/status/806134951926067200')).to
 expect(tw.getTwitterProfile('/jimkchin/status/806134951926067200')).to.equal({status: "status: invalid input, please specify url"});
 expect(tw.getTwitterProfile('.com/JamieAsnow')).to.equal({status: "status: invalid input, please specify url"});
 expect(tw.getTwitterProfile('/JamieAsnow)).to.equal({status: "status: invalid input, please specify url"});
-
