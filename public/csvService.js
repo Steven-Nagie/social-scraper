@@ -12,41 +12,46 @@
                                     PARSE PROFILE OBJECTS INTO STRINGS
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       this.parseProfileError = function(profile) {
-        var csvContent = " , , , , , , , , , , , , , , , , ,";
-        var totalObjLength = 0;
-        for (var key in profile) {
-          totalObjLength++;
-
-          csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
-        };
+        var csvContent = ` , , , , , , , , , , , , , , ,${profile.givenInput}, ${profile.error}`;
+        // var totalObjLength = 0;
+        // for (var key in profile) {
+        //   totalObjLength++;
+        //
+        //   csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
+        // };
         return csvContent;
       };
 
       this.parseProfileFacebook = function(profile) {
-        var csvContent = " , , , , , , ,";
-        var totalObjLength = 0;
-        for (var key in profile) {
-          totalObjLength++;
-
-          csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
-        };
-        console.log(csvContent);
+        //{givenInput, fan_count, comments, id, likes, post_id, shares, username}
+        if(profile.comments) {
+          var csvContent = ` , , , , ,${profile.givenInput},${profile.fan_count},${profile.likes},${profile.shares},${profile.comments}\n`;
+        } else {
+          var csvContent = ` , , , , ,${profile.givenInput},${profile.fan_count}\n`;
+        }
+        // var totalObjLength = 0;
+        // for (var key in profile) {
+        //   totalObjLength++;
+        //
+        //   csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
+        // };
         return csvContent;
       };
 
       this.parseProfileTwitter = function(profile) {
-        var csvContent = "";
-        var totalObjLength = 0;
-        for (var key in profile) {
-          totalObjLength++;
-
-          csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
-        };
+        //{givenInput, name, retweets, screen_name, status, status_count, type, favorite_count, followers_count}
+        var csvContent = `${profile.givenInput},${profile.screen_name},${profile.followers_count},${profile.favorite_count},${profile.retweets}\n`;
+        // var totalObjLength = 0;
+        // for (var key in profile) {
+        //   totalObjLength++;
+        //
+        //   csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
+        // };
         return csvContent;
       };
 
       this.parseProfileInstagram = function(profile) {
-        var csvContent = " , , , , , , , , , , , ,";
+        var csvContent = ` , , , , , , , , , ,`;
         var totalObjLength = 0;
         for (var key in profile) {
           totalObjLength++;
@@ -56,16 +61,9 @@
         return csvContent;
       };
 
-      this.parseProfiles = function(profile) {
-        var csvContent = "";
-        var totalObjLength = 0;
-        for (var key in profile) {
-          totalObjLength++;
-
-          csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
-        };
-        return csvContent;
-      };
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+                      PARSE PROFILE STRINGS INTO PROPER OBJECTS FOR CSV
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
       this.readCSV = function(file) {
         let rows=file.split('\n');
@@ -79,24 +77,21 @@
             whoTweetedIt: row[1],
             twitterFollowers: row[2],
             twitterLikes: row[3],
-            twitterShares: row[4],
-            retweets: row[5],
-            replies: row[6],
-            facebookLink: row[7],
-            facebookFollowers: row[8],
-            facebookLikes: row[9],
-            facebookShares: row[10],
-            facebookComments: row[11],
-            instagramLink: row[12],
-            instagramFollowers: row[13],
-            instagramLikes: row[14],
-            instagramComments: row[15],
-            instagramVideoViews: row[16],
-            errorLink: row[17],
-            errorMessage: row[18]
+            retweets: row[4],
+            facebookLink: row[5],
+            facebookFollowers: row[6],
+            facebookLikes: row[7],
+            facebookShares: row[8],
+            facebookComments: row[9],
+            instagramLink: row[10],
+            instagramFollowers: row[11],
+            instagramLikes: row[12],
+            instagramComments: row[13],
+            instagramVideoViews: row[14],
+            errorLink: row[15],
+            errorMessage: row[16]
           }
         })
-        console.log(csv);
         return csv;
       }
 

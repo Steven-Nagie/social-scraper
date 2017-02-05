@@ -4,7 +4,8 @@ body, h1, h2, h3, h4, h5, h6, main, textarea, input, button, .header {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 100;
   color: #bab9ba;
-  line-height: 1.5; }
+  line-height: 1.5;
+  box-sizing: border-box; }
 
 textarea, input, button {
   outline: none; }
@@ -65,7 +66,7 @@ main {
     color: #333;
     font-size: 12px;
     height: calc(100vh - 15px);
-    width: calc(100vw - 350px);
+    width: calc(100vw - 355px);
     min-width: 500px; }
 
 html, body, div, span, applet, object, iframe,
