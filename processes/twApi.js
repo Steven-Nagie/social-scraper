@@ -30,10 +30,11 @@ const buildProfileFromScreenName= function (data, statusCode, givenInput) {
   }
 }
 
-const buildErrorReport= function (error, statusCode) {
+const buildErrorReport= function ( error, statusCode, givenInput) {
   return {
-    status: error.statusCode,
-    message: error.message
+    givenInput: givenInput,
+    status: statusCode,
+    error: error.message
   }
 }
 

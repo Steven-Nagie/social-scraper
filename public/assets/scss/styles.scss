@@ -5,7 +5,7 @@
 body,h1,h2,h3,h4,h5,h6,main,textarea,input, button, .header {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 100;
-  color: rgb(186,185,186);	
+  color: rgb(186,185,186);
   line-height: 1.5;
 }
 
@@ -28,9 +28,9 @@ main {
 .main-left {
   height: calc(100vh - 15px);
   min-width: 155px;
-  max-width: 155px;   
+  max-width: 155px;
   background-color: rgb(74,75,85);
-  display: flex; 
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -63,7 +63,7 @@ main {
   }
 }
 
-.input { 
+.input {
   min-width: 200px;
   max-width: 200px;
 }
@@ -71,19 +71,12 @@ main {
 .output {
   height: calc(100vh - 15px);
   width: 75vw;
-  .table-header {
-    color:#333;
-    line-height: 20px;
-    font-size: 15px;;
-    font-weight: bold;
-    border-top: 1px solid #888;
-    border-bottom: 1px solid #888;
-  }
   .table {
+    box-sizing: border-box;
     color:#333;
     font-size: 12px;
-    border: none;
-    height: calc((91vh - 15px) / 3);
+    // border: none;
+    height: calc(100vh - 15px);
     width: calc(100vw - 350px);
     min-width: 500px;
   }

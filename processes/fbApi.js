@@ -33,13 +33,13 @@ exports.validateData = (url) => {
 
 exports.parseDataPostsOrVideos = (url) => {
   // For some reason these two functions can't be chained, they need to be separate like this in order to function correctly.
-  url = url.replace(/\s/g,''); //Eliminates empty space in thing
-  url = url.substring(url.lastIndexOf('.com') + 5); //Eliminates any empty space then gets rid of everything before the username
+  var remainingUrl = url.replace(/\s/g,''); //Eliminates empty space in thing
+  remainingUrl = remainingUrl.substring(remainingUrl.lastIndexOf('.com') + 5); //Eliminates any empty space then gets rid of everything before the username
   let arr;
-  if (url.includes('videos')) {
-    arr = url.split('/videos/');
+  if (remainingUrl.includes('videos')) {
+    arr = remainingUrl.split('/videos/');
   } else {
-    arr = url.split('/posts/');
+    arr = remainingUrl.split('/posts/');
   }
   let obj = {givenInput: url, username: arr[0], post_id: arr[1].replace(/\//g, '')};
   return obj;
@@ -47,24 +47,27 @@ exports.parseDataPostsOrVideos = (url) => {
 
 exports.parseDataPhotos = (url) => {
   // For some reason these two functions can't be chained, they need to be separate like this in order to function correctly.
-  url = url.replace(/\s/g,''); //Eliminates empty space in thing
-  url = url.substring(url.lastIndexOf('.com') + 5); //Eliminates any empty space then gets rid of everything before the username
+  var remainingUrl = url.replace(/\s/g,''); //Eliminates empty space in thing
+  remainingUrl = remainingUrl.substring(remainingUrl.lastIndexOf('.com') + 5); //Eliminates any empty space then gets rid of everything before the username
   // index of and lastindex of /
-  let arr = url.split('/photos/');
+  let arr = remainingUrl.split('/photos/');
   let obj = {givenInput: url, username: arr[0], post_id: arr[1].substring(arr[1].indexOf('/') + 1, arr[1].lastIndexOf('/'))};
   return obj;
 }
 
 exports.parseDataUser = (url) => {
-  url = url.replace(/\s/g, '');
-  url = url.substring(url.lastIndexOf('.com') + 5);
-  let obj = {givenInput: url, username: url.replace(/\//g, '')};
+  var username = url.replace(/\s/g, '');
+  username = username.substring(username.lastIndexOf('.com') + 5);
+  if (username.includes('/')) {
+    username = username.slice(0, username.indexOf('/'));
+  }
+  let obj = {givenInput: url, username: username};
   return obj;
 }
 
 exports.parseDataPermalink = (url) => {
-    url = url.replace(/\s/g, '');
-    let obj = {givenInput: url, username: url.substring(url.lastIndexOf('id=') + 3), post_id: url.substring(url.indexOf('id=') + 3, url.indexOf('&'))};
+    var remainingUrl = url.replace(/\s/g, '');
+    let obj = {givenInput: url, username: remainingUrl.substring(remainingUrl.lastIndexOf('id=') + 3), post_id: remainingUrl.substring(remainingUrl.indexOf('id=') + 3, remainingUrl.indexOf('&'))};
     return obj;
 }
 

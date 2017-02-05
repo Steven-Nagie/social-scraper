@@ -14,7 +14,7 @@
 </header>
 <main>
   <div class="main-left">
-    <button ng-click="vm.runTests(vm.testInput)">Run Tests</button>
+    <button ng-click="vm.startProcess(vm.testInput)">Run Tests</button>
     <button class="go" id="goButton" ng-click="vm.startProcess(vm.input)"><span>GO!</span></button>
     <button ng-click="">Clear</button>
     <button>Preferences</button>
@@ -27,8 +27,7 @@
 
 
   <div class="output">
-    <div ng-style="vm.goodTable" ui-grid="{data: vm.csv}" uiGridAutoResize></div>
-    <div ng-style="vm.errorTable" ui-grid="{data: vm.csvError}" uiGridAutoResize></div>
+    <div class="table" ui-grid="{data: vm.csv}" uiGridAutoResize></div>
   </div>
 
 </main>
