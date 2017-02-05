@@ -4,7 +4,7 @@ var request = require('request'),
     expect = require('chai').expect,
     ig = require('../processes/igApi'),
     testData = require('./data');
-  
+
 // use .skip() and .only() to specify which tests you want to work with so you dont run the other test suits
 
 describe.only('TESTING INSTAGRAM', function(){
@@ -19,7 +19,7 @@ describe.only('TESTING INSTAGRAM', function(){
 
     })//End of Data Validation
     describe('Parsing Data', function(){
-      
+
       it('should return correct shortcode', function(){
         let response = ig.parseData('https://www.instagram.com/p/BNV2cHyhaaI/?taken-by=jon.myrick')
         expect(response.shortcode).to.eql('BNV2cHyhaaI')
@@ -170,52 +170,40 @@ describe.only('TESTING INSTAGRAM', function(){
 
       it('Should take full url', function(){
         return ig.getPost('BNV2cHyhaaI').then(response => {
-          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'ogLink', 'data')
+          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'data')
         })
       })
       it('Should take full url', function(){
         return ig.getPost('BMzzt1ABr8U').then(response => {
-          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'ogLink', 'data')
+          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'data')
         })
       })
       it('Should take full url', function(){
         return ig.getPost('BMh6EFXhdkP').then(response => {
-          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'ogLink', 'data')
+          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'data')
         })
       })
       it('Should take full url', function(){
         return ig.getPost('BMMbXTNBsn7').then(response => {
-          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'ogLink', 'data')
+          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'data')
         })
       })
       it('Should take full url', function(){
         return ig.getPost('BMIghBeBqMK').then(response => {
-          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'ogLink', 'data')
+          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'data')
         })
       })
       it('Should take full url', function(){
         return ig.getPost('BL7W8xvB7RT').then(response => {
-          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'ogLink', 'data')
+          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'data')
         })
       })
       it('Should take full url', function(){
         return ig.getPost('BLnPICiBhLR').then(response => {
-          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'ogLink', 'data')
+          expect(response).to.have.all.keys('status', 'type', 'givenInput', 'data')
         })
       })
 
     })//End of Instagram Profiles
 
-})//End of Instagram testing 
-
-
-
-
-
-
-
-
-
-
-
-
+})//End of Instagram testing

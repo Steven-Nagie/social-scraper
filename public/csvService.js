@@ -13,12 +13,6 @@
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       this.parseProfileError = function(profile) {
         var csvContent = ` , , , , , , , , , , , , , , ,${profile.givenInput}, ${profile.error}\n`;
-        // var totalObjLength = 0;
-        // for (var key in profile) {
-        //   totalObjLength++;
-        //
-        //   csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
-        // };
         return csvContent;
       };
 
@@ -30,35 +24,22 @@
         } else {
           var csvContent = ` , , , , ,${profile.givenInput},${profile.fan_count}\n`;
         }
-        // var totalObjLength = 0;
-        // for (var key in profile) {
-        //   totalObjLength++;
-        //
-        //   csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
-        // };
         return csvContent;
       };
 
       this.parseProfileTwitter = function(profile) {
         //{givenInput, name, retweets, screen_name, status, status_count, type, favorite_count, followers_count}
         var csvContent = `${profile.givenInput},${profile.screen_name},${profile.followers_count},${profile.favorite_count},${profile.retweets}\n`;
-        // var totalObjLength = 0;
-        // for (var key in profile) {
-        //   totalObjLength++;
-        //
-        //   csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
-        // };
         return csvContent;
       };
 
       this.parseProfileInstagram = function(profile) {
-        var csvContent = ` , , , , , , , , , ,`;
-        var totalObjLength = 0;
-        for (var key in profile) {
-          totalObjLength++;
-
-          csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
-        };
+        if (profile.data.views) {
+          // This is a big assumption, because I have yet to see what it actually looks like when it's a video
+          var csvContent = ` , , , , , , , , , ,${profile.givenInput}, ,${profile.data.likes.count},${profile.data.comments.count},${profile.data.views.count}\n`;
+        } else {
+          var csvContent = ` , , , , , , , , , ,${profile.givenInput}, ,${profile.data.likes.count},${profile.data.comments.count}\n`;
+        }
         return csvContent;
       };
 

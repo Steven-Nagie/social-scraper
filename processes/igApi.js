@@ -29,7 +29,6 @@ const buildProfileFromShortcode = function (response, instagramUrl) {
     givenInput: instagramUrl,
     status: response.status,
     type: 'post',
-    ogLink: response
   }
 }
 
@@ -60,6 +59,7 @@ exports.parseData = function(instagramUrl){
 exports.getPost = function(shortcode, instagramUrl){
   let defered = q.defer();
   axios.get(`https://api.instagram.com/v1/media/shortcode/${shortcode}?access_token=${config.access_token}`).then(response => {
+    console.log(response);
     defered.resolve(buildProfileFromShortcode(response.data, instagramUrl));
   }).catch(error => {
     defered.resolve(buildErrorReport(error.response, instagramUrl))
