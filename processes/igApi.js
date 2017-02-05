@@ -25,7 +25,7 @@ exports.handleauth = function(req, res) {
 
 const buildProfileFromShortcode = function (response, instagramUrl) {
   return {
-    data: response.data, 
+    data: response.data,
     givenInput: instagramUrl,
     status: response.status,
     type: 'post',
@@ -37,7 +37,7 @@ const buildErrorReport= function (error, instagramUrl) {
   return {
     givenInput: instagramUrl,
     statusCode: error.status,
-    errText: error.statusText,
+    error: error.statusText,
   }
 }
 
@@ -64,7 +64,7 @@ exports.getPost = function(shortcode, instagramUrl){
   }).catch(error => {
     defered.resolve(buildErrorReport(error.response, instagramUrl))
   })
- 
+
   return defered.promise
 
 };

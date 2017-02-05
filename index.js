@@ -58,19 +58,15 @@ io.on('connect', socket => {
 
       for(let url of data.postsURLs){
         if (url.includes('facebook.com')){
-          if (fb.validateData(url)) {
-            fbApi.facebook(url)
+          fbApi.facebook(url)
           .then(profile => usersLoggedIn[data.userId].emit('profile', profile));
-          }
         }
         else if (url.includes('instagram.com')){
-          if(ig.validateData(url)){
-            let parsedObj = ig.parseData(url);
+          let parsedObj = ig.parseData(url);
             ig.getPost(parsedObj.shortcode, url)
             .then(profile => {
               usersLoggedIn[data.userId].emit('profile', profile)
             })
-          }
         }
         else if (url.includes('twitter.com')){
           if(tw.validateData(url)){
@@ -102,3 +98,20 @@ io.on('connect', socket => {
 http.listen(3000, function () {
   console.log(`listening on port ${this.address().port}`);
 })
+
+// if (fb.validateData(url)) {
+//   fbApi.facebook(url)
+//   .then(profile => usersLoggedIn[data.userId].emit('profile', profile));
+// } else {
+//   usersLoggedIn[data.userId].emit('profile', {givenInput: url, error: "Not a valid input. Check to ensure it is a Facebook, Instagram, or Twitter url."});
+// }
+
+// if(ig.validateData(url)){
+//   let parsedObj = ig.parseData(url);
+//   ig.getPost(parsedObj.shortcode, url)
+//   .then(profile => {
+//     usersLoggedIn[data.userId].emit('profile', profile)
+//   })
+// } else {
+//   usersLoggedIn[data.userId].emit('profile', {givenInput: url, error: "Not a valid input. Check to ensure it is a Facebook, Instagram, or Twitter url."});
+// }

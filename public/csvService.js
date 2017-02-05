@@ -12,7 +12,7 @@
                                     PARSE PROFILE OBJECTS INTO STRINGS
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       this.parseProfileError = function(profile) {
-        var csvContent = ` , , , , , , , , , , , , , , ,${profile.givenInput}, ${profile.error}`;
+        var csvContent = ` , , , , , , , , , , , , , , ,${profile.givenInput}, ${profile.error}\n`;
         // var totalObjLength = 0;
         // for (var key in profile) {
         //   totalObjLength++;
@@ -23,6 +23,7 @@
       };
 
       this.parseProfileFacebook = function(profile) {
+        console.log(profile);
         //{givenInput, fan_count, comments, id, likes, post_id, shares, username}
         if(profile.comments) {
           var csvContent = ` , , , , ,${profile.givenInput},${profile.fan_count},${profile.likes},${profile.shares},${profile.comments}\n`;
