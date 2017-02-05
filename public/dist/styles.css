@@ -4,7 +4,8 @@ body, h1, h2, h3, h4, h5, h6, main, textarea, input, button, .header {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 100;
   color: #bab9ba;
-  line-height: 1.5; }
+  line-height: 1.5;
+  box-sizing: border-box; }
 
 textarea, input, button {
   outline: none; }
@@ -60,19 +61,12 @@ main {
 .output {
   height: calc(100vh - 15px);
   width: 75vw; }
-  .output .table-header {
-    color: #333;
-    line-height: 20px;
-    font-size: 15px;
-    font-weight: bold;
-    border-top: 1px solid #888;
-    border-bottom: 1px solid #888; }
   .output .table {
+    box-sizing: border-box;
     color: #333;
     font-size: 12px;
-    border: none;
-    height: calc((91vh - 15px) / 3);
-    width: calc(100vw - 350px);
+    height: calc(100vh - 15px);
+    width: calc(100vw - 355px);
     min-width: 500px; }
 
 html, body, div, span, applet, object, iframe,

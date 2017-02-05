@@ -58,15 +58,17 @@ io.on('connect', socket => {
 
       for(let url of data.postsURLs){
         if (url.includes('facebook.com')){
-          fbApi.facebook(url)
-          .then(profile => usersLoggedIn[data.userId].emit('facebookProfile', profile));
+          if (fb.validateData(url)) {
+            fbApi.facebook(url)
+          .then(profile => usersLoggedIn[data.userId].emit('profile', profile));
+          }
         }
         else if (url.includes('instagram.com')){
           if(ig.validateData(url)){
             let parsedObj = ig.parseData(url);
             ig.getPost(parsedObj.shortcode, url)
             .then(profile => {
-              usersLoggedIn[data.userId].emit('instagramProfile', profile)
+              usersLoggedIn[data.userId].emit('profile', profile)
             })
           }
         }
@@ -75,15 +77,18 @@ io.on('connect', socket => {
             let parsedObj = tw.parseData(url)
             if(parsedObj.type === "post"){
               tw.getPost(parsedObj.endpoint, parsedObj.givenInput).then(profile => {
-                usersLoggedIn[data.userId].emit('twitterProfile', profile)
+                usersLoggedIn[data.userId].emit('profile', profile)
               });
             }
             else if(parsedObj.type === "profile"){
               tw.getProfile(parsedObj.endpoint).then(data => {
-                usersLoggedIn[data.userId].emit('twitterProfile', data)
+                usersLoggedIn[data.userId].emit('profile', data)
               });
             }
           }
+        } else {
+          // Do I have to return this?
+          usersLoggedIn[data.userId].emit('profile', {givenInput: url, error: "Not a valid input. Check to ensure it is a Facebook, Instagram, or Twitter url."});
         }
       }
     })

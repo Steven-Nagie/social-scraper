@@ -68,7 +68,7 @@ exports.test = describe('TWITTER TESTING', function(){
       it('Should not validate if there are typos in the URL', function(){
         expect(tw.validateData('witter.com/jimkchin/status/806134951926067200')).to.be.false
       })
-      
+
       it('Should not validate if missing base URL', function(){
         expect(tw.validateData('https://jimkchin/806134951926067200')).to.be.false
       })
@@ -128,7 +128,7 @@ exports.test = describe('TWITTER TESTING', function(){
       it('Should validate valid post URL', function(){
         expect(tw.validateData('https://twitter.com/highsteph/status/804000988604399616')).to.be.true
       })
-      
+
       it('Should validate if missing https', function(){
         expect(tw.validateData('twitter.com/jimkchin/status/806134951926067200')).to.be.true
       })
@@ -138,14 +138,15 @@ exports.test = describe('TWITTER TESTING', function(){
       })
 
 
-    }) // end of Data Validation 
+    }) // end of Data Validation
 
     describe('Error Handling', function(){
 
       it('should handle 404 errors', function(){
         return tw.getPost('80400098860499616').then(response => {
-          expect(response).to.have.all.keys('status', 'message')
-          expect(response.message).to.eql('No status found with that ID.');
+          console.log(response);
+          expect(response).to.have.all.keys('givenInput', 'status', 'error')
+          expect(response.error).to.eql('No status found with that ID.');
           expect(response.status).to.eql(404);
         })
       })
@@ -154,7 +155,7 @@ exports.test = describe('TWITTER TESTING', function(){
 
 
 
-    describe('Data Parsing', function(){  // My parsing logic assumes that the desired data is locaded after the last / and is the final part of the string. It also assumes that ID's and usernames will not contain an punctuation.  
+    describe('Data Parsing', function(){  // My parsing logic assumes that the desired data is locaded after the last / and is the final part of the string. It also assumes that ID's and usernames will not contain an punctuation.
 
       it('should return post for post URLs', function() {
         let response = tw.parseData('https://twitter.com/highsteph/status/804000988604399616')
@@ -171,7 +172,7 @@ exports.test = describe('TWITTER TESTING', function(){
       it('should return profile for profile URLs', function() {
         let response = tw.parseData('https://twitter.com/JamieAsnow');
         expect(response.type).to.eql('profile');
-        expect(response.endpoint).to.eql('JamieAsnow'); 
+        expect(response.endpoint).to.eql('JamieAsnow');
       })
 
       it('parsed data should not have white space', function() {
@@ -183,13 +184,13 @@ exports.test = describe('TWITTER TESTING', function(){
       it('parsed data should not have white space', function() {
         let response = tw.parseData('https://twitter.com/highsteph/status / 804000988604399616 ');
         expect(response.type).to.eql('post');
-        expect(response.endpoint).to.eql('804000988604399616'); 
+        expect(response.endpoint).to.eql('804000988604399616');
       })
 
       it('parsed data should not have white space', function() {
         let response = tw.parseData('https://twitter.com/highsteph/status/8040 00988604399616');
         expect(response.type).to.eql('post');
-        expect(response.endpoint).to.eql('804000988604399616'); 
+        expect(response.endpoint).to.eql('804000988604399616');
       })
 
       it('parsed data should not have white space', function() {
@@ -201,69 +202,69 @@ exports.test = describe('TWITTER TESTING', function(){
       it('parsed data should not have white space', function() {
         let response = tw.parseData('https://twitter.com/highsteph/status / 8 0 4 00 0 98 8 60 4 3 996 1 6 ');
         expect(response.type).to.eql('post');
-        expect(response.endpoint).to.eql('804000988604399616'); 
+        expect(response.endpoint).to.eql('804000988604399616');
       })
 
       it('parsed data should not have white space', function() {
         let response = tw.parseData('https://twitter.com / JamieAsnow  ');
         expect(response.type).to.eql('profile');
-        expect(response.endpoint).to.eql('JamieAsnow'); 
+        expect(response.endpoint).to.eql('JamieAsnow');
       })
 
       it('parsed data should not have white space', function() {
         let response = tw.parseData('https://twitter.com/Jamie Asnow');
         expect(response.type).to.eql('profile');
-        expect(response.endpoint).to.eql('JamieAsnow'); 
+        expect(response.endpoint).to.eql('JamieAsnow');
       })
 
       it('parsed data should not have white space', function() {
         let response = tw.parseData('https://twitter.com / J a m i e A s n o w');
         expect(response.type).to.eql('profile');
-        expect(response.endpoint).to.eql('JamieAsnow'); 
+        expect(response.endpoint).to.eql('JamieAsnow');
       })
 
       it('parsed data should not contain invalid charicters', function() {
         let response = tw.parseData('https://twitter.com/highsteph/status/80!40009?88604399616');
         expect(response.type).to.eql('post');
-        expect(response.endpoint).to.eql('804000988604399616'); 
+        expect(response.endpoint).to.eql('804000988604399616');
       })
 
       it('parsed data should not contain invalid charicters', function() {
         let response = tw.parseData('https://twitter.com/highsteph/status/8040009^88604:39961" "6');
         expect(response.type).to.eql('post');
-        expect(response.endpoint).to.eql('804000988604399616'); 
+        expect(response.endpoint).to.eql('804000988604399616');
       })
 
       it('parsed data should not contain invalid charicters', function() {
         let response = tw.parseData("'https://twitter.com/highsteph/status/8040009?88604399616'");
         expect(response.type).to.eql('post');
-        expect(response.endpoint).to.eql('804000988604399616'); 
+        expect(response.endpoint).to.eql('804000988604399616');
       })
 
       it('parsed data should not contain invalid charicters', function() {
         let response = tw.parseData('https://twitter.com/Jamie%Asnow  "');
         expect(response.type).to.eql('profile');
-        expect(response.endpoint).to.eql('JamieAsnow'); 
+        expect(response.endpoint).to.eql('JamieAsnow');
       })
 
       it('parsed data should not contain invalid charicters', function() {
         let response = tw.parseData('https://twitter.com/Jamie$Asnow');
         expect(response.type).to.eql('profile');
-        expect(response.endpoint).to.eql('JamieAsnow'); 
+        expect(response.endpoint).to.eql('JamieAsnow');
       })
 
       it('parsed data should not contain invalid charicters', function() {
         let response = tw.parseData(`"'https://twitter.com/Jamie#Asnow"'`);
         expect(response.type).to.eql('profile');
-        expect(response.endpoint).to.eql('JamieAsnow'); 
+        expect(response.endpoint).to.eql('JamieAsnow');
       })
 
       it('parsed data should not contain invalid charicters', function() {
         let response = tw.parseData(`!@#$%^&*()_+-=;:'"<>?|`);
-        expect(response.endpoint).to.eql(''); 
+        expect(response.endpoint).to.eql('');
       })
-      
-      
+
+
     })// end of Data Parsing
 
     describe('Twitter Posts', function(){

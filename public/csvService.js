@@ -8,8 +8,50 @@
 
     function csvService($http) {
 
-      this.parseProfiles = function(profile) {
-        var csvContent = "";
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+                                    PARSE PROFILE OBJECTS INTO STRINGS
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+      this.parseProfileError = function(profile) {
+        var csvContent = ` , , , , , , , , , , , , , , ,${profile.givenInput}, ${profile.error}`;
+        // var totalObjLength = 0;
+        // for (var key in profile) {
+        //   totalObjLength++;
+        //
+        //   csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
+        // };
+        return csvContent;
+      };
+
+      this.parseProfileFacebook = function(profile) {
+        //{givenInput, fan_count, comments, id, likes, post_id, shares, username}
+        if(profile.comments) {
+          var csvContent = ` , , , , ,${profile.givenInput},${profile.fan_count},${profile.likes},${profile.shares},${profile.comments}\n`;
+        } else {
+          var csvContent = ` , , , , ,${profile.givenInput},${profile.fan_count}\n`;
+        }
+        // var totalObjLength = 0;
+        // for (var key in profile) {
+        //   totalObjLength++;
+        //
+        //   csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
+        // };
+        return csvContent;
+      };
+
+      this.parseProfileTwitter = function(profile) {
+        //{givenInput, name, retweets, screen_name, status, status_count, type, favorite_count, followers_count}
+        var csvContent = `${profile.givenInput},${profile.screen_name},${profile.followers_count},${profile.favorite_count},${profile.retweets}\n`;
+        // var totalObjLength = 0;
+        // for (var key in profile) {
+        //   totalObjLength++;
+        //
+        //   csvContent += totalObjLength < Object.keys(profile).length ? profile[key] + ',' : profile[key] + ',' + '\n';
+        // };
+        return csvContent;
+      };
+
+      this.parseProfileInstagram = function(profile) {
+        var csvContent = ` , , , , , , , , , ,`;
         var totalObjLength = 0;
         for (var key in profile) {
           totalObjLength++;
@@ -19,7 +61,11 @@
         return csvContent;
       };
 
-      this.readCSVFacebook = function(file) {
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+                      PARSE PROFILE STRINGS INTO PROPER OBJECTS FOR CSV
+      /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+      this.readCSV = function(file) {
         let rows=file.split('\n');
         let cols = [];
         rows.forEach((row) => {
@@ -27,12 +73,23 @@
         });
         let csv = cols.map((row) => {
           return {
-            "name": row[2],
-            "userName": row[1],
-            "fanCount": row[3],
-            "postLikes": row[4],
-            "postShares": row[5],
-            "postComments": row[6]
+            twitterLink: row[0],
+            whoTweetedIt: row[1],
+            twitterFollowers: row[2],
+            twitterLikes: row[3],
+            retweets: row[4],
+            facebookLink: row[5],
+            facebookFollowers: row[6],
+            facebookLikes: row[7],
+            facebookShares: row[8],
+            facebookComments: row[9],
+            instagramLink: row[10],
+            instagramFollowers: row[11],
+            instagramLikes: row[12],
+            instagramComments: row[13],
+            instagramVideoViews: row[14],
+            errorLink: row[15],
+            errorMessage: row[16]
           }
         })
         return csv;
@@ -79,22 +136,14 @@
         return csv;
       }
 
-      this.exportCsv = function(facebook, twitter, instagram) {
+      this.exportCsv = function(profiles) {
         return $http({
           method: 'POST',
           url: '/exportCsv',
           data: {
-            facebook: facebook,
-            twitter: twitter,
-            instagram: instagram
+            profiles: profiles
           }
         })
-        // var data = {
-        //   facebook: facebook,
-        //   twitter: twitter,
-        //   instagram: instagram
-        // }
-        // $http.post('/exportCsv', data)
       }
 
     } //End of csvService

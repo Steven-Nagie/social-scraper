@@ -10,13 +10,9 @@
 
       this.login = login;
       this.startProcess = startProcess;
-      this.subscribeToFacebook = subscribeToFacebook;
-      this.subscribeToInstagram = subscribeToInstagram;
-      this.subscribeToTwitter =  subscribeToTwitter;
+      this.subscribeToData = subscribeToData;
 
-      let facebook_subscribers = [];
-      let instagram_subscribers = [];
-      let twitter_subscribers = [];
+      let profileData = [];
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
                                        USER INTERACTION
@@ -24,7 +20,7 @@
 
 
       function startProcess(postsURLs){
-        console.log(postsURLs);
+        // console.log(postsURLs);
         socket.emit('startProcess', {
           postsURLs: postsURLs,
           userId: userId
@@ -42,16 +38,8 @@
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-      function subscribeToFacebook(cb) {
-        facebook_subscribers.push(cb);
-      };
-
-      function subscribeToInstagram(cb) {
-        instagram_subscribers.push(cb);
-      };
-
-      function subscribeToTwitter(cb) {
-        twitter_subscribers.push(cb);
+      function subscribeToData(cb) {
+        profileData.push(cb);
       };
 
        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -65,8 +53,8 @@
 
 
 
-      socket.on('facebookProfile', function(profile){
-        angular.forEach(facebook_subscribers, function (cb) {
+      socket.on('profile', function(profile){
+        angular.forEach(profileData, function (cb) {
             cb(profile);
         });
       });
