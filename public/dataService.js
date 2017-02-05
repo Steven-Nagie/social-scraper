@@ -78,7 +78,6 @@
       });
 
       socket.on('twitterProfile', function(profile){
-        console.log(profile);
         angular.forEach(twitter_subscribers, function (cb) {
             cb(profile);
         });

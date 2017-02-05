@@ -14,7 +14,7 @@ exports.authorize_user = function(req, res) {
 exports.handleauth = function(req, res) {
   instagram.authorize_user(req.query.code, redirect_uri, function(err, result) {
     if (err) {
-      console.log(err.body);
+      console.log(err.status);
     } else {
       config.access_token = result.access_token;
       console.log('Yay! Access token is ' + result.access_token);
@@ -33,8 +33,10 @@ exports.validateData = function(instagramUrl){
 };
 
 exports.parseData = function(instagramUrl){
-  
-  return {shortcode: instagramUrl};
+  return {
+    shortcode: instagramUrl.match(/\/p\/(.*)\//gi)[0].replace(/\/p|[\/]/gi,'')
+  }
+
 };
 
 exports.getInstagramProfile = function(shortcode){
@@ -43,7 +45,7 @@ exports.getInstagramProfile = function(shortcode){
   axios.get(`https://api.instagram.com/v1/media/shortcode/${shortcode}?access_token=${config.access_token}`).then(response => {
     var returnData = {data: response.data.data, ogLink: data};
     defered.resolve(returnData);
-  }).catch(error => console.log(error));
+  }).catch(error => console.log(error.response.status));
     // instagram.media('BMIghBeBqMK', function(err, media, remaining, limit) {
     //   if(err) return console.log(err);
     //   defered.resolve(media)

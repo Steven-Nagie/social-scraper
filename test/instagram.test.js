@@ -80,12 +80,8 @@ describe.only('TESTING INSTAGRAM', function(){
       })
       
 
-      
-      
-      
-
-
     })//End of Parsing Data
+
     describe('Instagram Profiles', function(){
     
     })//End of Instagram Profiles

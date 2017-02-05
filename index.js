@@ -56,8 +56,6 @@ io.on('connect', socket => {
     fbApi.getToken(data)
     .then(response => {
 
-      console.log(response)
-
       for(let url of data.postsURLs){
         if (url.includes('facebook.com')){
           fbApi.facebook(url)
@@ -72,7 +70,6 @@ io.on('connect', socket => {
             let parsedObj = tw.parseData(url)
             if(parsedObj.type === "post"){
               tw.getPost(parsedObj.endpoint, parsedObj.givenInput).then(profile => {
-                console.log(profile)
                 usersLoggedIn[data.userId].emit('twitterProfile', profile)
               });
             }
