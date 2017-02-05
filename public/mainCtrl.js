@@ -11,26 +11,51 @@
       vm.startProcess = startProcess;
       vm.login = login;
       vm.csv = [{
-        "Twitter Link": "",
-        "Who Tweeted It": "",
-        "Followers (tw)": "",
-        "Likes (tw)": "",
-        "Shares (tw)": "",
-        "Retweets": "",
-        "Replies": "",
-        "Facebook Link": "",
-        "Followers (fb)": "",
-        "Likes (fb)": "",
-        "Shares (fb)": "",
-        "Comments (fb)": "",
-        "Instagram Link": "",
-        "Followers (ig)": "",
-        "Likes (ig)": "",
-        "Comments (ig)": "",
-        "Video Views (ig)": "",
-        "Error Link": "",
-        "Error Message": ""
+        twitterLink: "",
+        whoTweetedIt: "",
+        twitterFollowers: "",
+        twitterLikes: "",
+        twitterShares: "",
+        retweets: "",
+        replies: "",
+        facebookLink: "",
+        facebookFollowers: "",
+        facebookLikes: "",
+        facebookShares: "",
+        facebookComments: "",
+        instagramLink: "",
+        instagramFollowers: "",
+        instagramLikes: "",
+        instagramComments: "",
+        instagramVideoViews: "",
+        errorLink: "",
+        errorMessage: ""
       }];
+      vm.gridOptions = {
+        data: vm.csv,
+        enableColumnResizing: true,
+        columnDefs: [
+          {name: 'twitterLink', displayName: "Twitter Link", width: "10%"},
+          {name: 'whoTweetedIt', displayName: "Who Tweeted It", width: '10%'},
+          {name: 'twitterFollowers', displayName: "Twitter Followers", width: '10%'},
+          {name: 'twitterLikes', displayName: "Twitter Likes", width: '10%'},
+          {name: 'twitterShares', displayName: "Twitter Shares", width: '10%'},
+          {name: 'retweets', displayName: "Retweets", width: '10%'},
+          {name: 'replies', displayName: "Replies", width: '10%'},
+          {name: 'facebookLink', displayName: "Facebook Link", width: '10%'},
+          {name: 'facebookFollowers', displayName: "Facebook Followers", width: '10%'},
+          {name: 'facebookLikes', displayName: "Facebook Likes", width: '10%'},
+          {name: 'facebookShares', displayName: "Facebook Shares", width: '10%'},
+          {name: 'facebookComments', displayName: "Facebook Comments", width: '10%'},
+          {name: 'instagramLink', displayName: "Instagram Link", width: '10%'},
+          {name: 'instagramFollowers', displayName: "Instagram Followers", width: '10%'},
+          {name: 'instagramLikes', displayName: "Instagram Likes", width: '10%'},
+          {name: 'instagramComments', displayName: "Instagram Comments", width: '10%'},
+          {name: 'instagramVideoViews', displayName: "Instagram Video Views", width: '10%'},
+          {name: 'errorLink', displayName: "Error Link", width: '10%'},
+          {name: 'errorMessage', displayName: "Error Message", width: '10%'}
+        ]
+      }
       vm.profiles = "";
       vm.countInput = 0;
       vm.countOutput = 0;
@@ -73,6 +98,10 @@
           // }
 
           vm.csv = csvService.readCSV(vm.profiles);
+          vm.gridOptions = {
+            data: vm.csv,
+            enableColumnResizing: true,
+          }
         });
       })
 

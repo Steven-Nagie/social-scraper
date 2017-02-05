@@ -75,25 +75,25 @@
         });
         let csv = cols.map((row) => {
           return {
-            "Twitter Link": row[0],
-            "Who Tweeted It": row[1],
-            "Followers (tw)": row[2],
-            "Likes (tw)": row[3],
-            "Shares (tw)": row[4],
-            "Retweets": row[5],
-            "Replies": row[6],
-            "Facebook Link": row[7],
-            "Followers (fb)": row[8],
-            "Likes (fb)": row[9],
-            "Shares (fb)": row[10],
-            "Comments (fb)": row[11],
-            "Instagram Link": row[12],
-            "Followers (ig)": row[13],
-            "Likes (ig)": row[14],
-            "Comments (ig)": row[15],
-            "Video Views (ig)": row[16],
-            "Error Link": row[17],
-            "Error Message": row[18]
+            twitterLink: row[0],
+            whoTweetedIt: row[1],
+            twitterFollowers: row[2],
+            twitterLikes: row[3],
+            twitterShares: row[4],
+            retweets: row[5],
+            replies: row[6],
+            facebookLink: row[7],
+            facebookFollowers: row[8],
+            facebookLikes: row[9],
+            facebookShares: row[10],
+            facebookComments: row[11],
+            instagramLink: row[12],
+            instagramFollowers: row[13],
+            instagramLikes: row[14],
+            instagramComments: row[15],
+            instagramVideoViews: row[16],
+            errorLink: row[17],
+            errorMessage: row[18]
           }
         })
         console.log(csv);
@@ -149,12 +149,6 @@
             profiles: profiles
           }
         })
-        // var data = {
-        //   facebook: facebook,
-        //   twitter: twitter,
-        //   instagram: instagram
-        // }
-        // $http.post('/exportCsv', data)
       }
 
     } //End of csvService
