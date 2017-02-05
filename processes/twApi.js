@@ -43,7 +43,9 @@ exports.validateData = function(twitterUrl){
   if(typeof(twitterUrl) !== 'string') return false; //Filters out all inputs that are not a string
   if(!twitterUrl.includes('twitter')) return false; //Filters out all inputs that do not have base Url
   if(!twitterUrl.includes('/')) return false; //Filters out all inputs that do not an endpoint
+
   // if(!twitterUrl.substring(twitterUrl.lastIndexOf('/') + 1).trim()) return false; //Filters out all inputs that the endpoint is an empty string. 
+
   return true;
 }
 
@@ -83,7 +85,7 @@ exports.getProfile = function(endpoint, twitterUrl){
       iuser_id: '',
       screen_name: endpoint
     }, (err, data, response) => {
-      if (err) return defered.resolve(buildErrorReport(error, response.statusCode, twitterUrl))
+      if (err) return defered.resolve(buildErrorReport(err, response.statusCode, twitterUrl))
       return defered.resolve(buildProfileFromScreenName(data, response.statusCode, twitterUrl));
     })
   return defered.promise
