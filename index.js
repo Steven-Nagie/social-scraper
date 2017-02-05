@@ -7,7 +7,7 @@ var express = require('express'),
     io = require('socket.io')(http),
     tw = require('./processes/twApi.js'),
     fbApi = require('./processes/fbApi.js'),
-    igApi = require('./processes/igApi.js'),
+    ig = require('./processes/igApi.js'),
     csv = require('./processes/csvExport.js');
 
 
@@ -21,8 +21,8 @@ app.use(function(req, res, next) {
 });
 
 // This is authoization to use the Instagram API
-app.get('/authorize_user', igApi.authorize_user);
-app.get('/handleauth', igApi.handleauth);
+app.get('/authorize_user', ig.authorize_user);
+app.get('/handleauth', ig.handleauth);
 // For creating csv file
 // No proper error handling here. Ideas?
 app.post('/exportCsv', function(req, res, next) {
@@ -62,8 +62,13 @@ io.on('connect', socket => {
           .then(profile => usersLoggedIn[data.userId].emit('facebookProfile', profile));
         }
         else if (url.includes('instagram.com')){
-          igApi.getInstagramProfile(url)
-          .then(profile => usersLoggedIn[data.userId].emit('instagramProfile', profile));
+          if(ig.validateData(url)){
+            let parsedObj = ig.parseData(url);
+            ig.getPost(parsedObj.shortcode, url)
+            .then(profile => {
+              usersLoggedIn[data.userId].emit('instagramProfile', profile)
+            })
+          }
         }
         else if (url.includes('twitter.com')){
           if(tw.validateData(url)){

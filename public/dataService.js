@@ -72,6 +72,7 @@
       });
 
       socket.on('instagramProfile', function(profile){
+        console.log(profile)
         angular.forEach(instagram_subscribers, function (cb) {
             cb(profile);
         });

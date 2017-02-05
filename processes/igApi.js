@@ -23,12 +23,30 @@ exports.handleauth = function(req, res) {
   });
 };
 
+const buildProfileFromShortcode = function (response, instagramUrl) {
+  return {
+    data: response.data, 
+    givenInput: instagramUrl,
+    status: response.status,
+    type: 'post',
+    ogLink: response
+  }
+}
+
+const buildErrorReport= function (error, instagramUrl) {
+  return {
+    givenInput: instagramUrl,
+    statusCode: error.status,
+    errText: error.statusText,
+  }
+}
+
+
 exports.validateData = function(instagramUrl){
   if(!instagramUrl) return false;  //Filters out all falsy inputs
   if(typeof(instagramUrl) !== 'string') return false; //Filters out all inputs that are not a string
   if(!instagramUrl.includes('instagram')) return false; //Filters out all inputs that do not have base Url
   if(!instagramUrl.includes('/')) return false; //Filters out all inputs that do not an endpoint
-  if(!instagramUrl.substring(instagramUrl.lastIndexOf('/') + 1).trim()) return false; //Filters out all inputs that the endpoint is an empty string. 
   return true;
 };
 
@@ -39,16 +57,14 @@ exports.parseData = function(instagramUrl){
 
 };
 
-exports.getInstagramProfile = function(shortcode){
+exports.getPost = function(shortcode, instagramUrl){
   let defered = q.defer();
-  //BMIghBeBqMK
   axios.get(`https://api.instagram.com/v1/media/shortcode/${shortcode}?access_token=${config.access_token}`).then(response => {
-    var returnData = {data: response.data.data, ogLink: data};
-    defered.resolve(returnData);
-  }).catch(error => console.log(error.response.status));
-    // instagram.media('BMIghBeBqMK', function(err, media, remaining, limit) {
-    //   if(err) return console.log(err);
-    //   defered.resolve(media)
-    // });
+    defered.resolve(buildProfileFromShortcode(response.data, instagramUrl));
+  }).catch(error => {
+    defered.resolve(buildErrorReport(error.response, instagramUrl))
+  })
+ 
   return defered.promise
+
 };
