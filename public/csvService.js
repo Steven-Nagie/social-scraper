@@ -15,7 +15,7 @@
         if (profile.error) {
           var csvContent = ` , , , , , , , , , , , , , , ,${profile.givenInput}, ${profile.error}\n`;
         } else {
-          var csvContent = ` , , , , , , , , , , , , , , ,${profile.givenInput}, There is an error with this input\n`;
+          var csvContent = ` , , , , , , , , , , , , , , ,${profile.givenInput},There is an error with this input\n`;
         }
         return csvContent;
       };
