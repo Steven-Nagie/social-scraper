@@ -113,7 +113,7 @@
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       vm.loading = {
         "z-index": "100",
-        "background-color": "red",
+        "background-color": "rgb(74,75,85)",
         "position": "absolute",
         "display": "none",
         "flex-direction": "column",
@@ -130,7 +130,7 @@
       vm.loadingBarOuter = {
         "height": "3vh",
         "width": "20vw",
-        "background-color": "blue"
+        "background-color": "white"
       }
 
       vm.percentLoadedStyle = {
@@ -144,11 +144,17 @@
         "height": "3vh",
         "width": "0vw",
         "float": "left",
-        "background-color": "green"
+        "background-color": "rgb(240,83,79)"
       }
 
       vm.loadingButton = {
-        "cursor": "pointer"
+        "cursor": "pointer",
+        "color": "white",
+        "border": "none",
+        "min-width": "15vw",
+        "max-width": "15vw",
+        "height": "30px",
+        "background-color": "rgb(240,83,79)"
       }
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -159,7 +165,6 @@
         vm.loading["display"] = "flex";
         vm.input = postsURLs.split(/\r?\n/);
         vm.countInput = vm.input.length;
-        // console.log(vm.input);
         dataService.startProcess(vm.input)
       };
 
