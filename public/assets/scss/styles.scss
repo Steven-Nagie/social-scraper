@@ -26,6 +26,40 @@ main {
   height: calc(100vh - 15px);
 }
 
+.loading {
+  z-index: 100;
+  background-color: red;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 30vh;
+  width: 30vw;
+  padding: 5vh 0 5vh 0;
+
+  .loading-bar-outer {
+    height: 3vh;
+    width: 20vw;
+    background-color: blue;
+
+    .loading-bar-inner {
+      height: 3vh;
+      width: 10vw;
+      float: right;
+      background-color: green;
+    }
+  }
+
+  button {
+    cursor: pointer;
+    z-index: 100;
+  }
+}
+
 .main-left {
   height: calc(100vh - 15px);
   min-width: 155px;

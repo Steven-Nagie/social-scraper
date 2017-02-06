@@ -75,6 +75,7 @@
         $scope.$apply(function () {
           console.log(profile);
           vm.countOutput += 1;
+          console.log("Input: ", vm.countInput, "Output: ", vm.countOutput);
 
           if (profile.error) {
             vm.profiles += csvService.parseProfileError(profile);
@@ -89,16 +90,15 @@
           }
 
           // Do we want to make it so that we continually update as we get new info, which would require that we sort the data even after it's been on the dom but will ensure that data is spit out continuously and irrelevant to errors, or do we want to sort before we do anything, which will be smoother but which means that the user won't see anything until everything is all done, and which means that if one of our inputs doesn't return anything we have a problem
-          // if (vm.countOutput === vm.countInput) {
-          //   vm.profiles.sort(sortbyInput(vm.input));
-          //   console.log(vm.profiles);
-          // }
-
-          vm.csv = csvService.readCSV(vm.profiles);
-          vm.gridOptions = {
-            data: vm.csv,
-            enableColumnResizing: true,
+          if (vm.countOutput === vm.countInput) {
+            // vm.profiles.sort(sortbyInput(vm.input));
+            vm.csv = csvService.readCSV(vm.profiles);
+            vm.gridOptions = {
+              data: vm.csv,
+              enableColumnResizing: true,
+            }
           }
+
         });
       })
 
@@ -119,6 +119,10 @@
       function login(){
         dataService.login()
       };
+
+      vm.getResultsNow = function() {
+        console.log("User wants results");
+      }
 
 
 

@@ -13,6 +13,11 @@
   <p>Social Post Crawler</p>
 </header>
 <main>
+  <!-- <div class="loading">
+    <h2>Loading, please wait</h2>
+    <div class="loading-bar-outer"><div class="loading-bar-inner"></div></div>
+    <button type="button" ng-click="vm.getResultsNow()">See results now</button>
+  </div> -->
   <div class="main-left">
     <button ng-click="vm.startProcess(vm.testInput)">Run Tests</button>
     <button class="go" id="goButton" ng-click="vm.startProcess(vm.input)"><span>GO!</span></button>
@@ -25,7 +30,7 @@
 
   <textarea class="input" rows="20" cols="33" ng-model="vm.input" placeholder="Enter Input Here"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
 
-
+  <!-- Problem with oversized window is with this div -->
   <div class="output">
     <div class="table" ui-grid="vm.gridOptions" uiGridAutoResize></div>
   </div>
