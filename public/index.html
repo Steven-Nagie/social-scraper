@@ -13,11 +13,11 @@
   <p>Social Post Crawler</p>
 </header>
 <main>
-  <!-- <div class="loading">
+  <div ng-style="vm.loading">
     <h2>Loading, please wait</h2>
-    <div class="loading-bar-outer"><div class="loading-bar-inner"></div></div>
-    <button type="button" ng-click="vm.getResultsNow()">See results now</button>
-  </div> -->
+    <div ng-style="vm.loadingBarOuter"><p ng-style="vm.percentLoadedStyle">{{vm.percentLoaded}}%</p><div ng-style="vm.loadingBarInner"></div></div>
+    <button type="button" ng-style="vm.loadingButton" ng-click="vm.getResultsNow()">See results now</button>
+  </div>
   <div class="main-left">
     <button ng-click="vm.startProcess(vm.testInput)">Run Tests</button>
     <button class="go" id="goButton" ng-click="vm.startProcess(vm.input)"><span>GO!</span></button>
