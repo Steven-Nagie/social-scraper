@@ -1,7 +1,6 @@
 const fs = require('fs');
 
 exports.createCSV = (data) => {
-  console.log(data);
   // They want instagram followers in there too, which we currently don't have.
   // They ask for Twitter likes, shares, retweets and replies. We give them statuses count (whatever that is), favorites count, and retweets
   fs.unlinkSync('./public/assets/everything.csv');

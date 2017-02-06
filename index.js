@@ -69,7 +69,7 @@ io.on('connect', socket => {
             })
         }
         else if (url.includes('twitter.com')){
-          if(tw.validateData(url)){
+          //if(tw.validateData(url)){
             let parsedObj = tw.parseData(url)
             if(parsedObj.type === "post"){
               tw.getPost(parsedObj.endpoint, parsedObj.givenInput).then(profile => {
@@ -77,11 +77,11 @@ io.on('connect', socket => {
               });
             }
             else if(parsedObj.type === "profile"){
-              tw.getProfile(parsedObj.endpoint).then(data => {
-                usersLoggedIn[data.userId].emit('profile', data)
+              tw.getProfile(parsedObj.endpoint, parsedObj.givenInput).then(profile => {
+                usersLoggedIn[data.userId].emit('profile', profile)
               });
             }
-          }
+          //}
         } else {
           // Do I have to return this?
           usersLoggedIn[data.userId].emit('profile', {givenInput: url, error: "Not a valid input. Check to ensure it is a Facebook, Instagram, or Twitter url."});
