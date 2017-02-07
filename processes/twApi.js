@@ -19,7 +19,6 @@ const buildProfileFromId = function (data, statusCode, givenInput) {
 }
 
 const buildProfileFromScreenName= function (data, statusCode, givenInput) {
-
   return {
     givenInput: givenInput,
     status: statusCode,
@@ -44,7 +43,10 @@ exports.validateData = function(twitterUrl){
   if(typeof(twitterUrl) !== 'string') return false; //Filters out all inputs that are not a string
   if(!twitterUrl.includes('twitter')) return false; //Filters out all inputs that do not have base Url
   if(!twitterUrl.includes('/')) return false; //Filters out all inputs that do not an endpoint
-  if(!twitterUrl.substring(twitterUrl.lastIndexOf('.com/') + 1).trim()) return false; 
+
+
+  // if(!twitterUrl.substring(twitterUrl.lastIndexOf('/') + 1).trim()) return false; //Filters out all inputs that the endpoint is an empty string.
+
   return true;
 }
 

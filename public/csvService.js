@@ -12,12 +12,15 @@
                                     PARSE PROFILE OBJECTS INTO STRINGS
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       this.parseProfileError = function(profile) {
-        var csvContent = ` , , , , , , , , , , , , , , ,${profile.givenInput}, ${profile.error}\n`;
+        if (profile.error) {
+          var csvContent = ` , , , , , , , , , , , , , , ,${profile.givenInput}, ${profile.error}\n`;
+        } else {
+          var csvContent = ` , , , , , , , , , , , , , , ,${profile.givenInput},There is an error with this input\n`;
+        }
         return csvContent;
       };
 
       this.parseProfileFacebook = function(profile) {
-        console.log(profile);
         //{givenInput, fan_count, comments, id, likes, post_id, shares, username}
         if(profile.comments) {
           var csvContent = ` , , , , ,${profile.givenInput},${profile.fan_count},${profile.likes},${profile.shares},${profile.comments}\n`;
