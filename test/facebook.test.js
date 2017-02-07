@@ -10,7 +10,7 @@ chai.use(chaiAsPromised);
 
 describe("FACEBOOK TESTING", function() {
 
-  describe('Data Validation', function(){
+  describe('fb.validateData', function(){
 
     it('Should not validate if data is not a string', function(){
       expect(fb.validateData(9872094352)).to.be.false
@@ -138,7 +138,7 @@ describe("FACEBOOK TESTING", function() {
 
   }) // end of Data Validation
 
-  describe("Parse url for posts or videos", function() {
+  describe("fb.parseDataPostsOrVideos", function() {
 
     it("Should return a username", function() {
       let response = fb.parseDataPostsOrVideos("https://www.facebook.com/cart0onz/posts/1797041023877382");
@@ -198,7 +198,7 @@ describe("FACEBOOK TESTING", function() {
 
   }) // End of Facebook POST and VIDEO parsing
 
-  describe("Parse url for photos", function() {
+  describe("fb.parseDataPhotos", function() {
 
     it("Should return a username", function() {
       let response = fb.parseDataPhotos("https://www.facebook.com/MassiveNetwork/photos/a.470062353036949.107449.194775607232293/1337412742968568/?type=3&theater");
@@ -218,7 +218,7 @@ describe("FACEBOOK TESTING", function() {
 
   }) // End of Facebook PHOTOS parsing
 
-  describe("Parse url for user", function() {
+  describe("fb.parseDataUser", function() {
 
     it("Should return a username (case 1)", function() {
       let response = fb.parseDataUser("https://www.facebook.com/aimeefullersnow/");
@@ -258,7 +258,7 @@ describe("FACEBOOK TESTING", function() {
 
   }) // End of Facebook USER parsing
 
-  describe("Parse url for permalink", function() {
+  describe("fb.parseDataPermalink", function() {
 
     it("Should return a username", function() {
       let response = fb.parseDataPermalink("https://www.facebook.com/permalink.php?story_fbid=1370824039607865&id=288340451189568");
@@ -286,8 +286,8 @@ describe("FACEBOOK TESTING", function() {
 
   }) // End of Facebook PERMALINK parsing
 
-  describe('Get User id', function() {
-    this.timeout(5000);
+  describe('fb.getUserIdAndFans && fb.parseDataPostsOrVideos', function() {
+    this.timeout(5000); 
     before(function(done) {
       fb.getToken().then(function(){done()});
     })
@@ -344,9 +344,9 @@ describe("FACEBOOK TESTING", function() {
 
   }) // End of Facebook GET USER ID
 
-  describe("Get post info", function() {
+  describe("fb.getPostInfo", function() {
     this.timeout(5000);
-    let userFull;
+    let userFull; 
     before(function(done) {
       fb.getToken().then(function(){done()});
     })
@@ -396,7 +396,7 @@ describe("FACEBOOK TESTING", function() {
 
   }) //End of Facebook GET POST INFO
 
-  describe("FACEBOOK TOTAL", function() {
+  describe("fb.facebook", function() {
     this.timeout(10000);
     before(function(done) {
       fb.getToken().then(function(){done()});
