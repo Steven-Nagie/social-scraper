@@ -27,7 +27,7 @@ exports.validateData = (url) => {
   if (!url.includes('facebook')) return false; //Filters out inputs w/out base url
   if (!url.includes('/')) return false; //For inputs without profile name
   if (!url.includes('.com')) return false; //Ensures that all links include .com
-  if(!url.substring(url.lastIndexOf('/') + 1).trim()) return false; //Ensures endpoint is not empty string
+  // if(!url.substring(url.lastIndexOf('/') + 1).trim()) return false; //Ensures endpoint is not empty string -> but this line of code breaks so we have to replace it
   return true;
 }
 

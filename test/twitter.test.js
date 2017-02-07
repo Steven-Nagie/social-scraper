@@ -5,9 +5,9 @@
     tw = require('../processes/twApi'),
     testData = require('./data');
 
-exports.test = describe('TWITTER TESTING', function(){
+describe('TWITTER TESTING', function(){
 
-    describe('Data Validation', function(){
+    describe.only('tw.validateData', function(){
 
       it('Should not validate if data is not a string', function(){
         expect(tw.validateData(9872094352)).to.be.false
@@ -102,11 +102,11 @@ exports.test = describe('TWITTER TESTING', function(){
       })
 
       it('Should not validate if parsed string is empty', function(){
-        expect(tw.validateData('twitter/')).to.be.false
+        expect(tw.validateData('twitter.com/')).to.be.false
       })
 
       it('should not validate if parsed string is a space', function(){
-        expect(tw.validateData('twitter/ ')).to.be.false
+        expect(tw.validateData('twitter.com/ ')).to.be.false
       })
 
       it('Should validate if missing .com', function(){
@@ -140,22 +140,11 @@ exports.test = describe('TWITTER TESTING', function(){
 
     }) // end of Data Validation
 
-    describe('Error Handling', function(){
-
-      it('should handle 404 errors', function(){
-        return tw.getPost('80400098860499616').then(response => {
-          console.log(response);
-          expect(response).to.have.all.keys('givenInput', 'status', 'error')
-          expect(response.error).to.eql('No status found with that ID.');
-          expect(response.status).to.eql(404);
-        })
-      })
-
-    })
+   
 
 
 
-    describe('Data Parsing', function(){  // My parsing logic assumes that the desired data is locaded after the last / and is the final part of the string. It also assumes that ID's and usernames will not contain an punctuation.
+    describe('tw.parseData', function(){  // My parsing logic assumes that the desired data is locaded after the last / and is the final part of the string. It also assumes that ID's and usernames will not contain an punctuation.
 
       it('should return post for post URLs', function() {
         let response = tw.parseData('https://twitter.com/highsteph/status/804000988604399616')
@@ -267,7 +256,7 @@ exports.test = describe('TWITTER TESTING', function(){
 
     })// end of Data Parsing
 
-    describe('Twitter Posts', function(){
+    describe('tw.getPost', function(){
       it('Should take full url', function(){
         return tw.getPost('804000988604399616').then(response => {
           expect(response).to.have.all.keys('followers_count', 'statuses_count', 'favorite_count', 'retweets', 'status', 'type', 'screen_name', 'name', 'givenInput')
@@ -281,12 +270,29 @@ exports.test = describe('TWITTER TESTING', function(){
       })
     }) // end of Twitter Posts
 
-    describe('Twitter Profiles', function(){
+    describe('tw.getProfile', function(){
       it('Should take full url', function(){
         return tw.getProfile('JamieAsnow').then(response => {
           expect(response).to.have.all.keys('followers_count', 'statuses_count','status', 'type', 'screen_name', 'name', 'givenInput')
         })
       })
-
     })// end of twitter Profiles
+
+    describe('tw.getPost Error Handling', function(){
+
+    it('should handle 404 errors', function(){
+      return tw.getPost('80400098860499616').then(response => {
+        expect(response).to.have.all.keys('givenInput', 'status', 'error')
+        expect(response.status).to.eql(404);
+      })
+    })
+
+    it('should handle 404 errors', function(){
+      return tw.getPost('asdf').then(response => {
+        expect(response).to.have.all.keys('givenInput', 'status', 'error')
+        expect(response.status).to.eql(404);
+      })
+    })
+
+  })
 }) // end of TWITTER TESTING
