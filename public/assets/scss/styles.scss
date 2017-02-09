@@ -77,14 +77,17 @@ textarea, input, button { outline: none; }
   width: 75vw;
   color:#333;
   font-size: 12px;
+  height: calc(100vh - 15px);
+  width: calc(100vw - 355px);
+  min-width: 500px;
 
   // .table {
   //   box-sizing: border-box;
   //   color:#333;
   //   font-size: 12px;
   //   // border: none;
-  //   height: calc(100vh - 15px);
-  //   width: calc(100vw - 355px);
-  //   min-width: 500px;
+  //   
+  //   
+  //   
   // }
 }
