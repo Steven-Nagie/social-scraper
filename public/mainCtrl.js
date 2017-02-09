@@ -158,11 +158,11 @@
         vm.profilesArray.forEach(function(profile) {
           if (profile.error) {
             vm.profilesString += csvService.parseProfileError(profile);
-          } else if (profile.givenInput.includes('facebook')) {
+          } else if (profile.url.includes('facebook')) {
             vm.profilesString += csvService.parseProfileFacebook(profile);
-          } else if (profile.givenInput.includes('twitter')) {
+          } else if (profile.url.includes('twitter')) {
             vm.profilesString += csvService.parseProfileTwitter(profile);
-          } else if (profile.givenInput.includes('instagram')) {
+          } else if (profile.url.includes('instagram')) {
             vm.profilesString += csvService.parseProfileInstagram(profile);
           } else {
             vm.profilesString += csvService.parseProfileError(profile);

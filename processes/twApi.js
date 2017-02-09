@@ -92,8 +92,7 @@ exports.parseData = function(twitterUrl){
 }
 
 exports.getPost = function(endpoint, twitterUrl){
-  console.log('post')
-  console.log(endpoint)
+
   let defered = q.defer()
   twitter.get('statuses/show', {
       id: endpoint
@@ -106,8 +105,7 @@ exports.getPost = function(endpoint, twitterUrl){
 
 
 exports.getProfile = function(endpoint, twitterUrl){
-  console.log('profile')
-  console.log(endpoint)
+
   let defered = q.defer()
     twitter.get('users/show', {
       iuser_id: '',

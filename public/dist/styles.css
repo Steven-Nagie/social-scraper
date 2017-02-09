@@ -59,7 +59,8 @@ main {
 .input {
   min-width: 200px;
   max-width: 1000px;
-  resize: horizontal; }
+  resize: horizontal;
+  color: #222; }
 
 .output {
   height: calc(100vh - 15px);
