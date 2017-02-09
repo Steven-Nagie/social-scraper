@@ -29,21 +29,7 @@
         errorLink: "",
         errorMessage: ""
       }];
-      vm.gridOptions = {
-        data: vm.csv,
-        enableColumnResizing: true,
-        columnDefs: [ 
-          {name: 'influencer',       displayName: "Influencer",       width: "10%"},
-          {name: 'followers',        displayName: "Followers",        width: '10%'},
-          {name: 'url',              displayName: "URL",              width: '10%'},
-          {name: 'postingDate',     displayName: "Posting Date",     width: '10%'},
-          {name: 'platform',         displayName: "Platform",         width: '10%'},
-          {name: 'likes',            displayName: "Likes",            width: '10%'},
-          {name: 'shares/Re-Tweets', displayName: "Shares/Re-Tweets", width: '10%'},
-          {name: 'comments',         displayName: "Comments",    width: '10%'},
-          {name: 'views',            displayName: "Views",            width: '10%'},
-        ]
-      }
+     
       vm.profilesString = "";
       vm.profilesArray = [];
       vm.countInput = 0;
@@ -66,16 +52,17 @@
       }
 
       dataService.subscribeToData(function (profile) {
+        console.log(profile)
         $scope.$apply(function () {
           vm.countOutput += 1;
           vm.loadingBarInner["width"] = ((vm.countOutput/vm.countInput) * 20) + "vw";
           vm.percentLoaded = Math.round((vm.countOutput/vm.countInput) * 100);
-          console.log(vm.percentLoaded);
-
           vm.profilesArray.push(profile);
+
           vm.tabledata = {
-            items: vm.returnData
+            items: vm.profilesArray
           }
+
           if (vm.countOutput === vm.countInput) {
             vm.profilesArray.sort(sortbyInput(vm.input));
             vm.profilesArray.forEach(function(profile) {
