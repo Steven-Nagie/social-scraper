@@ -2,7 +2,7 @@
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,300);
 
-body,h1,h2,h3,h4,h5,h6,.main,textarea,input, button, .header {
+body,h1,h2,h3,h4,h5,h6,main,textarea,input,button, .header,output {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 100;
   color: rgb(186,185,186);
@@ -21,14 +21,14 @@ textarea, input, button { outline: none; }
   text-align: center;
 }
 
-.main {
+main {
   display: flex;
   height: calc(100vh - 15px);
   overflow-y:auto;
   overflow-x:auto;
 }
 
-.main-left {
+.sidebar {
   height: calc(100vh - 15px);
   min-width: 155px;
   max-width: 155px;
@@ -70,6 +70,7 @@ textarea, input, button { outline: none; }
   min-width: 200px;
   max-width: 1000px;
   resize: horizontal;
+  color: #222;
 }
 
 .output {
@@ -77,14 +78,7 @@ textarea, input, button { outline: none; }
   width: 75vw;
   color:#333;
   font-size: 12px;
-
-  // .table {
-  //   box-sizing: border-box;
-  //   color:#333;
-  //   font-size: 12px;
-  //   // border: none;
-  //   height: calc(100vh - 15px);
-  //   width: calc(100vw - 355px);
-  //   min-width: 500px;
-  // }
+  height: calc(100vh - 15px);
+  width: calc(100vw - 355px);
+  min-width: 500px;
 }

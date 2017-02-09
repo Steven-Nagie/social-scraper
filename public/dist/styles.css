@@ -1,6 +1,6 @@
 /**************MAIN STYLES**********/
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,300);
-body, h1, h2, h3, h4, h5, h6, .main, textarea, input, button, .header {
+body, h1, h2, h3, h4, h5, h6, main, textarea, input, button, .header, output {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 100;
   color: #bab9ba;
@@ -18,13 +18,13 @@ textarea, input, button {
   font-size: 10px;
   text-align: center; }
 
-.main {
+main {
   display: flex;
   height: calc(100vh - 15px);
   overflow-y: auto;
   overflow-x: auto; }
 
-.main-left {
+.sidebar {
   height: calc(100vh - 15px);
   min-width: 155px;
   max-width: 155px;
@@ -34,7 +34,7 @@ textarea, input, button {
   align-items: center;
   justify-content: flex-start;
   padding-top: 2px; }
-  .main-left button {
+  .sidebar button {
     min-width: 150px;
     max-width: 150px;
     height: 30px;
@@ -42,9 +42,9 @@ textarea, input, button {
     border: none;
     margin: 2px;
     color: white; }
-  .main-left button:hover {
+  .sidebar button:hover {
     background-color: #43434D; }
-  .main-left .export-button {
+  .sidebar .export-button {
     min-width: 150px;
     max-width: 150px;
     height: 30px;
@@ -53,19 +53,23 @@ textarea, input, button {
     bottom: 2px;
     left: 0;
     background-color: #f0534f; }
-  .main-left .export-button:hover {
+  .sidebar .export-button:hover {
     background-color: #f81525; }
 
 .input {
   min-width: 200px;
   max-width: 1000px;
-  resize: horizontal; }
+  resize: horizontal;
+  color: #222; }
 
 .output {
   height: calc(100vh - 15px);
   width: 75vw;
   color: #333;
-  font-size: 12px; }
+  font-size: 12px;
+  height: calc(100vh - 15px);
+  width: calc(100vw - 355px);
+  min-width: 500px; }
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

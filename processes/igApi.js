@@ -23,20 +23,38 @@ exports.handleauth = function(req, res) {
   });
 };
 
-const buildProfileFromShortcode = function (response, instagramUrl) {
+const buildProfileFromShortcode = function (data, instagramUrl) {
+
   return {
-    data: response.data,
-    givenInput: instagramUrl,
-    status: response.status,
     type: 'post',
+    influencer: data.user.username,
+    followers: '',
+    url: instagramUrl,
+    postingDate: '1/1/2017',
+    platform: 'Instagram',
+    likes: data.likes.count,
+    shares: '',
+    comments: data.comments.count,
+    views: ''
+
   }
-}
+}    
 
 const buildErrorReport= function (error, instagramUrl) {
+  console.log('from error')
   return {
-    givenInput: instagramUrl,
-    statusCode: error.status,
-    error: error.statusText,
+  
+    type: 'post',
+    influencer: '',
+    followers: '',
+    url: instagramUrl,
+    postingDate: '1/1/2017',
+    platform: 'Instagram',
+    likes: '',
+    shares: '',
+    comments: '',
+    views: '',
+
   }
 }
 
@@ -59,9 +77,9 @@ exports.parseData = function(instagramUrl){
 exports.getPost = function(shortcode, instagramUrl){
   let defered = q.defer();
   axios.get(`https://api.instagram.com/v1/media/shortcode/${shortcode}?access_token=${config.access_token}`).then(response => {
-    defered.resolve(buildProfileFromShortcode(response.data, instagramUrl));
+    defered.resolve(buildProfileFromShortcode(response.data.data, instagramUrl));
   }).catch(error => {
-    defered.resolve(buildErrorReport(error.response, instagramUrl))
+    // if (error) defered.resolve(buildErrorReport(error.response, instagramUrl))
   })
 
   return defered.promise

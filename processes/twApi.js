@@ -4,36 +4,56 @@ const q = require('q'),
 
 let twitter = new Twit(config.twitter)
 
-const buildProfileFromId = function (data, statusCode, givenInput) {
+const buildProfileFromId = function (data, statusCode, twitterUrl) {
   return {
-    givenInput: givenInput,
     status: statusCode,
     type: 'post',
-    screen_name: data.user.screen_name,
     name: data.user.name,
-    followers_count: data.user.followers_count,
-    statuses_count: data.user.statuses_count,
-    favorite_count: data.favorite_count,
-    retweets: data.retweet_count
+    influencer: data.user.screen_name,
+    followers: data.user.followers_count,
+    url: twitterUrl,
+    postingDate: '1/1/2017',
+    platform: 'Twitter',
+    likes: data.favorite_count,
+    shares: data.retweet_count,
+    comments: '',
+    views: '',
+    error: ''
   }
 }
 
-const buildProfileFromScreenName= function (data, statusCode, givenInput) {
+const buildProfileFromScreenName= function (data, statusCode, twitterUrl) {
+
   return {
-    givenInput: givenInput,
     status: statusCode,
     type: 'profile',
-    screen_name: data.screen_name,
-    name: data.name,
-    followers_count: data.followers_count,
-    statuses_count: data.statuses_count
+    status: statusCode,
+    influencer: data.screen_name,
+    followers: data.followers_count,
+    url: twitterUrl,
+    postingDate: '',
+    platform: 'Twitter',
+    likes: '',
+    shares: '',
+    comments: '',
+    views: '',
+    error: ''
   }
 }
 
-const buildErrorReport= function ( error, statusCode, givenInput) {
+const buildErrorReport= function ( error, statusCode, twitterUrl) {
   return {
-    givenInput: givenInput,
+    type: 'profile',
     status: statusCode,
+    influencer: '',
+    followers: '',
+    url: twitterUrl,
+    postingDate: '1/1/2017',
+    platform: 'Twitter',
+    likes: '',
+    shares: '',
+    comments: '',
+    views: '',
     error: error.message
   }
 }
@@ -51,7 +71,10 @@ exports.validateData = function(twitterUrl){
 }
 
 exports.parseData = function(twitterUrl){
-  let endpoint = twitterUrl.substring(twitterUrl.lastIndexOf('.com/') + 1).replace(/\s/g,'').replace(/[!@#$%^&*()":;',?<>_=+|-]/ig, '')
+  let endpoint = twitterUrl.substring(twitterUrl.lastIndexOf('/') + 1).replace(/\s/g,'').replace(/[!@#$%^&*()":;',?<>_=+|-]/ig, '')
+
+  console.log(endpoint)
+
   if (Number(endpoint)){ // checks if the endpoint is a string or a number
     return {
       type: 'post',
@@ -69,6 +92,7 @@ exports.parseData = function(twitterUrl){
 }
 
 exports.getPost = function(endpoint, twitterUrl){
+
   let defered = q.defer()
   twitter.get('statuses/show', {
       id: endpoint
@@ -81,6 +105,7 @@ exports.getPost = function(endpoint, twitterUrl){
 
 
 exports.getProfile = function(endpoint, twitterUrl){
+
   let defered = q.defer()
     twitter.get('users/show', {
       iuser_id: '',
