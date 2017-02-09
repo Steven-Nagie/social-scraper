@@ -2,7 +2,7 @@
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,300);
 
-body,h1,h2,h3,h4,h5,h6,main,textarea,input, button, .header {
+body,h1,h2,h3,h4,h5,h6,.main,textarea,input, button, .header {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 100;
   color: rgb(186,185,186);
@@ -21,9 +21,11 @@ textarea, input, button { outline: none; }
   text-align: center;
 }
 
-main {
+.main {
   display: flex;
   height: calc(100vh - 15px);
+  overflow-y:auto;
+  overflow-x:auto;
 }
 
 .main-left {
@@ -73,13 +75,16 @@ main {
 .output {
   height: calc(100vh - 15px);
   width: 75vw;
-  .table {
-    box-sizing: border-box;
-    color:#333;
-    font-size: 12px;
-    // border: none;
-    height: calc(100vh - 15px);
-    width: calc(100vw - 355px);
-    min-width: 500px;
-  }
+  color:#333;
+  font-size: 12px;
+
+  // .table {
+  //   box-sizing: border-box;
+  //   color:#333;
+  //   font-size: 12px;
+  //   // border: none;
+  //   height: calc(100vh - 15px);
+  //   width: calc(100vw - 355px);
+  //   min-width: 500px;
+  // }
 }

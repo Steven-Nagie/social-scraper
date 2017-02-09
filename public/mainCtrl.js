@@ -32,24 +32,16 @@
       vm.gridOptions = {
         data: vm.csv,
         enableColumnResizing: true,
-        columnDefs: [
-          {name: 'twitterLink', displayName: "Twitter Link", width: "10%"},
-          {name: 'whoTweetedIt', displayName: "Username", width: '10%'},
-          {name: 'twitterFollowers', displayName: "Followers (tw)", width: '10%'},
-          {name: 'twitterLikes', displayName: "Likes (tw)", width: '10%'},
-          {name: 'retweets', displayName: "Retweets", width: '10%'},
-          {name: 'facebookLink', displayName: "Facebook Link", width: '10%'},
-          {name: 'facebookFollowers', displayName: "Followers (fb)", width: '10%'},
-          {name: 'facebookLikes', displayName: "Likes (fb)", width: '10%'},
-          {name: 'facebookShares', displayName: "Shares (fb)", width: '10%'},
-          {name: 'facebookComments', displayName: "Comments (fb)", width: '10%'},
-          {name: 'instagramLink', displayName: "Instagram Link", width: '10%'},
-          {name: 'instagramFollowers', displayName: "Followers (ig)", width: '10%'},
-          {name: 'instagramLikes', displayName: "Likes (ig)", width: '10%'},
-          {name: 'instagramComments', displayName: "Comments (ig)", width: '10%'},
-          {name: 'instagramVideoViews', displayName: "Instagram Video Views", width: '10%'},
-          {name: 'errorLink', displayName: "Error Link", width: '10%'},
-          {name: 'errorMessage', displayName: "Error Message", width: '10%'}
+        columnDefs: [ 
+          {name: 'influencer',       displayName: "Influencer",       width: "10%"},
+          {name: 'followers',        displayName: "Followers",        width: '10%'},
+          {name: 'url',              displayName: "URL",              width: '10%'},
+          {name: 'postingDate',     displayName: "Posting Date",     width: '10%'},
+          {name: 'platform',         displayName: "Platform",         width: '10%'},
+          {name: 'likes',            displayName: "Likes",            width: '10%'},
+          {name: 'shares/Re-Tweets', displayName: "Shares/Re-Tweets", width: '10%'},
+          {name: 'comments',         displayName: "Comments",    width: '10%'},
+          {name: 'views',            displayName: "Views",            width: '10%'},
         ]
       }
       vm.profilesString = "";
@@ -81,7 +73,9 @@
           console.log(vm.percentLoaded);
 
           vm.profilesArray.push(profile);
-
+          vm.tabledata = {
+            items: vm.returnData
+          }
           if (vm.countOutput === vm.countInput) {
             vm.profilesArray.sort(sortbyInput(vm.input));
             vm.profilesArray.forEach(function(profile) {
@@ -163,9 +157,9 @@
 
       function startProcess(postsURLs){
         vm.loading["display"] = "flex";
-        vm.input = postsURLs.split(/\r?\n/);
-        vm.countInput = vm.input.length;
-        dataService.startProcess(vm.input)
+        let urlArray = postsURLs.split(/\r?\n/);
+        vm.countInput = urlArray.length;
+        dataService.startProcess(urlArray);
       };
 
       function login(){
