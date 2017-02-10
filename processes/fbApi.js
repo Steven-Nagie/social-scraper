@@ -92,8 +92,17 @@ exports.getPostInfo = (obj) => {
     if(!res || res.error) {
       defered.resolve(!res ? {url: obj.url, influencer: obj.influencer, platform: "Facebook", error: 'Invalid input. Remember that private user profiles are not legally accessible.'} : {url: obj.url, influencer: obj.influencer, platform: "Facebook", error: `${res.error.message}. Remember that private user profiles are not legally accessible.`});
     }
+    let time = "Unknown";
+    if (res.created_time) {
+      // If they wanted the international format this could all be shortened into:
+      // obj.postingDate = !res.created_time ? "Unknown" : res.created_time..substring(0, res.created_time.indexOf('T')).split('-').reverse().join('/');
+      time = res.created_time.substring(0, res.created_time.indexOf('T')).split('-');
+      let year = time.shift();
+      time.push(year);
+      time = time.join('/');
+    }
     obj.type = "post"
-    obj.postingDate = !res.created_time ? "Unknown" : res.created_time;
+    obj.postingDate = time;
     obj.likes = !res.likes ? 0 : res.likes.data.length;
     obj.shares = !res.shares ? 0 : res.shares.count;
     obj.comments = !res.comments ? 0 : res.comments.data.length;
