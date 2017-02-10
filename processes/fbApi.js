@@ -41,7 +41,7 @@ exports.parseDataPostsOrVideos = (url) => {
   } else {
     arr = remainingUrl.split('/posts/');
   }
-  let obj = {givenInput: url, username: arr[0], post_id: arr[1].replace(/\//g, '')};
+  let obj = {url: url, influencer: arr[0], post_id: arr[1].replace(/\//g, '')};
   return obj;
 }
 
@@ -51,7 +51,7 @@ exports.parseDataPhotos = (url) => {
   remainingUrl = remainingUrl.substring(remainingUrl.lastIndexOf('.com') + 5); //Eliminates any empty space then gets rid of everything before the username
   // index of and lastindex of /
   let arr = remainingUrl.split('/photos/');
-  let obj = {givenInput: url, username: arr[0], post_id: arr[1].substring(arr[1].indexOf('/') + 1, arr[1].lastIndexOf('/'))};
+  let obj = {url: url, influencer: arr[0], post_id: arr[1].substring(arr[1].indexOf('/') + 1, arr[1].lastIndexOf('/'))};
   return obj;
 }
 
@@ -61,24 +61,26 @@ exports.parseDataUser = (url) => {
   if (username.includes('/')) {
     username = username.slice(0, username.indexOf('/'));
   }
-  let obj = {givenInput: url, username: username};
+  let obj = {url: url, influencer: username};
   return obj;
 }
 
 exports.parseDataPermalink = (url) => {
     var remainingUrl = url.replace(/\s/g, '');
-    let obj = {givenInput: url, username: remainingUrl.substring(remainingUrl.lastIndexOf('id=') + 3), post_id: remainingUrl.substring(remainingUrl.indexOf('id=') + 3, remainingUrl.indexOf('&'))};
+    let obj = {url: url, influencer: remainingUrl.substring(remainingUrl.lastIndexOf('id=') + 3), post_id: remainingUrl.substring(remainingUrl.indexOf('id=') + 3, remainingUrl.indexOf('&'))};
     return obj;
 }
 
 exports.getUserIdAndFans =(obj) => {
     let defered = q.defer();
-    app.api(`${obj.username}?fields=id,fan_count`, function(res) {
+    app.api(`${obj.influencer}?fields=id,fan_count`, function(res) {
       if(!res || res.error) {
-        defered.resolve(!res ? {givenInput: obj.givenInput, username: obj.username, error: 'Invalid input. Remember that private user profiles are not legally accessible.'} : {givenInput: obj.givenInput, username: obj.username, error: `${res.error.message}. Remember that private user profiles are not legally accessible.`});
+        defered.resolve(!res ? {url: obj.url, influencer: obj.influencer, platform: "Facebook", error: 'Invalid input. Remember that private user profiles are not legally accessible.'} : {url: obj.url, influencer: obj.influencer, platform: "Facebook", error: `${res.error.message}. Remember that private user profiles are not legally accessible.`});
       }
+      obj.platform = "Facebook";
+      obj.type = "user";
       obj.id = res.id;
-      obj.fan_count = res.fan_count;
+      obj.followers = res.fan_count;
       defered.resolve(obj);
     });
     return defered.promise;
@@ -86,10 +88,12 @@ exports.getUserIdAndFans =(obj) => {
 
 exports.getPostInfo = (obj) => {
   let defered = q.defer();
-  app.api(`${obj.id}_${obj.post_id}?fields=shares.limit(1000000),likes.limit(1000000),comments.limit(1000000)`, function(res)  {
+  app.api(`${obj.id}_${obj.post_id}?fields=created_time,shares.limit(1000000),likes.limit(1000000),comments.limit(1000000)`, function(res)  {
     if(!res || res.error) {
-      defered.resolve(!res ? {givenInput: obj.givenInput, username: obj.username, error: 'Invalid input. Remember that private user profiles are not legally accessible.'} : {givenInput: obj.givenInput, username: obj.username, error: `${res.error.message}. Remember that private user profiles are not legally accessible.`});
+      defered.resolve(!res ? {url: obj.url, influencer: obj.influencer, platform: "Facebook", error: 'Invalid input. Remember that private user profiles are not legally accessible.'} : {url: obj.url, influencer: obj.influencer, platform: "Facebook", error: `${res.error.message}. Remember that private user profiles are not legally accessible.`});
     }
+    obj.type = "post"
+    obj.postingDate = !res.created_time ? "Unknown" : res.created_time;
     obj.likes = !res.likes ? 0 : res.likes.data.length;
     obj.shares = !res.shares ? 0 : res.shares.count;
     obj.comments = !res.comments ? 0 : res.comments.data.length;

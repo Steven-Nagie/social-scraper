@@ -13,7 +13,6 @@ var express = require('express'),
 
 app.use(bodyParser.json());
 app.use(express.static('./public'));
-// app.use('/bower_components', express.static('/bower_components'));
 app.use(morgan('dev'))
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

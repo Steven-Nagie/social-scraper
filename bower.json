@@ -12,8 +12,8 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.6.2",
     "jquery": "^3.1.1",
-    "handsontable": "^0.30.1"
+    "handsontable": "^0.30.1",
+    "angular": "^1.6.2"
   }
 }
