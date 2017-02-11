@@ -22,18 +22,18 @@
       $stateProvider
       .state('main', {
         url: '/',
-        templateUrl: 'routs/main.html',
-        controller: ''
+        templateUrl: 'routs/main/main.html',
+        controller: 'MainCtrl as vm'
       })
       .state('login', {
         url: '/login',
-        templateUrl: 'routs/login.html',
-        controller: ''
+        templateUrl: 'routs/login/login.html',
+        controller: 'loginCtrl'
       })
       .state('signup', {
         url: '/signup',
-        templateUrl: 'routs/signup.html',
-        controller: ''
+        templateUrl: 'routs/signup/signup.html',
+        controller: 'signupCtrl'
       })
 
       //This is satellizer --> 
