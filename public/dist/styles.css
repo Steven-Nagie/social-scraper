@@ -1,6 +1,6 @@
 /**************MAIN STYLES**********/
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,300);
-body, h1, h2, h3, h4, h5, h6, main, textarea, input, button, .header, output {
+body, h1, h2, h3, h4, h5, h6, main, textarea, input, button, .header, output, section {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 100;
   color: #bab9ba;
@@ -70,6 +70,81 @@ main {
   height: calc(100vh - 15px);
   width: calc(100vw - 355px);
   min-width: 500px; }
+
+.loginMain {
+  background-color: #4a4b55;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.loginModal {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #3E3F47;
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.loginModal h1 {
+  margin: 50px;
+  font-size: 25px; }
+
+.loginModal input {
+  margin: 10px;
+  width: 150px;
+  height: 30px; }
+
+.loginButton {
+  margin: 50px 0px 10px 0px;
+  background-color: #f0534f;
+  color: white;
+  font-size: 12px;
+  height: 35px;
+  width: 110px;
+  text-align: center;
+  padding-top: 12px; }
+
+.creatAccount {
+  font-size: 10px;
+  font-weight: 100; }
+
+.creatAccount:hover {
+  text-decoration: underline; }
+
+.signup {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #3E3F47;
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.signup h1 {
+  margin: 20px;
+  font-size: 18px; }
+
+.signup input {
+  color: #333;
+  margin: 5px;
+  width: 150px;
+  height: 30px; }
+
+.signupButton {
+  margin: 20px 0px 10px 0px;
+  background-color: #f0534f;
+  color: white;
+  font-size: 12px;
+  height: 35px;
+  width: 110px;
+  text-align: center;
+  padding-top: 12px; }
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

@@ -8,41 +8,24 @@
 </head>
 
 <body ng-controller="MainCtrl as vm">
-
-
-  <header class="header">
-    <p>Social Post Crawler</p>
-  </header>
-  <main class="main">
-
-    <!--<div ng-style="vm.loading">
-      <h2>Loading, please wait</h2>
-      <div ng-style="vm.loadingBarOuter"><p ng-style="vm.percentLoadedStyle">{{vm.percentLoaded}}%</p><div ng-style="vm.loadingBarInner"></div></div>
-      <button type="button" ng-style="vm.loadingButton" ng-click="vm.getResultsNow()">See results now</button>
-    </div>-->
-    
-    <sidebar class="sidebar"></sidebar>
-
-    <textarea class="input" rows="20" cols="33" ng-model="vm.input" placeholder="Enter Input Here"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" wrap="off"></textarea>
-    
-    <output class="output"></output>
- 
-  </main>
-
-
-
+  
+<ui-view></ui-view>
 
 
 
 
   <script src="./bower_components/angular/angular.js"></script>
   <script src="./bower_components/jquery/dist/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
+  <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.js"></script>
+
   <script src="./bower_components/handsontable/dist/handsontable.full.js"></script>
   <script src="./bower_components/ngHandsontable/dist/ngHandsontable.js"></script>
 
   <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 
   <script src="app.js"></script>
+  <script src="routs.js"></script>
   <script src="MainCtrl.js"></script>
   <script src="dataService.js"></script>
   <script src="csvService.js"></script>

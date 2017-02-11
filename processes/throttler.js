@@ -50,4 +50,4 @@ function speedOk(){
    }
  }
 
- throttler(alphabet, 0);
+ 
