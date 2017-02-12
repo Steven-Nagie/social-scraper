@@ -2,7 +2,7 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,300);
 body, h1, h2, h3, h4, h5, h6, main, textarea, input, button, .header, output, section {
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: 100;
+  font-weight: 200;
   color: #bab9ba;
   line-height: 1.5;
   box-sizing: border-box; }
@@ -34,6 +34,8 @@ main {
   align-items: center;
   justify-content: flex-start;
   padding-top: 2px; }
+  .sidebar .bold {
+    font-weight: 500; }
   .sidebar button {
     min-width: 150px;
     max-width: 150px;
@@ -43,7 +45,8 @@ main {
     margin: 2px;
     color: white; }
   .sidebar button:hover {
-    background-color: #43434D; }
+    background-color: #43434D;
+    border-left: 1px solid #f0534f; }
   .sidebar .export-button {
     min-width: 150px;
     max-width: 150px;
@@ -146,6 +149,21 @@ main {
   text-align: center;
   padding-top: 12px; }
 
+/* Include this file in your html if you are using the CSP mode. */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide:not(.ng-hide-animate) {
+  display: none !important; }
+
+ng\:form {
+  display: block; }
+
+.ng-animate-shim {
+  visibility: hidden; }
+
+.ng-anchor {
+  position: absolute; }
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -189,21 +207,6 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0; }
-
-/* Include this file in your html if you are using the CSP mode. */
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
-.ng-cloak, .x-ng-cloak,
-.ng-hide:not(.ng-hide-animate) {
-  display: none !important; }
-
-ng\:form {
-  display: block; }
-
-.ng-animate-shim {
-  visibility: hidden; }
-
-.ng-anchor {
-  position: absolute; }
 
 @charset "UTF-8";
 /*!
