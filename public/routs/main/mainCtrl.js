@@ -4,9 +4,9 @@
     .module('ss')
     .controller('MainCtrl', MainCtrl)
 
-    MainCtrl.$inject = ['$scope', 'dataService', 'csvService']
+    MainCtrl.$inject = ['$scope', '$timeout', '$mdSidenav', 'dataService', 'csvService']
 
-    function MainCtrl($scope, dataService, csvService){
+    function MainCtrl($scope, $timeout, $mdSidenav, dataService, csvService){
       let vm = this;
       vm.startProcess = startProcess;
       vm.login = login;
@@ -191,6 +191,16 @@
           }
         });
       }
+
+
+      $scope.toggleLeft = buildToggler('left');
+      $scope.toggleRight = buildToggler('right');
+      function buildToggler(componentId) {
+        return function() {
+          $mdSidenav(componentId).toggle();
+        }
+      }
+
 
 
     }; //End of MainCtrl

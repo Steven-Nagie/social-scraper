@@ -7,6 +7,6 @@
     LoginCtrl.$inject = ['$scope']
 
     function LoginCtrl($scope){
-
+     
     }
-})
+})();

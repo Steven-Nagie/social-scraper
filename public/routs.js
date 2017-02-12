@@ -28,12 +28,12 @@
       .state('login', {
         url: '/login',
         templateUrl: 'routs/login/login.html',
-        controller: 'loginCtrl'
+        controller: 'LoginCtrl as vm'
       })
       .state('signup', {
         url: '/signup',
         templateUrl: 'routs/signup/signup.html',
-        controller: 'signupCtrl'
+        controller: 'SignupCtrl as vm'
       })
 
       //This is satellizer --> 

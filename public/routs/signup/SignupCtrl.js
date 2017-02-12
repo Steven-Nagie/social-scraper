@@ -2,11 +2,11 @@
   'use strict'
   angular
     .module('ss')
-    .controller('signupCtrl', signupCtrl)
+    .controller('SignupCtrl', SignupCtrl)
 
-    signupCtrl.$inject = ['$scope']
+    SignupCtrl.$inject = ['$scope']
 
-    function signupCtrl($scope){
+    function SignupCtrl($scope){
 
     }
-})
+})();
