@@ -1,5 +1,6 @@
 (function() {
   'use strict'
   angular
-    .module('ss', ['ngHandsontable'])
+    .module('ss', ['ngHandsontable','ui.router', 'satellizer', 'ngMaterial'])
+    
 })();
