@@ -4,6 +4,7 @@
     .module('ss')
     .config(function($stateProvider, $urlRouterProvider, $authProvider){ 
 
+      $urlRouterProvider.when('', '/')
       $urlRouterProvider.otherwise('/');
 
       // let skipIfLoggedIn = ['$q', '$location', '$auth', ($q, $location, $auth) => {
