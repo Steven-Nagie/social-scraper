@@ -1,0 +1,4 @@
+Weird Stuff
+-----------
+The loading bar
+vm.countOutput and vm.countInput currently aren't working

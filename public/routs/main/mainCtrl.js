@@ -48,7 +48,7 @@
       function sortbyInput(list){
          return function (a, b) {
              var sortingArr = list;
-             return sortingArr.indexOf(a.givenInput) - sortingArr.indexOf(b.givenInput);
+             return sortingArr.indexOf(a.url) - sortingArr.indexOf(b.url);
          }
       }
 
@@ -66,19 +66,6 @@
 
           if (vm.countOutput === vm.countInput) {
             vm.profilesArray.sort(sortbyInput(vm.input));
-            vm.profilesArray.forEach(function(profile) {
-              if (profile.error) {
-                vm.profilesString += csvService.parseProfileError(profile);
-              } else if (profile.givenInput.includes('facebook')) {
-                vm.profilesString += csvService.parseProfileFacebook(profile);
-              } else if (profile.givenInput.includes('twitter')) {
-                vm.profilesString += csvService.parseProfileTwitter(profile);
-              } else if (profile.givenInput.includes('instagram')) {
-                vm.profilesString += csvService.parseProfileInstagram(profile);
-              } else {
-                vm.profilesString += csvService.parseProfileError(profile);
-              }
-            })
             vm.csv = csvService.readCSV(vm.profilesString);
             vm.gridOptions = {
               data: vm.csv,
@@ -86,6 +73,20 @@
             }
             vm.loading["display"] = "none";
           }
+          // This is down here only because the countOutput and countInput isn't working right now. Once those are up and running this will be better suited to being up there for the sake of keeping it sorted.
+          vm.profilesArray.forEach(function(profile) {
+            if (profile.error) {
+              vm.profilesString += csvService.parseProfileError(profile);
+            } else if (profile.url.includes('facebook')) {
+              vm.profilesString += csvService.parseProfileFacebook(profile);
+            } else if (profile.url.includes('twitter')) {
+              vm.profilesString += csvService.parseProfileTwitter(profile);
+            } else if (profile.url.includes('instagram')) {
+              vm.profilesString += csvService.parseProfileInstagram(profile);
+            } else {
+              vm.profilesString += csvService.parseProfileError(profile);
+            }
+          })
 
         });
       })
