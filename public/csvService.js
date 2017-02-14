@@ -121,6 +121,7 @@
       }
 
       this.exportCsv = function(profiles) {
+        console.log("Export profiles: ", profiles);
         return $http({
           method: 'POST',
           url: '/exportCsv',
