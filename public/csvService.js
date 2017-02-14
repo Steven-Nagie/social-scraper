@@ -23,28 +23,27 @@
       this.parseProfileFacebook = function(profile) {
         //{givenInput, fan_count, comments, id, likes, post_id, shares, username}
         if(profile.comments) {
-          var csvContent = ` , , , , ,${profile.givenInput},${profile.fan_count},${profile.likes},${profile.shares},${profile.comments}\n`;
+          var csvContent = `${profile.influencer},${profile.followers},${profile.url},${profile.postingDate},${profile.platform},${profile.likes},${profile.shares},${profile.comments}\n`;
         } else {
-          var csvContent = ` , , , , ,${profile.givenInput},${profile.fan_count}\n`;
+          var csvContent = `${profile.influencer},${profile.followers},${profile.url}, ,${profile.postingDate},${profile.platform}\n`
         }
         return csvContent;
       };
 
       this.parseProfileTwitter = function(profile) {
         //{givenInput, name, retweets, screen_name, status, status_count, type, favorite_count, followers_count}
-        var csvContent = `${profile.givenInput},${profile.screen_name},${profile.followers_count},${profile.favorite_count},${profile.retweets}\n`;
+        var csvContent = `${profile.influencer},${profile.followers},${profile.url},${profile.postingDate},${profile.platform},${profile.likes},${profile.shares}\n`;
         return csvContent;
       };
 
       this.parseProfileInstagram = function(profile) {
-        if (profile.data.views) {
-          // This is a big assumption, because I have yet to see what it actually looks like when it's a video
-          var csvContent = ` , , , , , , , , , ,${profile.givenInput}, ,${profile.data.likes.count},${profile.data.comments.count},${profile.data.views.count}\n`;
-        } else {
-          var csvContent = ` , , , , , , , , , ,${profile.givenInput}, ,${profile.data.likes.count},${profile.data.comments.count}\n`;
-        }
+          var csvContent = `${profile.influencer},${profile.followers},${profile.url},${profile.postingDate},${profile.platform},${profile.likes},${profile.shares},${profile.comments},${profile.views}\n`;
         return csvContent;
       };
+
+      this.parseProfile = function(profile) {
+
+      }
 
       /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
                       PARSE PROFILE STRINGS INTO PROPER OBJECTS FOR CSV

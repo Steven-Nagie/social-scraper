@@ -73,7 +73,7 @@ exports.validateData = function(twitterUrl){
 exports.parseData = function(twitterUrl){
   let endpoint = twitterUrl.substring(twitterUrl.lastIndexOf('/') + 1).replace(/\s/g,'').replace(/[!@#$%^&*()":;',?<>_=+|-]/ig, '')
 
-  console.log(endpoint)
+  // console.log(endpoint)
 
   if (Number(endpoint)){ // checks if the endpoint is a string or a number
     return {
