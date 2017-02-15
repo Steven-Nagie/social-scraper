@@ -83,8 +83,7 @@ io.on('connect', socket => {
             }
           //}
         } else {
-          // Do I have to return this?
-          usersLoggedIn[data.userId].emit('profile', {givenInput: url, error: "Not a valid input. Check to ensure it is a Facebook, Instagram, or Twitter url."});
+          usersLoggedIn[data.userId].emit('profile', {url: url, influencer: "N/A", platform: "N/A", type: "error", postingDate: "N/A", likes: "N/A", shares: "N/A", comments: "N/A", views: "N/A", response: "Not a valid input. Check to ensure it is a Facebook, Instagram, or Twitter url."});
         }
       }
     })
