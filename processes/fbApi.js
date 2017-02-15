@@ -81,6 +81,7 @@ exports.getUserIdAndFans =(obj) => {
       obj.type = "user";
       obj.id = res.id;
       obj.followers = res.fan_count;
+      obj.response = "complete";
       obj.postingDate = "N/A";
       obj.likes = "N/A";
       obj.shares = "N/A";
@@ -111,7 +112,6 @@ exports.getPostInfo = (obj) => {
     obj.likes = !res.likes ? 0 : res.likes.data.length;
     obj.shares = !res.shares ? 0 : res.shares.count;
     obj.comments = !res.comments ? 0 : res.comments.data.length;
-    obj.response = "complete";
     defered.resolve(obj);
   });
   return defered.promise;
