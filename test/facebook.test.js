@@ -8,7 +8,7 @@ var request = require('request'),
 
 chai.use(chaiAsPromised);
 
-describe("FACEBOOK TESTING", function() {
+describe.only("FACEBOOK TESTING", function() {
 
   describe('fb.validateData', function(){
 
@@ -372,26 +372,26 @@ describe("FACEBOOK TESTING", function() {
     it("Should return an object with url, influencer, id, post_id, followers, shares, comments, and likes", function(done) {
       let answer = fb.getPostInfo(userFull);
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', "platform", "postingDate", "type").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', "platform", "postingDate", "type", 'response', 'views').notify(done);
 
     })
 
     it("Should return an object with url, influencer, id, post_id, followers, shares, comments, and likes", function(done) {
       let answer = fb.getPostInfo(userFull);
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', "platform", "postingDate", "type").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', "platform", "postingDate", "type", 'response', 'views').notify(done);
     })
 
     it("Should return an object with url, influencer, id, post_id, followers, shares, comments, and likes", function(done) {
       let answer = fb.getPostInfo(userFull);
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', "platform", "postingDate", "type").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', "platform", "postingDate", "type", 'response', 'views').notify(done);
     })
 
     it("Should return an object with url, influencer, id, post_id, followers, shares, comments, and likes", function(done) {
       let answer = fb.getPostInfo(userFull);
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', "platform", "postingDate", "type").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', "platform", "postingDate", "type", 'response', 'views').notify(done);
     })
 
   }) //End of Facebook GET POST INFO
@@ -405,80 +405,82 @@ describe("FACEBOOK TESTING", function() {
     it("Should do exactly what we want it to (case 1)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/cart0onz/posts/1797041023877382");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
     it("Should do exactly what we want it to (case 2)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/sl1pg8rLP/videos/1499081423439939/");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
     it("Should do exactly what we want it to (case 3)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/permalink.php?story_fbid=1370824039607865&id=288340451189568");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
     it("Should do exactly what we want it to (case 4)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/aimeefullersnow/");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'platform', "type").notify(done);
+      // Won't ever collect post_id because it is a user object, not a post
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
     it("Should do exactly what we want it to (case 5)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/sl1pg8rLP/videos/1499081423439939/");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
     it("Should do exactly what we want it to (case 6)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/MassiveNetwork/posts/1316604901716019");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
     it("Should do exactly what we want it to (case 7)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/sl1pg8rLP/posts/1516922548322493");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
     it("Should do exactly what we want it to (case 8)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/GoProBombSquad/posts/1521657471183229");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
     it("Should do exactly what we want it to (case 9)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/216875158351676/photos/a.218037834902075.55227.216875158351676/1289469471092234/?type=3&theater");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
     it("Should do exactly what we want it to (case 10)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/161903407172302/photos/a.161919140504062.39607.161903407172302/1475901979105765/?type=3&theater");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
     it("Should do exactly what we want it to (case 11)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/ericwillettofficial/");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'platform', "type").notify(done);
+      // Won't have a post_id key because it is a user object, not a post, and post_id is not one of the values we have to display
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
 
     it("Should do exactly what we want it to (case 12)", function(done) {
       let answer = fb.facebook("https://www.facebook.com/willwessonski/videos/1269951999743269/");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate").notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', "id", 'followers', 'post_id', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
     it("Should throw an error when stuff breaks", function(done) {
       let answer = fb.facebook("https://www.facebook.com/tatum.monod/photos/a.927441700603682.1073741829.804486849565835/1456800001001180/?type=3&theater");
       expect(answer).to.eventually.be.an('object');
-      expect(answer).to.eventually.have.all.keys('influencer', 'url', 'error', 'platform').notify(done);
+      expect(answer).to.eventually.have.all.keys('influencer', 'url', 'followers', 'shares', 'comments', 'likes', 'platform', "type", "postingDate", 'response', 'views').notify(done);
     })
 
   }) // End of FACEBOOK TOTAL
