@@ -74,18 +74,9 @@
             vm.loading["display"] = "none";
           }
           // This is down here only because the countOutput and countInput isn't working right now. Once those are up and running this will be better suited to being up there for the sake of keeping it sorted.
+          vm.profilesString = ""; //This line should be deleted when we get the input/output count going. It's here only so that we don't get repeated data with the forEach
           vm.profilesArray.forEach(function(profile) {
-            if (profile.error) {
-              vm.profilesString += csvService.parseProfileError(profile);
-            } else if (profile.url.includes('facebook')) {
-              vm.profilesString += csvService.parseProfileFacebook(profile);
-            } else if (profile.url.includes('twitter')) {
-              vm.profilesString += csvService.parseProfileTwitter(profile);
-            } else if (profile.url.includes('instagram')) {
-              vm.profilesString += csvService.parseProfileInstagram(profile);
-            } else {
-              vm.profilesString += csvService.parseProfileError(profile);
-            }
+            vm.profilesString += csvService.parseProfile(profile);
           })
 
         });
