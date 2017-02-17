@@ -1,8 +1,5 @@
 config.js
 node_modules
-facebook.csv
-twitter.csv
 everything.csv
 public/dist
 bower_components
-public/assets/ngHandsontable-master

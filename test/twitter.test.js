@@ -7,7 +7,7 @@
 
 describe('TWITTER TESTING', function(){
 
-    describe.only('tw.validateData', function(){
+    describe('tw.validateData', function(){
 
       it('Should not validate if data is not a string', function(){
         expect(tw.validateData(9872094352)).to.be.false
@@ -140,7 +140,7 @@ describe('TWITTER TESTING', function(){
 
     }) // end of Data Validation
 
-   
+
 
 
 

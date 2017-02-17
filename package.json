@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonmyrick7401/social-scraper.git"
+    "url": "git+https://github.com/steven-nagie/social-scraper.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jonmyrick7401/social-scraper/issues"
+    "url": "https://github.com/steven-nagie/social-scraper/issues"
   },
-  "homepage": "https://github.com/jonmyrick7401/social-scraper#readme",
+  "homepage": "https://github.com/steven-nagie/social-scraper#readme",
   "dependencies": {
     "angular-ui-grid": "^4.0.2",
     "axios": "^0.15.3",
