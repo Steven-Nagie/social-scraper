@@ -1,0 +1,123 @@
+**************************
+function sortbyInput(list){
+   return function (a, b) {
+       var sortingArr = list;
+       return sortingArr.indexOf(a.Input) - sortingArr.indexOf(b.Input);
+   }
+}
+****************
+
+Regarding exporting to csv:
+We can append to an already existing file. So, the best way to do this would seem to be to create the file to begin with, and include the column names at the start. Then, simply append every data point to the file as we get it.
+Alternatively, we could use fs.writeFile to write a new file
+Data point = complete info for each user, not each point in each user's info.
+
+Want to use iframe to display csv file, have to hit server to get it
+(Im curious about this ^ do you mean that you would want to use an Iframe rather than the grid??) - Jon
+
+*****************************************
+DEFINITELY GOING TO RUN INTO A PROBLEM WITH FB PARSING LINKS WHERE USER NAMES HAVE PERIODS IN THEM
+*****************************************
+
+Linking multiple calls into one:
+1398906127024209_1808047382776746?fields=likes.limit(3000){id},comments.limit(3000){id},shares
+
+https://www.facebook.com/cart0onz/posts/1797041023877382
+https://www.facebook.com/sl1pg8rLP/videos/1499081423439939/
+https://www.facebook.com/permalink.php?story_fbid=1370824039607865&id=288340451189568
+https://www.facebook.com/MassiveNetwork/photos/a.470062353036949.107449.194775607232293/1337412742968568/?type=3&theater
+https://www.facebook.com/aimeefullersnow/
+
+Have to contend with:
+Videos and posts, where we have to use username to get id, then combine user_id and video_id to get info
+Maybe best way to make Facebook robust is to always use username and last series of numbers, instead of grasping at periods and stuff.
+Maybe always use either username or id to grab id, combine that with post id if there is one. That would prevent us from having to verify whether the url has an id for us to use or if we have to grab one.
+
+
+fields are:
+?fields=field
+
+edges are
+/edge
+
+userid/username
+fields:
+fan_count = their total likes
+
+edges:
+instagram_accounts = Any linked instagram accounts
+photos = the page's photos
+picture = the page's profile picture (Doesn't return a JSON object)
+posts = returns a list of all their posts, including an id for the post, which we can presumably use to see likes on that post.
+feed = The feed of posts (including status updates) and links published by this page, or by others on this page. Don't know what the difference is between this and posts.
+
+Posts
+fields:
+shares = share count of the post
+  if no shares, response contains only post id
+
+edges:
+likes
+  returns an array of users who have liked the post. To get a total we have to do res.data[0].length, and we have to be careful that we put the limit pretty high so we don't cut anyone off. I think the default limit is 25.
+reactions
+  Returns an array of users who have reacted, including a property describing their type of reaction.
+comments
+sharedposts
+  If no shares, response is empty array
+
+
+
+
+
+
+https://www.facebook.com/Jamieandersonsnow/photos/a.211038416173.137482.208209591173/10153945604136174/?type=3&theater
+https://www.facebook.com/aimeefullersnow/
+https://www.facebook.com/jeb.corliss/?fref=ts
+https://www.facebook.com/brandonmikesell23/photos/a.841942249259190.1073741828.839057202881028/1144637245656354/?type=3&theater'
+
+https://www.instagram.com/p/BNjEF8DA_-M/?taken-by=aimee_fuller
+https://www.instagram.com/p/BNhux3Ngj7O/?taken-by=jimmy_chin
+https://www.instagram.com/p/BNXVDlXBfnj/?taken-by=shawnjohnson
+https://www.instagram.com/p/BNhux3Ngj7O/?taken-by=jimmy_chin
+https://www.instagram.com/p/BNUTi3Vghki/?taken-by=jebcorliss
+https://www.instagram.com/p/BNZ1e5_gqcA/
+
+
+
+
+GET https://api.twitter.com/1.1/statuses/show.json?id=210462857140252672
+GET https://api.twitter.com/1.1/users/show.json?screen_name=twitterdev
+
+Success for posts
+
+https://twitter.com/highsteph/status/804000988604399616 Expect to return post stats
+https://twitter.com/ShawnJohnson/status/804370878599430144 Expect to return post stats
+https://twitter.com/jimkchin/status/806134951926067200 Expect to return post stats
+twitter.com/jimkchin/status/806134951926067200 Expect to return post stats
+
+
+succress for profiles
+
+https://twitter.com/JamieAsnow Expect to return profile stats
+twitter.com/JamieAsnow Expect to return profile stats
+
+
+
+
+GET post
+expect(tw.getTwitterProfile('https://twitter.com/highsteph/status/804000988604399616)).to.equal(`post stats`);
+expect(tw.getTwitterProfile('https://twitter.com/highsteph/status/804000988604399616)).to.equal(`post stats`);
+expect(tw.getTwitterProfile('https://twitter.com/jimkchin/status/806134951926067200)).to.equal(`post stats`);
+expect(tw.getTwitterProfile('twitter.com/jimkchin/status/806134951926067200)).to.equal(`post stats`);
+
+GET profile
+expect(tw.getTwitterProfile('https://twitter.com/JamieAsnow')).to.equal(`profile stats`);
+expect(tw.getTwitterProfile('twitter.com/JamieAsnow')).to.equal(`profile stats`);
+
+Errors
+expect(tw.getTwitterProfile('https://twitter.com/jimkchin/806134951926067200')).to.equal({status: "status: invalid input, please specify status"});
+expect(tw.getTwitterProfile('https://twitter.com/jimkchin/status/82606')).to.equal({status: "status: invalid input, please specify url"});
+expect(tw.getTwitterProfile('witter.com/jimkchin/status/806134951926067200')).to.equal({status: "status: invalid input, please specify url"});
+expect(tw.getTwitterProfile('/jimkchin/status/806134951926067200')).to.equal({status: "status: invalid input, please specify url"});
+expect(tw.getTwitterProfile('.com/JamieAsnow')).to.equal({status: "status: invalid input, please specify url"});
+expect(tw.getTwitterProfile('/JamieAsnow)).to.equal({status: "status: invalid input, please specify url"});
