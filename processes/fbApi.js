@@ -75,7 +75,7 @@ exports.getUserIdAndFans =(obj) => {
     let defered = q.defer();
     app.api(`${obj.influencer}?fields=id,fan_count`, function(res) {
       if(!res || res.error) {
-        defered.resolve(!res ? {url: obj.url, influencer: obj.influencer, platform: "Facebook", type: "error", postingDate: "N/A", likes: "N/A", shares: "N/A", comments: "N/A", views: "N/A", response: 'Invalid input. Remember that private user profiles are not legally accessible.'} : {url: obj.url, influencer: obj.influencer, platform: "Facebook", type: "error", postingDate: "N/A", likes: "N/A", shares: "N/A", comments: "N/A", views: "N/A", response: `${res.error.message}. Remember that private user profiles are not legally accessible.`});
+        defered.resolve(!res ? {url: obj.url, influencer: obj.influencer, platform: "Facebook", followers: 'N/A', type: "error", postingDate: "N/A", likes: "N/A", shares: "N/A", comments: "N/A", views: "N/A", response: 'Invalid input. Remember that private user profiles are not legally accessible.'} : {url: obj.url, followers: 'N/A', influencer: obj.influencer, platform: "Facebook", type: "error", postingDate: "N/A", likes: "N/A", shares: "N/A", comments: "N/A", views: "N/A", response: `${res.error.message}. Remember that private user profiles are not legally accessible.`});
       }
       obj.platform = "Facebook";
       obj.type = "user";
@@ -96,7 +96,7 @@ exports.getPostInfo = (obj) => {
   let defered = q.defer();
   app.api(`${obj.id}_${obj.post_id}?fields=created_time,shares.limit(1000000),likes.limit(1000000),comments.limit(1000000)`, function(res)  {
     if(!res || res.error) {
-      defered.resolve(!res ? {url: obj.url, influencer: obj.influencer, platform: "Facebook", type: "error", postingDate: "N/A", likes: "N/A", shares: "N/A", comments: "N/A", views: "N/A", response: 'Invalid input. Remember that private user profiles are not legally accessible.'} : {url: obj.url, influencer: obj.influencer, platform: "Facebook", type: "error", postingDate: "N/A", likes: "N/A", shares: "N/A", comments: "N/A", views: "N/A", response: `${res.error.message}. Remember that private user profiles are not legally accessible.`});
+      defered.resolve(!res ? {url: obj.url, followers: 'N/A', influencer: obj.influencer, platform: "Facebook", type: "error", postingDate: "N/A", likes: "N/A", shares: "N/A", comments: "N/A", views: "N/A", response: 'Invalid input. Remember that private user profiles are not legally accessible.'} : {url: obj.url, followers: 'N/A', influencer: obj.influencer, platform: "Facebook", type: "error", postingDate: "N/A", likes: "N/A", shares: "N/A", comments: "N/A", views: "N/A", response: `${res.error.message}. Remember that private user profiles are not legally accessible.`});
     }
     let time = "Unknown";
     if (res.created_time) {
