@@ -3,7 +3,9 @@ const config = require('./../config'),
       q = require('q'),
       fs = require('fs');
 
-let app = FB.extend({appId: config.facebook.appId, appSecret: config.facebook.appSecret});
+let appId = process.env.APPID || config.facebook.appId;
+let appSecret = process.env.APPSECRET || config.facebook.appSecret;
+let app = FB.extend({appId: appId, appSecret: appSecret});
 let gotToken = false;
 
 exports.getToken = () => {
@@ -11,7 +13,7 @@ exports.getToken = () => {
   if(gotToken) defered.resolve("already have token");
   else{
     FB.options({version: 'v2.8'});
-    FB.api(`oauth/access_token?client_id=${config.facebook.appId}&client_secret=${config.facebook.appSecret}&grant_type=client_credentials`, function(res) {
+    FB.api(`oauth/access_token?client_id=${appId}&client_secret=${appSecret}&grant_type=client_credentials`, function(res) {
       if (!res || res.error) return console.log(!res ? 'error occurred' : res.error);
       app.setAccessToken(res.access_token);
       gotToken = true;
