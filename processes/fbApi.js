@@ -1,7 +1,10 @@
-const config = require('./../config'),
-      FB = require('fb'),
+const FB = require('fb'),
       q = require('q'),
       fs = require('fs');
+
+if ('./../config') {
+  const config = require('./../config');
+}
 
 let appId = process.env.APPID || config.facebook.appId;
 let appSecret = process.env.APPSECRET || config.facebook.appSecret;
