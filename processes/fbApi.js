@@ -1,10 +1,11 @@
 const FB = require('fb'),
       q = require('q'),
       fs = require('fs');
+let config;
 
-// if ('./../config') {
-//   const config = require('./../config');
-// }
+if (fs.existsSync('./config.js')) {
+  config = require('./../config');
+}
 
 let appId = process.env.APPID || config.facebook.appId;
 let appSecret = process.env.APPSECRET || config.facebook.appSecret;
